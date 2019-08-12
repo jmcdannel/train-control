@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {  Button, IconButton, Paper, Typography, Toolbar } from '@material-ui/core';
+import { Button, IconButton, Paper, Typography, Toolbar } from '@material-ui/core';
 import './sounds.scss';
-
 
 export const Sounds = props => {
 
