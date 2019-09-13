@@ -11,6 +11,10 @@ export const Sounds = props => {
 		{
 			audio: '/media/sounds/Train Whistle-SoundBible.com-458982136.mp3',
 			name: 'Horn 1'
+		},
+		{
+			audio: '/media/sounds/steam-train-whistle-daniel_simon.mp3',
+			name: 'Whistle 1'
 		}
 	];
 
@@ -35,9 +39,7 @@ export const Sounds = props => {
 				{playing && (
 					<section>
 						<h3>Now Playing: {playing.name}</h3>
-						<audio autoplay controls={showControls}>
-							<source src={playing.audio} type="audio/mpeg" />
-						</audio>
+						<audio autoplay controls={showControls} src={playing.audio} />
 						<Button onClick={() => handlePlaySound(null)} variant="contained" color="secondary">CLEAR</Button>
 					</section>
 				)}
