@@ -1,0 +1,83 @@
+
+$on: rgb(118, 255, 3);
+$off: rgba(0,0,0,.4);
+
+.chip {
+  margin: 0rem 0.5rem 0.5rem 0;
+}
+
+.turnout {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.MuiButtonBase-root.media {
+  flex: 0 1;
+  padding: 1em;
+}
+
+.information {
+  flex: 1;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.media-container {
+  position: relative;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -20px;
+  margin-top: -20px;
+}
+
+.loading .svg-wrapper {
+  opacity: 0.1;
+}
+
+.turnout-image {
+  
+  text {
+    fill: #fff;
+  }
+  path {
+    stroke: $on;
+  }
+  #Label {
+    display: none; 
+  }
+  #divergent-inner,
+  #divergent-outer {
+    stroke: $off;
+  }
+
+  &.divergent {
+    #straight-inner,
+    #straight-outer {
+      stroke: $off;
+    }
+    #divergent-inner,
+    #divergent-outer {
+      stroke: $on;
+    }
+  }
+}
+
+.MuiTextField-root {
+  margin: 1rem;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.3; }
+  50% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.3; }
+}
