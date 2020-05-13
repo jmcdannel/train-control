@@ -47,6 +47,15 @@ function App() {
     setPage(newValue);
   }
 
+  const getTurnoutById = id => turnouts.data.find(t => id === t.id);
+
+  const getLinkedTurnout = turnout => 
+    turnout.crossover
+      ? getTurnoutById(turnout.crossover)
+      : turnout.reverse
+        ? getTurnoutById(turnout.reverse)
+        : null;
+
   return (
     <MuiThemeProvider theme={theme}>
     <CssBaseline />
@@ -65,7 +74,7 @@ function App() {
             {page === 'Turnouts' && (
               <Grid container spacing={2}>
                 {turnouts.data && turnouts.data.map(turnout => (
-                  <Grid key={turnout.id} item sm={6} xs={12}><Turnout config={turnout} /></Grid>
+                  <Grid key={turnout.id} item sm={6} xs={12}><Turnout config={turnout} linked={getLinkedTurnout(turnout)} /></Grid>
                 ))}
               </Grid>
             )}

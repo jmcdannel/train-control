@@ -35,7 +35,7 @@ async function deleteTurnout(id) {
   throw new Error('Not implemented');
 }
 
-export const apiHost = 'http://0.0.0.0:5000';
+export const apiHost = 'http://192.168.86.25:5000';
 
 export const api = {
   get: readTurnout,

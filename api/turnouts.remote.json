@@ -1,0 +1,144 @@
+[
+  {
+     "abbr":"R.1 => G.1",
+     "current":60,
+     "default":"straight",
+     "divergent":120,
+     "id":101,
+     "line":"Red",
+     "name":"Red 1 to Green 1",
+     "servo":0,
+     "straight":60,
+     "crossover":201,
+     "relay": 22
+  },
+  {
+     "abbr":"R.2 => G.2",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":102,
+     "line":"Red",
+     "name":"Red 2 to Green 2",
+     "servo":1,
+     "straight":60,
+     "crossover":202
+  },
+  {
+     "abbr":"R.3 => RevM:S",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":103,
+     "line":"Red",
+     "name":"Red to Reverse Magenta South",
+     "straight":60,
+     "reverse":106
+  },
+  {
+     "abbr":"R.4 => RevY:S",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":104,
+     "line":"Red",
+     "name":"Red to Reverse Yellow South",
+     "straight":60,
+     "reverse":105
+  },
+  {
+     "abbr":"R.5 => RevY:N",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":105,
+     "line":"Red",
+     "name":"Red to Reverse Yellow North",
+     "straight":60,
+     "reverse":104
+  },
+  {
+     "abbr":"R.6 => RevM:N",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":106,
+     "line":"Red",
+     "name":"Red to Reverse Magenta North",
+     "straight":60,
+     "reverse":103
+  },
+  {
+     "abbr":"G.1 => R.1",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":201,
+     "line":"Green",
+     "name":"Green 1 to Red 1",
+     "straight":60,
+     "crossover":101,
+     "relay": 21
+  },
+  {
+     "abbr":"G.2 => R.2",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":202,
+     "line":"Green",
+     "name":"Green 2 to Red 2",
+     "straight":60,
+     "crossover":102
+  },
+  {
+     "abbr":"G.3 => O",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":203,
+     "line":"Green",
+     "name":"Green to Yard Orange",
+     "straight":60
+  },
+  {
+     "abbr":"G.4 => M",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":204,
+     "line":"Green",
+     "name":"Green to Mountain Grades",
+     "straight":60
+  },
+  {
+     "abbr":"Y:O.1",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":301,
+     "line":"Orange",
+     "name":"Orange Yard Track 1",
+     "straight":60
+  },
+  {
+     "abbr":"Y:O.2",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":302,
+     "line":"Orange",
+     "name":"Orange Yard Track 2",
+     "straight":60
+  },
+  {
+     "abbr":"M.1 N/S",
+     "current":90,
+     "default":"straight",
+     "divergent":120,
+     "id":401,
+     "line":"Mountain",
+     "name":"Mountain Grades North/South",
+     "straight":60
+  }
+]
