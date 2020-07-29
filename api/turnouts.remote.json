@@ -11,7 +11,19 @@
      "servo":0,
      "straight":60,
      "crossover":201,
-     "relay": 22
+     "relay": 22,
+     "position": {
+        "top": "380px",
+        "left": "600px",
+        "straight-indicator": {
+            "top": "42px",
+            "left": "4px"
+         },
+         "divergent-indicator": {
+            "top": "34px",
+            "left": "10px"
+         }
+     }
   },
   {
      "abbr":"R.2 => G.2",
@@ -22,7 +34,6 @@
      "id":102,
      "line":"Red",
      "name":"Red 2 to Green 2",
-     "servo":1,
      "straight":60,
      "crossover":202
   },
@@ -60,7 +71,8 @@
      "line":"Red",
      "name":"Red to Reverse Yellow North",
      "straight":60,
-     "reverse":104
+     "reverse":104,
+     "servo": 1
   },
   {
      "abbr":"R.6 => RevM:N",
@@ -152,7 +164,7 @@
      "default":"straight",
      "divergent":120,
      "id":401,
-     "line":"Mountain",
+     "line":"Purple",
      "name":"Mountain Grades North/South",
      "straight":60
   }
