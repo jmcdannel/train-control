@@ -1,0 +1,206 @@
+.switch {
+  position: absolute;
+  top: 200px;
+  left:200px;
+  
+  z-index: 100;
+
+  display: none;
+
+  // button {
+  //   background-color: rgba(0,0,0,.3);
+  //   border: 1px solid red;
+  //   color: white;
+  // }
+}
+
+
+.straight-indicator,
+.divergent-indicator {
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.straight-indicator--on {
+  background-color: green;
+}
+.divergent-indicator--on {
+  background-color: green;
+}
+
+.switch-101 {
+  top: 583px;
+  left: 600px;
+  .straight-indicator {
+    top: 53px;
+    left: 6px;
+  }
+  .divergent-indicator {
+    top: 43px;
+    left: -2px;
+  }
+}
+
+.switch-102 {
+  top: 479px;
+  left: 600px;
+  .straight-indicator {
+    top: -37px;
+    left: -3px;
+  }
+  .divergent-indicator {
+    top: -47px;
+    left: 5px;
+  }
+}
+
+.switch-103 {
+  top: 380px;
+  left: 600px;
+  .straight-indicator {
+    top: 42px;
+    left: 4px;
+  }
+  .divergent-indicator {
+    top: 34px;
+    left: 10px;
+  }
+}
+
+.switch-104 {
+  top: 128px;
+  left: 152px;
+  .straight-indicator {
+    top: 44px;
+    left: -14px;
+  }
+  .divergent-indicator {
+    top: 37px;
+    left: -6px;
+  }
+}
+
+.switch-105 {
+  top: 286px;
+  left: 635px;
+  display: block;
+  .straight-indicator {
+    top: 44px;
+    left: -14px;
+  }
+  .divergent-indicator {
+    top: 37px;
+    left: -6px;
+  }
+}
+
+.switch-106 {
+  top: 745px;
+  left: 860px;
+  .straight-indicator {
+    top: -32px;
+    left: 2px;
+  }
+  .divergent-indicator {
+    top: -19px;
+    left: -2px;
+  }
+}
+
+.switch-201 {
+  top: 655px; //17
+  left: 603px; //-30
+  top: 672px;
+  left: 573px;
+  .straight-indicator {
+    top: -46px;
+    left: 17px;
+  }
+  .divergent-indicator {
+    top: -36px;
+    left: 24px;
+  }
+}
+
+.switch-202 {
+  top: 388px;
+  left: 567px;
+  .straight-indicator {
+    top: 55px;
+    left: 21px;
+  }
+  .divergent-indicator {
+    top: 45px;
+    left: 28px;
+  }
+}
+
+.switch-203 {
+  top: 57px;
+  left: 616px;
+  .straight-indicator {
+    top: 6px;
+    left: -30px;
+  }
+  .divergent-indicator {
+    top: 14px;
+    left: -23px;
+  }
+}
+
+.switch-204 {
+  top: 57px;
+  left: 666px;
+  .straight-indicator {
+    top: 6px;
+    left: -30px;
+  }
+  .divergent-indicator {
+    top: -1px;
+    left: -23px;
+  }
+}
+
+.switch-301 {
+  top: 57px;
+  left: 541px;
+  .straight-indicator {
+    top: 7px;
+    left: -27px;
+  }
+  .divergent-indicator {
+    top: 14px;
+    left: -19px;
+  }
+}
+
+.switch-302 {
+  top: 57px;
+  left: 508px;
+  .straight-indicator {
+    top: 13px;
+    left: -26px;
+  }
+  .divergent-indicator {
+    top: 5px;
+    left: -20px;
+  }
+}
+
+.switch-401 {
+  top: 24px;
+  left: 609px;
+  .straight-indicator {
+    top: 13px;
+    left: -27px;
+  }
+  .divergent-indicator {
+    top: 22px;
+    left: -20px;
+  }
+}

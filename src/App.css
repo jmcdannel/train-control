@@ -24,9 +24,19 @@
   color: white;
 }
 
+.App-content {
+  overflow: auto;
+}
+
 .App-link {
   color: #61dafb;
 }
+
+
+/* .App-footer {
+  position: fixed;
+  bottom: 0;
+} */
 
 @keyframes App-logo-spin {
   from {

@@ -25,7 +25,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import api from '../Api';
 
 
 const getInverse = degrees => {
@@ -35,7 +34,7 @@ const getInverse = degrees => {
 }
 
 export const Settings = props => {
-  const { open, config, onClose, } = props;
+  const { open, config, onClose, onChange } = props;
   const { id } = config;
   const [name, setName] = useState(config.name);
   const [line, setLine] = useState(config.line);
@@ -84,13 +83,13 @@ export const Settings = props => {
     try {
       setIsLoading(true);
       setHasError(false);
-      await api.put({
+      await onChange([{
         id,
         name,
         line,
         straight,
         divergent
-      });
+      }]);
       onClose();
     } catch (err) {
       console.error(err);
@@ -106,10 +105,11 @@ export const Settings = props => {
   }
 
   const handleStraightChange = e => {
-    if (isValidDegrees(e.target.value)) {
-      setStraight(e.target.value);
+    const val = parseInt(e.target.value);
+    if (isValidDegrees(val)) {
+      setStraight(val);
       if (isLinked) {
-        setDivergent(getInverse(e.target.value));
+        setDivergent(getInverse(val));
       }
     }
   }
@@ -117,19 +117,20 @@ export const Settings = props => {
   const isValidDegrees = value => {
     const intValue = parseInt(value);
     return (value === '' || 
-      (/^\d+$/.test(value) && intValue >= 0 && intValue <= 180));
+      (/^\d+$/.test(value) && intValue >= 0 && intValue <= 360));
   }
 
   const handleDivergentChange = e => {
-    if (isValidDegrees(e.target.value)) {
-      setDivergent(e.target.value);
+    const val = parseInt(e.target.value);
+    if (isValidDegrees(val)) {
+      setDivergent(val);
       if (isLinked) {
-        setStraight(getInverse(e.target.value));
+        setStraight(getInverse(val));
       }
     }
   }
   const sendDegrees = async degrees => {
-    return await api.put({ id, current: degrees });
+    return await onChange([{ id, current: parseInt(degrees) }]);
   }
 
   return (

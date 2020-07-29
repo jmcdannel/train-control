@@ -28,63 +28,57 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Settings from './Settings';
-import api from '../Api';
-import * as Colors from 'material-ui/colors';
+import { api, linesConfig } from '../Api';
 import './Turnout.scss';
-
-const lines = {
-  "Red": {
-    primary: Colors.red[500]
-  },
-  "Green": {
-    primary: Colors.green[500]
-  },
-  "Orange": {
-    primary: Colors.orange[500]
-  },
-  "Mountain": {
-    primary: Colors.purple[500]
-  },
-}
 
 export const Turnout = props => {
 
-  const { config, linked: linkedTurnout  } = props;
-  const { relay, crossover, reverse, name, id, line, abbr, current, straight, divergent, 'default': defaultOrientation } = config;
+  const { config, linked: linkedTurnout, onChange  } = props;
 
-  const [turnoutConfig, setTurnoutConfig] = useState(config);
-  const [isDivergent, setIsDivergent] = useState(current === divergent);
+  const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [isPristine, setIsPristine] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isLinked, setIsLinked] = useState(true);
+  const { current, relay, crossover, reverse, name, id, line, label, abbr, straight, divergent, 'default': defaultOrientation } = config;
 
   useEffect(() => {
     setIsDivergent((current === divergent));
   }, [current, straight, divergent]);
 
-  useEffect(() => {
-    setTurnoutConfig(config);
-  }, [config]);
-
-  const handleToggle = e => {
-    const prevState = isDivergent;
-    const data = { id, current: prevState ? straight : divergent };
-    handleConfigChange(data);
-    if (linkedTurnout && isLinked) {
-      handleConfigChange({
-        id: linkedTurnout.id,
-        current: prevState 
-          ? linkedTurnout.straight 
-          : linkedTurnout.divergent
-      })
+  const handleToggle = async e => {
+    if (isLoading) { 
+      return;
     }
+    try {
+      const data = [{ id, current: isDivergent ? straight : divergent }];
+      setIsLoading(true);
+      setIsPristine(false);
+
+      if (linkedTurnout && isLinked) {
+        data.push({
+          id: linkedTurnout.id,
+          current: isDivergent 
+            ? linkedTurnout.straight 
+            : linkedTurnout.divergent
+        })
+      }
+      await onChange(data);
+
+    } catch (err) {
+      console.error(err);
+      setError(err.toString());
+    } finally {
+      setIsLoading(false);
+    }
+    
   }
+
 
   const handleReset = async e => {
     const data = { id, current: defaultOrientation === 'straight' ? straight : divergent };
-    await handleConfigChange(data);
+    await onChange([data]);
   }
 
   const handleSettings = () => setShowSettings(true);
@@ -98,39 +92,8 @@ export const Turnout = props => {
     setError(undefined);
   };
 
-  const handleConfigChange = async data => {
-    if (isLoading) { 
-      return;
-    }
-    try {
-      setIsLoading(true);
-      const response = await api.put(data);
-      handleConfigUpdated(response);
-    } catch (err) {
-      console.error(err);
-      setError(err.toString());
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  const handleConfigUpdated = newConfig => {
-    setIsPristine(false);
-    setIsLoading(false);
-    setTurnoutConfig(newConfig);
-    setIsDivergent(newConfig.current === newConfig.divergent);
-  }
-
   const handleLinkedChange = event => {
     setIsLinked(event.target.checked);
-  }
-
-  const getTurnoutId = () => {
-    return isLinked && crossover
-      ? `${id} x ${crossover}`
-      : isLinked && reverse
-        ? `${id} - ${reverse}`
-        : id;
   }
 
 	return (
@@ -151,30 +114,18 @@ export const Turnout = props => {
       <CardContent className="information">
         <Box>
             <Chip
-              label={`${line} Line`}
-              variant="outlined"
-              className="chip"
-              style={{ backgroundColor: lines[line].primary }}
-              
-            />
-            <Chip
+              label={`${label}`}
               icon={<CallSplit />}
-              label={getTurnoutId()}
               variant="outlined"
               className="chip"
+              size="small"
+              style={{ backgroundColor: linesConfig.find(l => l.name === line).color }}
             />
-            <Chip
-              icon={isPristine ? <LinkOffIcon /> :  <LinkIcon />}
-              label={`${isLoading ? 'connecting...' : isPristine ? 'unknown' : 'connected'}`}
-              variant="outlined"
-              className="chip"
-            />
+            {isLoading || isPristine 
+              ? <LinkOffIcon style={{color: 'gray'}} /> 
+              :  <LinkIcon style={{color: 'green'}} />}
             {relay && (
-              <Chip
-                icon={<PowerIcon />}
-                label="Juiced Frog"
-                variant="outlined"
-                className="chip"
+              <PowerIcon style={{ color: 'green'}}
             />
             )}
           </Box>
@@ -187,12 +138,12 @@ export const Turnout = props => {
             </Typography>
             {crossover && (<Box><FormControlLabel
               control={<Switch checked={isLinked} onChange={handleLinkedChange} name="islinked" />}
-              label={`Link crossover:${crossover}`}
+              label={`Link crossover: ${linkedTurnout.label}`}
             /></Box>)}
             
             {reverse && (<Box><FormControlLabel
               control={<Switch checked={isLinked} onChange={handleLinkedChange} name="islinked" />}
-              label={`Link reverse loop switch:${reverse}`}
+              label={`Link reverse loop switch: ${linkedTurnout.label}`}
             /></Box>)}
           </Box>
       </CardContent>
@@ -216,7 +167,12 @@ export const Turnout = props => {
           </IconButton>
         </span>
       </CardActions>
-      <Settings open={showSettings} config={config} onClose={hideSettings} />
+      <Settings 
+        open={showSettings} 
+        config={config} 
+        onClose={hideSettings}
+        onChange={onChange} 
+      />
 
       <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose} message={error} />
     </Card>
