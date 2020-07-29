@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/github.io/train-control/static/css/main.baabd080.chunk.css",
+    "main.js": "/github.io/train-control/static/js/main.9f41e035.chunk.js",
+    "main.js.map": "/github.io/train-control/static/js/main.9f41e035.chunk.js.map",
+    "runtime-main.js": "/github.io/train-control/static/js/runtime-main.92db74bc.js",
+    "runtime-main.js.map": "/github.io/train-control/static/js/runtime-main.92db74bc.js.map",
+    "static/js/2.3096a0dd.chunk.js": "/github.io/train-control/static/js/2.3096a0dd.chunk.js",
+    "static/js/2.3096a0dd.chunk.js.map": "/github.io/train-control/static/js/2.3096a0dd.chunk.js.map",
+    "index.html": "/github.io/train-control/index.html",
+    "precache-manifest.3aab8b5234dbbeb9838e1ab691aabf2f.js": "/github.io/train-control/precache-manifest.3aab8b5234dbbeb9838e1ab691aabf2f.js",
+    "service-worker.js": "/github.io/train-control/service-worker.js",
+    "static/css/main.baabd080.chunk.css.map": "/github.io/train-control/static/css/main.baabd080.chunk.css.map",
+    "static/js/2.3096a0dd.chunk.js.LICENSE.txt": "/github.io/train-control/static/js/2.3096a0dd.chunk.js.LICENSE.txt",
+    "static/media/IDAWANY-base.png": "/github.io/train-control/static/media/IDAWANY-base.9c3d904a.png",
+    "static/media/IDAWANY-blueline.png": "/github.io/train-control/static/media/IDAWANY-blueline.e0160c42.png",
+    "static/media/IDAWANY-brownline.png": "/github.io/train-control/static/media/IDAWANY-brownline.9b239898.png",
+    "static/media/IDAWANY-greenline.png": "/github.io/train-control/static/media/IDAWANY-greenline.deb95cb4.png",
+    "static/media/IDAWANY-magentaline.png": "/github.io/train-control/static/media/IDAWANY-magentaline.90f04987.png",
+    "static/media/IDAWANY-orangeline.png": "/github.io/train-control/static/media/IDAWANY-orangeline.6ff3ae42.png",
+    "static/media/IDAWANY-purpleline.png": "/github.io/train-control/static/media/IDAWANY-purpleline.57038a14.png",
+    "static/media/IDAWANY-redline.png": "/github.io/train-control/static/media/IDAWANY-redline.8c26ca8a.png",
+    "static/media/IDAWANY-switches.png": "/github.io/train-control/static/media/IDAWANY-switches.049c4d96.png",
+    "static/media/IDAWANY-yellowline.png": "/github.io/train-control/static/media/IDAWANY-yellowline.90eb524b.png",
+    "static/media/switch.e1411ea7.svg": "/github.io/train-control/static/media/switch.e1411ea7.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.92db74bc.js",
+    "static/js/2.3096a0dd.chunk.js",
+    "static/css/main.baabd080.chunk.css",
+    "static/js/main.9f41e035.chunk.js"
+  ]
+}
