@@ -3,6 +3,8 @@ from flask_cors import CORS
 from flask import Flask, render_template, url_for, json, jsonify, request, abort
 from adafruit_servokit import ServoKit
 
+# TODO: enable https
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 CORS(app)
