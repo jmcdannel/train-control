@@ -56,4 +56,4 @@ def update_turnout(turnout_id):
   return jsonify(turnout[0])
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(ssl_context='adhoc', host='0.0.0.0')
