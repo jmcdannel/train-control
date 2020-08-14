@@ -1,3 +1,11 @@
+
+## Roadmap
+[ ] Configure turnout locations on Conductor view
+[ ] Settings configuration: endpoint, reset turnouts.json
+[ ] Conductor turnout buttons
+[ ] Power district map
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
