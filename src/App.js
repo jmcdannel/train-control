@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -33,8 +34,12 @@ function App() {
   useEffect(() => {
     const fetchTurnouts = async () => {
       setTurnouts({...turnouts, status: 'pending' });
-      const response = await api.get();
-      setTurnouts({...turnouts, data: response, status: 'done' });
+      try {
+        const response = await api.get();
+        setTurnouts({...turnouts, data: response, status: 'done' });
+      } catch(err) {
+        setTurnouts({...turnouts, status: 'error' });
+      }
     }
     if (turnouts.data === null && turnouts.status === 'idle') {
       fetchTurnouts();
@@ -89,29 +94,39 @@ function App() {
           </Toolbar>
         </AppBar>
         </Box>
+        
         <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
-          <Container maxWidth="lg">
-            {page === 'Turnouts' && (
-              <Grid container spacing={2}>
-                {turnoutList && turnoutList.map(turnout => (
-                  <Grid key={turnout.id} item sm={6} xs={12}>
-                    <Turnout 
-                      config={turnout} 
-                      linked={getLinkedTurnout(turnout)}
-                      onChange={handleChange} />
-                  </Grid>
-                ))}
-              </Grid>
+            {turnouts.status  === 'done' && (
+                <Container maxWidth="lg">
+                    {page === 'Turnouts' && (
+                    <Grid container spacing={2}>
+                        {turnoutList && turnoutList.map(turnout => (
+                        <Grid key={turnout.id} item sm={6} xs={12}>
+                            <Turnout 
+                            config={turnout} 
+                            linked={getLinkedTurnout(turnout)}
+                            onChange={handleChange} />
+                        </Grid>
+                        ))}
+                    </Grid>
+                    )}
+                    {page === 'Layout' && (<Layout turnouts={turnoutList} />)}
+                    {page === 'Settings' && (
+                    <Grid container spacing={1}>
+                        <p>Settings</p>
+                    </Grid>
+                    )}
+                    {page === 'Conductor' && (<MapControl turnouts={turnoutList} onChange={handleChange} />)}
+                </Container>
             )}
-            {page === 'Layout' && (<Layout turnouts={turnoutList} />)}
-            {page === 'Settings' && (
-              <Grid container spacing={1}>
-                <p>Settings</p>
-              </Grid>
+            {turnouts.status  === 'idle' || turnouts.status === 'pending' && (
+                <CircularProgress color="primary" className="spinner" />
             )}
-            {page === 'Conductor' && (<MapControl turnouts={turnoutList} onChange={handleChange} />)}
-          </Container>
+            {turnouts.status  === 'error' && (
+                <h1>Error: could not load turnouts. Check settings and make sure the API host is running.</h1>
+            )}
         </Box>
+        
         <Box mt={1}>
           <BottomNavigation
             value={page}

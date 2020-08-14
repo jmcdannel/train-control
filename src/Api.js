@@ -57,7 +57,7 @@ export const linesConfig = [
 ];
 
 // export const apiHost = 'http://0.0.0.0:5000';
-export const apiHost = 'http://traincontrol:5000';
+export const apiHost = 'https://traincontrol:5000';
 
 
 export const api = {
