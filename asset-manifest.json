@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/train-control/static/css/main.baabd080.chunk.css",
-    "main.js": "/train-control/static/js/main.7c94ea6e.chunk.js",
-    "main.js.map": "/train-control/static/js/main.7c94ea6e.chunk.js.map",
+    "main.css": "/train-control/static/css/main.7c526732.chunk.css",
+    "main.js": "/train-control/static/js/main.66b54e89.chunk.js",
+    "main.js.map": "/train-control/static/js/main.66b54e89.chunk.js.map",
     "runtime-main.js": "/train-control/static/js/runtime-main.7dcd6d51.js",
     "runtime-main.js.map": "/train-control/static/js/runtime-main.7dcd6d51.js.map",
-    "static/js/2.91e57af9.chunk.js": "/train-control/static/js/2.91e57af9.chunk.js",
-    "static/js/2.91e57af9.chunk.js.map": "/train-control/static/js/2.91e57af9.chunk.js.map",
+    "static/js/2.7c28a47a.chunk.js": "/train-control/static/js/2.7c28a47a.chunk.js",
+    "static/js/2.7c28a47a.chunk.js.map": "/train-control/static/js/2.7c28a47a.chunk.js.map",
     "index.html": "/train-control/index.html",
-    "precache-manifest.49f750cef8a9c13f970aa5b6247f7d1a.js": "/train-control/precache-manifest.49f750cef8a9c13f970aa5b6247f7d1a.js",
+    "precache-manifest.f3071fb945003f65d220fd0bfe5a04c1.js": "/train-control/precache-manifest.f3071fb945003f65d220fd0bfe5a04c1.js",
     "service-worker.js": "/train-control/service-worker.js",
-    "static/css/main.baabd080.chunk.css.map": "/train-control/static/css/main.baabd080.chunk.css.map",
-    "static/js/2.91e57af9.chunk.js.LICENSE.txt": "/train-control/static/js/2.91e57af9.chunk.js.LICENSE.txt",
+    "static/css/main.7c526732.chunk.css.map": "/train-control/static/css/main.7c526732.chunk.css.map",
+    "static/js/2.7c28a47a.chunk.js.LICENSE.txt": "/train-control/static/js/2.7c28a47a.chunk.js.LICENSE.txt",
     "static/media/IDAWANY-base.png": "/train-control/static/media/IDAWANY-base.9c3d904a.png",
     "static/media/IDAWANY-blueline.png": "/train-control/static/media/IDAWANY-blueline.e0160c42.png",
     "static/media/IDAWANY-brownline.png": "/train-control/static/media/IDAWANY-brownline.9b239898.png",
@@ -26,8 +26,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.7dcd6d51.js",
-    "static/js/2.91e57af9.chunk.js",
-    "static/css/main.baabd080.chunk.css",
-    "static/js/main.7c94ea6e.chunk.js"
+    "static/js/2.7c28a47a.chunk.js",
+    "static/css/main.7c526732.chunk.css",
+    "static/js/main.66b54e89.chunk.js"
   ]
 }
