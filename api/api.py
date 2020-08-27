@@ -75,5 +75,5 @@ def update_turnout(turnout_id):
   return jsonify(turnout)
 
 if __name__ == '__main__':
-    context = ('server.crt', 'server.key')#certificate and key files
+    context = ('cert.crt', 'cert.key')#certificate and key files
     app.run(host='0.0.0.0', ssl_context=context)
