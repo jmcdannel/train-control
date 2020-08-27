@@ -8,16 +8,18 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import CallSplit from '@material-ui/icons/CallSplit';
 import MapIcon from '@material-ui/icons/Map';
 import SettingsIcon from '@material-ui/icons/Settings';
 import TrainIcon from '@material-ui/icons/Train';
+import HttpsIcon from '@material-ui/icons/Https';
 import Turnout from './Turnouts/Tunrout';
 import Layout from './Layout/Layout';
 import MapControl from './Layout/MapControl';
-import api from './Api';
+import api, { apiHost } from './Api';
 // THEME
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
@@ -50,6 +52,10 @@ function App() {
 
   const navigate = (event, newValue) => {
     setPage(newValue);
+  }
+
+  const handleSSLAuth = (event) => {
+      window.open(apiHost);
   }
 
   const handleChange = async data => {
@@ -88,9 +94,16 @@ function App() {
       <Box  >
         <AppBar position="sticky">
           <Toolbar>
-            <Typography variant="h6">
+            <Typography variant="h6" className="title">
               {page}
             </Typography>
+            <IconButton
+                onClick={handleSSLAuth}
+                color="inherit"
+              >
+                <HttpsIcon />
+              </IconButton>
+            
           </Toolbar>
         </AppBar>
         </Box>
