@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CallSplit from '@material-ui/icons/CallSplit';
+import { ReactComponent as TurnoutMaskLeft4Diverge } from '../Shared/Images/TurnoutMasks/leff-4-diverge-for export.svg';
+
 import api from '../Api';
 
 import './Switch.scss';
@@ -9,7 +11,7 @@ import './Switch.scss';
 function TurnoutSwitch(props) {
 
   const { config, linked: linkedTurnout, onChange  } = props;
-  const { relay, crossover, reverse, name, id, label, line, abbr, current, straight, divergent, 'default': defaultOrientation } = config;
+  const { relay, crossover, reverse, name, turnoutId, label, line, abbr, current, straight, divergent, 'default': defaultOrientation } = config;
 
   const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,11 +25,11 @@ function TurnoutSwitch(props) {
       return;
     }
     try {
-      const data = [{ id, current: isDivergent ? straight : divergent }];
+      const data = [{ id: turnoutId, current: isDivergent ? straight : divergent }];
       setIsLoading(true);
       if (linkedTurnout) {
         data.push({
-          id: linkedTurnout.id,
+          id: linkedTurnout.turnoutId,
           current: isDivergent 
             ? linkedTurnout.straight 
             : linkedTurnout.divergent
@@ -44,20 +46,18 @@ function TurnoutSwitch(props) {
 
 
   return (
-      <div className={`switch switch-${id} box no-cursor`}>
+      <div className={`switch switch-${turnoutId} box no-cursor`}>
         <Button
           variant="outlined"
           color="secondary"
           size="small"
           startIcon={<CallSplit />}
           onClick={handleClick}
-          className="cursor"
+          className="cursor switch-button"
         >
           <strong>{label}</strong>
         </Button>
-  
-        <span className={`straight-indicator straight-indicator--${isDivergent ? 'off' : 'on'}`}></span>
-        <span className={`divergent-indicator divergent-indicator--${isDivergent ? 'on' : 'off'}`}></span>
+        <TurnoutMaskLeft4Diverge className={`diverge-mask diverge-mask--${isDivergent ? 'off' : 'on'}`} />
       </div>
   );
 }

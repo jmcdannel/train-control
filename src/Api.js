@@ -8,12 +8,19 @@ import purpleLineImg from './Layout/images/IDAWANY-purpleline.png';
 import redLineImg from './Layout/images/IDAWANY-redline.png';
 import yellowLineImg from './Layout/images/IDAWANY-yellowline.png';
 
+var emulatedTurnoutsData = require('./Shared/Utils/Emulator/turnouts.emulator.json');
+
 async function createTurnout() {
   throw new Error('Not implemented');
 }
 
 async function readTurnout(id = null) {
   try {
+    if (api.emulator) {
+      return id !== null
+        ? emulatedTurnoutsData.find(turnout => turnout.id === id)
+        : emulatedTurnoutsData;
+    }
     const response = id !== null
       ? await fetch(`${apiHost}/turnouts/${id}`)
       : await fetch(`${apiHost}/turnouts`);
@@ -26,6 +33,11 @@ async function readTurnout(id = null) {
 
 async function updateTurnout(data) {
   try {
+    if (api.emulator) {
+      let turnout = emulatedTurnoutsData.find(t => t.id === data.id);
+      turnout = {...turnout, data};
+      return {...emulatedTurnoutsData};
+    }
     const response = await fetch(`${apiHost}/turnouts/${data.id}`, {
       method: 'PUT',
       cache: 'no-cache',

@@ -24,24 +24,28 @@ import IconButton from '@material-ui/core/IconButton';
 import LinkIcon from '@material-ui/icons/Link';
 import LinkOffIcon from '@material-ui/icons/LinkOff';
 import Avatar from '@material-ui/core/Avatar';
+import WifiTetheringIcon from '@material-ui/icons/WifiTethering';
+import PortableWifiOffIcon from '@material-ui/icons/PortableWifiOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import Settings from './Settings';
 import { api, linesConfig } from '../Api';
+import { ReactComponent as TurnoutMaskLeft4Diverge } from './images/left-4-diverge.svg';
 import './Turnout.scss';
 
 export const Turnout = props => {
 
   const { config, linked: linkedTurnout, onChange  } = props;
 
+  const [isCompact, setIsCompact] = useState(true);
   const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [isPristine, setIsPristine] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isLinked, setIsLinked] = useState(true);
-  const { current, relay, crossover, reverse, name, id, line, label, abbr, straight, divergent, 'default': defaultOrientation } = config;
+  const { current, relay, crossover, reverse, name, turnoutId, line, label, abbr, straight, divergent, 'default': defaultOrientation } = config;
 
   useEffect(() => {
     setIsDivergent((current === divergent));
@@ -52,13 +56,13 @@ export const Turnout = props => {
       return;
     }
     try {
-      const data = [{ id, current: isDivergent ? straight : divergent }];
+      const data = [{ id: turnoutId, current: isDivergent ? straight : divergent }];
       setIsLoading(true);
       setIsPristine(false);
 
       if (linkedTurnout && isLinked) {
         data.push({
-          id: linkedTurnout.id,
+          id: linkedTurnout.turnoutId,
           current: isDivergent 
             ? linkedTurnout.straight 
             : linkedTurnout.divergent
@@ -77,7 +81,7 @@ export const Turnout = props => {
 
 
   const handleReset = async e => {
-    const data = { id, current: defaultOrientation === 'straight' ? straight : divergent };
+    const data = { id: turnoutId, current: defaultOrientation === 'straight' ? straight : divergent };
     await onChange([data]);
   }
 
@@ -97,8 +101,8 @@ export const Turnout = props => {
   }
 
 	return (
-    <Card className="turnout">
-      <CardActionArea className={`media ${isLoading ? 'loading' : ''}`} onClick={handleToggle}>
+    <Card className="turnout turnout--compact">
+      <CardActionArea className={`turnout__state ${isLoading ? 'loading' : ''}`} onClick={handleToggle}>
         <CardMedia
           component="div"
           height="100%"
@@ -111,44 +115,49 @@ export const Turnout = props => {
           {isLoading && (<CircularProgress color="primary" className="spinner" />)}
         </CardMedia>
       </CardActionArea>
-      <CardContent className="information">
-        <Box>
-            <Chip
-              label={`${label}`}
-              icon={<CallSplit />}
-              variant="outlined"
-              className="chip"
-              size="small"
-              style={{ backgroundColor: linesConfig.find(l => l.name === line).color }}
-            />
+      <CardContent className="turnout__id">
+          <Chip
+            label={`${label}`}
+            icon={<CallSplit />}
+            variant="outlined"
+            className="chip"
+            size="large"
+            style={{ backgroundColor: linesConfig.find(l => l.name === line).color }}
+          />
+          <Box>
             {isLoading || isPristine 
-              ? <LinkOffIcon style={{color: 'gray'}} /> 
-              :  <LinkIcon style={{color: 'green'}} />}
+              ? <PortableWifiOffIcon style={{color: 'gray'}} /> 
+              :  <WifiTetheringIcon style={{color: 'green'}} />}
             {relay && (
               <PowerIcon style={{ color: 'green'}}
-            />
+              />
             )}
-          </Box>
-          <Box my={1}>
-            <Typography component="h6" variant="h6" gutterBottom>
-              {name} <strong style={{whiteSpace:"nowrap"}}>({abbr})</strong>
-            </Typography>
-            <Typography component="small" gutterBottom>
-              Angle: {current}
-            </Typography>
-            {crossover && (<Box><FormControlLabel
-              control={<Switch checked={isLinked} onChange={handleLinkedChange} name="islinked" />}
-              label={`Link crossover: ${linkedTurnout.label}`}
-            /></Box>)}
-            
-            {reverse && (<Box><FormControlLabel
-              control={<Switch checked={isLinked} onChange={handleLinkedChange} name="islinked" />}
-              label={`Link reverse loop switch: ${linkedTurnout.label}`}
-            /></Box>)}
-          </Box>
+        </Box>
+        <Box my={1} class="turnout__desc compact-hidden">
+          <Typography component="h6" variant="h6" gutterBottom>
+            {name} <strong style={{whiteSpace:"nowrap"}}>({abbr})</strong>
+          </Typography>
+          <Typography component="small" gutterBottom>
+            Angle: {current}
+          </Typography>
+          {crossover && (<Box><FormControlLabel
+            control={<Switch checked={isLinked} onChange={handleLinkedChange} name="islinked" />}
+            label={`${isCompact ? '' : 'Link crossover: ${linkedTurnout.label}'}`}
+          />
+          {isCompact && isLinked &&  (<LinkIcon style={{color: 'green'}} />)}
+          {isCompact && !isLinked &&  (<LinkOffIcon style={{color: 'gray'}} />)}
+          {isCompact && (<span>{linkedTurnout.label}</span>)}
+          </Box>)}
+          
+          {reverse && (<Box><FormControlLabel
+            control={<Switch checked={isLinked} onChange={handleLinkedChange} name="islinked" />}
+            label={`Link reverse loop switch: ${linkedTurnout.label}`}
+          /></Box>)}
+        </Box>
       </CardContent>
-      <CardActions className="actions">
+      <CardActions className="tournout__actions">
         <Button 
+          className="compact-hidden"
           variant="contained" 
           color="primary" 
           onClick={handleToggle}

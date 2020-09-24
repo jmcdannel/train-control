@@ -11,6 +11,35 @@ $off: rgba(0,0,0,.4);
   width: 100%;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  &.turnout--compact {
+
+    flex-direction: column;
+    align-items: center;
+
+    .turnout__state {
+      order: 1;
+      display: flex;
+      background-color: #222;
+      padding: .5rem 2rem;
+    }
+
+    .turnout__id {
+      order: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+    }
+
+    .tournout__actions {
+      order: 2;
+      align-self: flex-end;
+    }
+  }
+
+
 }
 
 .MuiButtonBase-root.media {
@@ -75,6 +104,13 @@ $off: rgba(0,0,0,.4);
 .MuiTextField-root {
   margin: 1rem;
 }
+.turnout--compact {
+
+  .compact-hidden {
+    display: none;
+  }
+}
+
 
 @keyframes pulse {
   0% { transform: scale(0.95); opacity: 0.3; }

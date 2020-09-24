@@ -49,7 +49,7 @@ function MapControl(props) {
     return `layout-img ${classes.join(' ')}`;
   }
 
-  const getTurnoutById = id => turnouts.find(t => id === t.id);
+  const getTurnoutById = id => turnouts.find(t => id === t.turnoutId);
 
   const getLinkedTurnout = turnout => 
     turnout.crossover
@@ -108,7 +108,7 @@ function MapControl(props) {
                 {showTurnouts && (
                   <div className="switch-container">
                     {turnouts && turnouts.map(turnout => (
-                      <TurnoutSwitch key={turnout.id} className="layout-switch" config={turnout} linked={getLinkedTurnout(turnout)} onChange={onChange} />
+                      <TurnoutSwitch key={turnout.turnoutId} className="layout-switch" config={turnout} linked={getLinkedTurnout(turnout)} onChange={onChange} />
                     ))}
                   </div>
                 )}

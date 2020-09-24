@@ -12,6 +12,19 @@
   //   border: 1px solid red;
   //   color: white;
   // }
+
+  .switch-button {
+    padding: 3px;
+    min-width: 24px;
+
+    .MuiButton-label {
+      display: flex;
+      flex-direction: column;
+      .MuiButton-iconSizeSmall {
+        margin: 0;
+      }
+    }
+  }
 }
 
 
@@ -89,13 +102,12 @@
   top: 286px;
   left: 635px;
   display: block;
-  .straight-indicator {
-    top: 44px;
-    left: -14px;
-  }
-  .divergent-indicator {
-    top: 37px;
-    left: -6px;
+  .diverge-mask {
+    transform: rotate(90deg);
+    width: 78px;
+    position: absolute;
+    left: -48px;
+    top: 5px;
   }
 }
 

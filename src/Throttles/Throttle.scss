@@ -1,0 +1,114 @@
+$sliderWidth: 3rem;
+
+.throttle {
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+
+  &__content {
+    flex: 1;
+    &__grid {
+      height: 100%;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 100%;
+
+    &__slider {
+      flex: 1;
+      padding: 1rem 1rem 3rem;
+    }
+
+    &__speed {
+      width: 100%;
+    }
+  }
+
+  &__slider {
+    position: relative;
+    height: 100%;
+
+    &.MuiSlider-root.MuiSlider-vertical {
+      width: $sliderWidth;
+    }
+
+    &.MuiSlider-vertical {
+
+      .MuiSlider-rail {
+        width: $sliderWidth;
+        box-shadow: inset 2px 2px 0px 0px #000000;;
+        box-shadow: inset 2px 2px 0px 0px #000000;
+        border-radius: 1rem;
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+        
+      }
+
+      .MuiSlider-track {
+        width: $sliderWidth;
+        box-shadow: inset 2px 2px 0px 0px #000000;
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+      }
+
+      .MuiSlider-mark {
+        width: calc(3rem - 4px);
+        transform: translate(2px, 15px);
+      }
+
+      .MuiSlider-thumb {
+        left: 50%;
+        width: $sliderWidth*2;
+        height: $sliderWidth/2;
+        transform: translate(-50%);
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 2px;
+        border-radius: 1rem;
+        background-color: #222;
+        box-shadow: inset -2px 2px 0px 0px #000000;
+        background-image: linear-gradient(to bottom, #222, #333);
+
+        // background: #A7A7A7;
+        // background-image: linear-gradient(to bottom, #A7A7A7, #5E5E5E);
+        // border-radius: 20px;
+        // color: #FFFFFF;
+        // font-family: Open Sans;
+        // font-size: 0px;
+        // font-weight: 100;
+        // padding: 35px;
+        // box-shadow: inset -1px 1px 0px 0px #000000;
+        // border: solid #000000 1px;
+        // text-decoration: none;
+        // display: inline-block;
+        cursor: pointer;
+        text-align: center;
+        &:hover {
+          // border: solid #000000 1px;
+          // background: #A5D626;
+          // background-image: linear-gradient(to bottom, #A5D626, #8FBA1F);
+          // border-radius: 20px;
+          // text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &__speed {
+    padding: 1rem;
+    width: 100%;
+    border: 1px solid yellowgreen;
+    border-radius: .25rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+}
