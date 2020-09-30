@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import HttpsIcon from '@material-ui/icons/Https';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import Typography from '@material-ui/core/Typography';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,19 +25,41 @@ export const Header = props => {
     setMenu(null);
   };
 
+  const handleTurnoutsCompactClick = () => {
+    handleMenuClick({ 
+      menu: '/turnouts',
+      state: { view: 'compact' }
+    });
+    handleClose();
+  }
+
+  const handleTurnoutsComfyClick = () => {
+    handleMenuClick({ 
+      menu: '/turnouts',
+      state: { view: 'comfy' }
+    });
+    handleClose();
+  }
+
   return (
     <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h6" className="title">
           {page}
         </Typography>
+          <IconButton
+            color="secondary" >
+            <PowerSettingsNewIcon fontSize="large" />
+          </IconButton>
         <IconButton
             onClick={handleSSLAuth}
             color="inherit"
+            variant="outlined"
           >
             <HttpsIcon />
           </IconButton>
           <IconButton 
+            variant="outlined"
             aria-label="display more actions" 
             edge="end" 
             color="inherit"
@@ -51,8 +74,8 @@ export const Header = props => {
         open={menu === '/turnouts'}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleMenuClick}>Compact</MenuItem>
-        <MenuItem onClick={handleMenuClick}>Compfy</MenuItem>
+        <MenuItem onClick={handleTurnoutsCompactClick}>Compact</MenuItem>
+        <MenuItem onClick={handleTurnoutsComfyClick}>Comfy</MenuItem>
       </Menu>
     </AppBar>
   );

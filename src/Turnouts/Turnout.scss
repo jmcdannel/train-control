@@ -6,40 +6,106 @@ $off: rgba(0,0,0,.4);
   margin: 0rem 0.5rem 0.5rem 0;
 }
 
-.turnout {
+.turnouts {
   display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 
-  &.turnout--compact {
 
-    flex-direction: column;
-    align-items: center;
 
-    .turnout__state {
-      order: 1;
-      display: flex;
-      background-color: #222;
-      padding: .5rem 2rem;
-    }
+  .turnout {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    .turnout__id {
-      order: 0;
+    &__header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       width: 100%;
-
+      align-items: center;
     }
 
-    .tournout__actions {
-      order: 2;
-      align-self: flex-end;
+    &__desc {
+      padding-left: 1rem;
+    }
+
+    &__link {
+      padding: 0.5rem 1.5rem;
+      background-color: rgba(0,0,0,.5);
+      border-radius: 0.5rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+  }
+
+  &.turnouts--compact {
+
+    .turnout {
+
+      flex-direction: column;
+      align-items: center;
+
+
+      .turnout__state {
+        order: 1;
+        display: flex;
+        background-color: #222;
+        padding: .5rem 2rem;
+      }
+
+      .turnout__id {
+        order: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+      }
+
+      .tournout__actions {
+        order: 2;
+        align-self: flex-end;
+      }
     }
   }
 
+  &.turnouts--comfy {
+    .turnout {
+      flex-direction: column;
 
+      height: 100%;
+      align-items: flex-start;
+
+      &__container {
+        flex: 1 0 33%;
+      }
+
+      .turnout__state {
+        display: flex;
+        padding: .5rem 2rem;
+        width: 90px;
+        flex: 0 1 90px;
+        
+      }
+
+      .turnout__id {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex: 1;
+
+      }
+
+      .tournout__actions {
+        align-self: flex-end;
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
 }
 
 .MuiButtonBase-root.media {

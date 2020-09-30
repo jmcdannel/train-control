@@ -7,13 +7,15 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
+import ReportIcon from '@material-ui/icons/Report';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import ThrottleSlider from './ThrottleSlider';
 import ThrottleSpeed from './ThrottleSpeed';
 import Functions from './Functions';
@@ -45,7 +47,6 @@ export const Throttle = props => {
           </IconButton>
         }
         title="1234"
-        subheader="September 14, 2016"
       />
       <CardContent className="throttle__content">
         <Grid container spacing={2}  className="throttle__content__grid">
@@ -63,7 +64,7 @@ export const Throttle = props => {
                 </div>
               </div>
           </Grid>
-          <Grid item xs={12} sm={6} className="throttle__functinos">
+          <Grid item xs={12} sm={6} className="throttle__functions">
             <Functions />
           </Grid>
         </Grid>
@@ -74,6 +75,11 @@ export const Throttle = props => {
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
+        </IconButton>
+
+
+        <IconButton aria-label="share" color="secondary" className="throttle__actions__primary">
+          <ReportIcon fontSize="large" />
         </IconButton>
       </CardActions>
     </Card>

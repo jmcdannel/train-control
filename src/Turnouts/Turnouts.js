@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
+import { MenuContext } from '../Shared/Context/MenuContext';
 import Turnout from './Turnout';
 
 export const Turnouts = props => {
 
   const { turnoutList, onChange } = props;
+
+  const menu = useContext(MenuContext);
+  const isCompact = menu
+    && menu['/turnouts'] 
+    && menu['/turnouts'].view === 'compact' ? true : false;
 
   const getTurnoutById = id => turnoutList.find(t => id === t.turnoutId);
 
@@ -15,11 +21,13 @@ export const Turnouts = props => {
         ? getTurnoutById(turnout.reverse)
         : null;
 
+        console.log('menu', menu, isCompact);
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className={`turnouts ${isCompact ? 'turnouts--compact' : 'turnouts--comfy'}`}>
       {turnoutList && turnoutList.map(turnout => (
-      <Grid key={turnout.turnoutId} item>
+      <Grid key={turnout.turnoutId} item className="turnout__container">
           <Turnout 
+            compact={isCompact}
             config={turnout} 
             linked={getLinkedTurnout(turnout)}
             onChange={onChange} />

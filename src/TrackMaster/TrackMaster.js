@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Switch,
   Route,
@@ -19,8 +19,10 @@ import Turnouts from '../Turnouts/Turnouts';
 import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
+import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
 import api, { apiHost } from '../Api';
 import './TrackMaster.scss';
+
 
 function TrackMaster(props) {
 
@@ -34,6 +36,7 @@ function TrackMaster(props) {
 
   const [page, setPage] = useState(location && location.pathname);
   // const [page, setPage] = useState('Layout');
+  const [menu, setMenu] = useState(menuConfig);
 
   const [turnouts, setTurnouts] = useState({ data: null, status: 'idle' });
   const [turnoutList, setTurnoutList] = useState([]);
@@ -104,21 +107,25 @@ function TrackMaster(props) {
     setTurnouts({...turnouts, data: null, status: 'idle'});
   }
 
-  const handleMenuClick = event => {
-    console.log(event.currentTarget);
+  const handleMenuClick = menuChange => {
+    console.log(menuChange);
+    const m = {...menu};
+    m[menuChange.menu] = {...m[menuChange.menu], ...menuChange.state};
+    console.log(m);
+    setMenu(m);
   }
 
 
         console.log('turnoutList', turnoutList);
   return (
-    <Box display="flex" flexDirection="column" height="100%" width="100%">
-      <Box  >
-        <Header page={page} onSSLAuth={handleSSLAuth} handleMenuClick={handleMenuClick} />
-      </Box>
-        
+    <MenuContext.Provider value={menu}>
+      <Box display="flex" flexDirection="column" height="100%" width="100%">
+        <Box  >
+          <Header page={page} onSSLAuth={handleSSLAuth} handleMenuClick={handleMenuClick} />
+        </Box>
         <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
           {turnouts.status  === 'done' && (
-            <Container maxWidth="lg" className="trackmaster__content-container">
+            <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
               <Switch>
                 <Route path="/layout">
                   <Layout turnouts={turnoutList} />
@@ -157,6 +164,7 @@ function TrackMaster(props) {
           <Footer page={page} onNavigate={handleNavigate} />
         </Box>
       </Box>
+      </MenuContext.Provider>
   );
 }
 

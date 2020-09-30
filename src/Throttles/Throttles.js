@@ -8,7 +8,26 @@ export const Throttles = props => {
   }
 
   return (
-    <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+    <div className="throttles">
+      <div className="throttle__container">
+        <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+      </div>
+      <div className="throttle__container">
+        <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+      </div>
+      <div className="throttle__container">
+        <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+      </div>
+      <div className="throttle__container">
+        <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+      </div>
+      <div className="throttle__container">
+        <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+      </div>
+      <div className="throttle__container">
+        <Throttle engine="" initialState="" onChange={handleThrottleChange} />
+      </div>
+    </div>
   );
 
 }
