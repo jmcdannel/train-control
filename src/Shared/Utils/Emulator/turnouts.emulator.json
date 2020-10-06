@@ -52,7 +52,7 @@
   {
      "abbr":"R.4 => RevY:S",
      "label": "R4",
-     "current":90,
+     "current":120,
      "default":"straight",
      "divergent":120,
      "id":104,
@@ -64,7 +64,7 @@
   {
      "abbr":"R.5 => RevY:N",
      "label": "R5",
-     "current":90,
+     "current":60,
      "default":"straight",
      "divergent":120,
      "id":105,

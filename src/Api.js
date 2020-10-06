@@ -32,11 +32,14 @@ async function readTurnout(id = null) {
 }
 
 async function updateTurnout(data) {
+  debugger;
   try {
     if (api.emulator) {
-      let turnout = emulatedTurnoutsData.find(t => t.id === data.id);
-      turnout = {...turnout, data};
-      return {...emulatedTurnoutsData};
+      return emulatedTurnoutsData.map(turnout => {
+        return (turnout.id === data.turnoutId) 
+          ? Object.assign({}, turnout, data)
+          : turnout;
+      });
     }
     const response = await fetch(`${apiHost}/turnouts/${data.id}`, {
       method: 'PUT',

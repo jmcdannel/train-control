@@ -103,11 +103,30 @@
   left: 635px;
   display: block;
   .diverge-mask {
-    transform: rotate(90deg);
+    transform: rotate(90deg) scaleY(-1);
     width: 78px;
     position: absolute;
     left: -48px;
-    top: 5px;
+    top: 0px;
+    &--on {
+      visibility: visible;
+    }
+    &--off {
+      visibility: hidden;
+    }
+  }
+  .straight-mask {
+    transform: rotate(90deg) scaleY(-1);
+    width: 78px;
+    position: absolute;
+    left: -39px;
+    top: -6px;
+    &--on {
+      visibility: visible;
+    }
+    &--off {
+      visibility: hidden;
+    }
   }
 }
 

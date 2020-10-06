@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CallSplit from '@material-ui/icons/CallSplit';
-import { ReactComponent as TurnoutMaskLeft4Diverge } from '../Shared/Images/TurnoutMasks/leff-4-diverge-for export.svg';
-import { ReactComponent as TurnoutMask4Straight } from '../Shared/Images/TurnoutMasks/4-straight.svg';
+import { ReactComponent as Turnout4Diverge } from '../Shared/Images/TurnoutMasks/4-divergent.svg';
+import { ReactComponent as Turnout4Straight } from '../Shared/Images/TurnoutMasks/4-straight.svg';
 
 import api from '../Api';
 
@@ -26,11 +26,11 @@ function TurnoutSwitch(props) {
       return;
     }
     try {
-      const data = [{ id: turnoutId, current: isDivergent ? straight : divergent }];
+      const data = [{ turnoutId, current: isDivergent ? straight : divergent }];
       setIsLoading(true);
-      if (linkedTurnout) {
+      if (false && linkedTurnout) {
         data.push({
-          id: linkedTurnout.turnoutId,
+          turnoutId: linkedTurnout.turnoutId,
           current: isDivergent 
             ? linkedTurnout.straight 
             : linkedTurnout.divergent
@@ -58,8 +58,8 @@ function TurnoutSwitch(props) {
         >
           <strong>{label}</strong>
         </Button>
-        <TurnoutMaskLeft4Diverge className={`diverge-mask diverge-mask--${isDivergent ? 'off' : 'on'}`} />
-        <TurnoutMask4Straight className={`straight-mask straight-mask--${isDivergent ? 'on' : 'off'}`} />
+        <Turnout4Diverge className={`diverge-mask diverge-mask--${isDivergent ? 'off' : 'on'}`} />
+        <Turnout4Straight className={`straight-mask straight-mask--${isDivergent ? 'on' : 'off'}`} />
       </div>
   );
 }

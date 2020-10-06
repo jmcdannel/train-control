@@ -58,13 +58,13 @@ export const Turnout = props => {
       return;
     }
     try {
-      const data = [{ id: turnoutId, current: isDivergent ? straight : divergent }];
+      const data = [{ turnoutId, current: isDivergent ? straight : divergent }];
       setIsLoading(true);
       setIsPristine(false);
 
       if (linkedTurnout && isLinked) {
         data.push({
-          id: linkedTurnout.turnoutId,
+          turnoutId: linkedTurnout.turnoutId,
           current: isDivergent 
             ? linkedTurnout.straight 
             : linkedTurnout.divergent
@@ -83,7 +83,7 @@ export const Turnout = props => {
 
 
   const handleReset = async e => {
-    const data = { id: turnoutId, current: defaultOrientation === 'straight' ? straight : divergent };
+    const data = { turnoutId, current: defaultOrientation === 'straight' ? straight : divergent };
     await onChange([data]);
   }
 

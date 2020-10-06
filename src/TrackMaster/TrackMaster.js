@@ -79,11 +79,12 @@ function TrackMaster(props) {
   }
 
   const handleTurnoutChange = async data => {
+    debugger;
     async function getResults() {
       let results = [];
       for (let item of data) {
           let r = await api.put(item);
-          results.push(r);
+          results = r;
       }
       return results;
     } 
