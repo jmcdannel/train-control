@@ -14,25 +14,24 @@ async function createTurnout() {
   throw new Error('Not implemented');
 }
 
-async function readTurnout(id = null) {
+async function readTurnout(turnoutId = null) {
   try {
     if (api.emulator) {
-      return id !== null
-        ? emulatedTurnoutsData.find(turnout => turnout.id === id)
+      return turnoutId !== null
+        ? emulatedTurnoutsData.find(turnout => turnout.id === turnoutId)
         : emulatedTurnoutsData;
     }
-    const response = id !== null
-      ? await fetch(`${apiHost}/turnouts/${id}`)
+    const response = turnoutId !== null
+      ? await fetch(`${apiHost}/turnouts/${turnoutId}`)
       : await fetch(`${apiHost}/turnouts`);
     return response.json();
   } catch (err) {
     console.error(err);
-    throw new Error('Unable to read Turnout(s)', id, `id=${id}`);
+    throw new Error('Unable to read Turnout(s)', turnoutId, `turnoutId=${turnoutId}`);
   }
 }
 
 async function updateTurnout(data) {
-  debugger;
   try {
     if (api.emulator) {
       return emulatedTurnoutsData.map(turnout => {
@@ -41,9 +40,10 @@ async function updateTurnout(data) {
           : turnout;
       });
     }
-    const response = await fetch(`${apiHost}/turnouts/${data.id}`, {
+    const response = await fetch(`${apiHost}/turnouts/${data.turnoutId}`, {
       method: 'PUT',
       cache: 'no-cache',
+      crossDomain: true,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -71,8 +71,10 @@ export const linesConfig = [
   { name: 'Purple', color: Colors.purple[500], img: purpleLineImg }
 ];
 
+export const apiHost = 'http://192.168.86.22:5000';
+// export const apiHost = 'http://localhost:5000';
 // export const apiHost = 'http://0.0.0.0:5000';
-export const apiHost = 'https://traincontrol:5000';
+// export const apiHost = 'https://traincontrol:5000';
 
 
 export const api = {

@@ -35,7 +35,7 @@ const getInverse = degrees => {
 
 export const Settings = props => {
   const { open, config, onClose, onChange } = props;
-  const { id } = config;
+  const { turnoutId } = config;
   const [name, setName] = useState(config.name);
   const [line, setLine] = useState(config.line);
   const [straight, setStraight] = useState(config.straight);
@@ -84,7 +84,7 @@ export const Settings = props => {
       setIsLoading(true);
       setHasError(false);
       await onChange([{
-        id,
+        turnoutId,
         name,
         line,
         straight,
@@ -130,7 +130,7 @@ export const Settings = props => {
     }
   }
   const sendDegrees = async degrees => {
-    return await onChange([{ id, current: parseInt(degrees) }]);
+    return await onChange([{ turnoutId, current: parseInt(degrees) }]);
   }
 
   return (
@@ -150,7 +150,7 @@ export const Settings = props => {
                 label="Switch Num"
                 size="small"
                 disabled
-                value={id}
+                value={turnoutId}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

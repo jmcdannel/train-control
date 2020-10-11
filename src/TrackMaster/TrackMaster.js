@@ -26,7 +26,7 @@ import './TrackMaster.scss';
 
 function TrackMaster(props) {
 
-  api.emulator = true;
+  // api.emulator = true;
   
   let apiEndpoint = '';
   let location = useLocation();
@@ -47,9 +47,7 @@ function TrackMaster(props) {
       try {
         console.log('f');
         const response = await api.get();
-        console.log('response', response);
-        console.log('formatResponse', formatResponse(response));
-        setTurnouts({...turnouts, data: formatResponse(response), status: 'done' });
+        setTurnouts({...turnouts, data: response, status: 'done' });
       } catch(err) {
         setTurnouts({...turnouts, status: 'error' });
       }
@@ -70,21 +68,12 @@ function TrackMaster(props) {
       window.open(apiHost);
   }
 
-  const formatResponse = response => {
-    response.forEach(turnout => {
-      turnout['turnoutId'] = turnout['id'];
-      // delete turnout['id'];
-    });
-    return response;
-  }
-
   const handleTurnoutChange = async data => {
-    debugger;
     async function getResults() {
       let results = [];
       for (let item of data) {
-          let r = await api.put(item);
-          results = r;
+          let turnout = await api.put(item);
+          results.push(turnout);
       }
       return results;
     } 

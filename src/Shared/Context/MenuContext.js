@@ -2,7 +2,7 @@ import React from 'react';
 
 export const menuConfig = {
   '/turnouts': {
-    view: 'comfy',
+    view: 'compact',
     on: false
   }
 }

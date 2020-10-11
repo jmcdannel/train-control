@@ -110,7 +110,7 @@ export const Turnout = props => {
             icon={<CallSplit />}
             variant="outlined"
             className="chip"
-            size="large"
+            size="medium"
             style={{ backgroundColor: linesConfig.find(l => l.name === line).color }}
           />
           <Box>

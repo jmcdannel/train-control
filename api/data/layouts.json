@@ -1,0 +1,21 @@
+{
+  "layouts": [
+    {
+      "id": "idawany",
+      "features": [
+        "/turnouts",
+        "/conductor",
+        "/map"
+      ]
+    },
+    {
+      "id": "cabinn",
+      "features": [
+        "/turnouts",
+        "/conductor",
+        "/throttles",
+        "/map"
+      ]
+    }
+  ]
+}
