@@ -71,7 +71,8 @@ export const linesConfig = [
   { name: 'Purple', color: Colors.purple[500], img: purpleLineImg }
 ];
 
-export const apiHost = 'http://192.168.86.22:5000';
+export const apiHost = 'http://tamarackpi:5000';
+// export const apiHost = 'http://192.168.86.22:5000';
 // export const apiHost = 'http://localhost:5000';
 // export const apiHost = 'http://0.0.0.0:5000';
 // export const apiHost = 'https://traincontrol:5000';

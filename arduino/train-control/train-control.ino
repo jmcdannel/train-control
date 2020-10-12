@@ -12,7 +12,20 @@
 const size_t capacity = 2*JSON_OBJECT_SIZE(2) + JSON_OBJECT_SIZE(3) + 60;
 DynamicJsonDocument doc(capacity);
 
-//Signal signal1(5, 4, 3);
+/* signal pins */
+/* 
+ *  0: Signal 2 Green
+ *  1: Signal 2 Yellow
+ *  2: Signal 2 Red
+ *  3: Signal 1 Green
+ *  4: Signal 1 Yellow
+ *  5: Signal 1 Red
+ *  6: Blue
+ *  7: White
+ */
+
+//Signal signal1(3, 4, 5);
+//Signal signal2(0, 1, 2);
 ServoController servos;
 //Button2 button = Button2(BUTTON_PIN);
 
@@ -22,6 +35,7 @@ void setup() {
   servos.setup();
   Serial.println("Setup");
 //  signal1.setup();
+//  signal2.setup();
 //  button.setPressedHandler(pressed);
 }
 
@@ -30,6 +44,8 @@ void loop() {
   if (Serial.available() > 0) {
     Serial.println("handleInput");
     handleInput();
+//    signal1.next();
+//    signal2.next();
   }
 }
 

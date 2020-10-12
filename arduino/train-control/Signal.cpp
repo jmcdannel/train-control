@@ -1,8 +1,8 @@
 #include "Signal.h"
 
-#define datapin 2
-#define clockpin 3
-#define latchpin 4
+#define datapin 12
+#define clockpin 9
+#define latchpin 11
 
 Signal::Signal(int greenLed, int yellowLed, int redLed) {
   this->greenLed = greenLed;
