@@ -7,7 +7,8 @@ from turnouts import api as tunroutsApi
 
 app = Flask(__name__)
 cors = CORS(app)
-arduino = serial.Serial('/dev/cu.usbmodem146301', 9600)
+# arduino = serial.Serial('/dev/cu.usbmodem146301', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
 # logging.getLogger('flask_cors').level = logging.DEBUG
 
 def write_serial_command(turnout):
@@ -42,7 +43,7 @@ def turnouts():
 def get_turnout(turnout_id):
   return tunroutsApi.get(turnout_id)
 
-@app.route('/turnouts/<int:turnout_id>', methods=['OPTIONS', 'PUT'])
+@app.route('/turnouts/<int:turnout_id>', methods=['PUT'])
 def update_turnout(turnout_id):
   response = tunroutsApi.put(turnout_id)
   write_serial_command(response.get_json())
