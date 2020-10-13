@@ -1,10 +1,7 @@
 import React from 'react';
 
 export const menuConfig = {
-  '/turnouts': {
-    view: 'compact',
-    on: false
-  }
+  view: 'compact'
 }
 
 export const MenuContext = React.createContext(menuConfig);

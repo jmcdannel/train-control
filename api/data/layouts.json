@@ -3,19 +3,19 @@
     {
       "id": "idawany",
       "features": [
-        "/turnouts",
-        "/conductor",
-        "/map"
-      ]
+        "turnouts",
+        "conductor",
+        "map"
+      ],
+      "defaultApiHost": "http://traincontrol:5000"
     },
     {
       "id": "cabinn",
       "features": [
-        "/turnouts",
-        "/conductor",
-        "/throttles",
-        "/map"
-      ]
+        "turnouts",
+        "throttles"
+      ],
+      "defaultApiHost": "http://tamarackpi:5000"
     }
   ]
 }
