@@ -11,7 +11,6 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -20,6 +19,7 @@ import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
 import ApiHost from '../Shared/ApiHost/ApiHost';
+import ApiError from '../Shared/ApiError/ApiError';
 import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
 import api, { getApiHost, setApiHost } from '../Api';
 import './TrackMaster.scss';
@@ -29,14 +29,10 @@ function TrackMaster(props) {
 
   // api.emulator = true;
   
-  let apiEndpoint = '';
   let location = useLocation();
   let history = useHistory();
 
-  console.log('location', location);
-
   const [page, setPage] = useState(location && location.pathname);
-  // const [page, setPage] = useState('Layout');
   const [menu, setMenu] = useState(menuConfig);
   const [apiHostOpen, setApiHostOpen] = useState(false);
 
@@ -87,11 +83,9 @@ function TrackMaster(props) {
       });
       setTurnoutList([...newTurnouts]);
     });
-
   }
 
-  const handleEmulatorClick = event => {
-    console.log('handleEmulatorClick', api.emulator);
+  const handleEmulatorClick = () => {
     if (!api.emulator) {
       api.emulator = true;
       Object.freeze(api);
@@ -100,14 +94,11 @@ function TrackMaster(props) {
   }
 
   const handleMenuClick = menuChange => {
-    console.log(menuChange);
     const m = {...menu, ...menuChange};
-    console.log(m);
     setMenu(m);
   }
 
   const handleApiClick = e => {
-    console.log('handleApiClick');
     setApiHostOpen(true);
   }
 
@@ -115,16 +106,20 @@ function TrackMaster(props) {
     setApiHostOpen(false);
   }
 
-
-        console.log('turnoutList', turnoutList);
   return (
     <MenuContext.Provider value={menu}>
       <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
       <Box display="flex" flexDirection="column" height="100%" width="100%">
-        <Box  >
+        <Box>
           <Header page={page} onSSLAuth={handleSSLAuth} handleMenuClick={handleMenuClick} handleApiClick={handleApiClick} />
         </Box>
         <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
+          {turnouts.status  === 'idle' || turnouts.status === 'pending' && (
+              <CircularProgress color="primary" className="spinner" />
+          )}
+          {turnouts.status  === 'error' && (
+            <ApiError handleEmulatorClick={handleEmulatorClick} />
+          )}
           {turnouts.status  === 'done' && (
             <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
               <Switch>
@@ -139,28 +134,11 @@ function TrackMaster(props) {
                 </Route>
                 <Route path={["/", "/turnouts"]}>
                   <Turnouts turnoutList={turnoutList} onChange={handleTurnoutChange} />
-                  
                 </Route>
               </Switch>
             </Container>
           )}
-          {turnouts.status  === 'idle' || turnouts.status === 'pending' && (
-              <CircularProgress color="primary" className="spinner" />
-          )}
-          {turnouts.status  === 'error' && (
-            <Container maxWidth="lg">
-              <Grid container spacing={1}>
-                <Box p={2}>
-                  <h1>Error: could not load turnouts. Check settings and make sure the API host is running.</h1>
-                  <Button variant="outlined" onClick={handleEmulatorClick}>
-                      Eanble Emulator
-                  </Button>
-                </Box>
-              </Grid>
-            </Container>
-          )}
         </Box>
-        
         <Box mt={1}>
           <Footer page={page} onNavigate={handleNavigate} />
         </Box>
