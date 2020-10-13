@@ -19,8 +19,9 @@ import Turnouts from '../Turnouts/Turnouts';
 import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
+import ApiHost from '../Shared/ApiHost/ApiHost';
 import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
-import api, { apiHost } from '../Api';
+import api, { getApiHost, setApiHost } from '../Api';
 import './TrackMaster.scss';
 
 
@@ -37,6 +38,7 @@ function TrackMaster(props) {
   const [page, setPage] = useState(location && location.pathname);
   // const [page, setPage] = useState('Layout');
   const [menu, setMenu] = useState(menuConfig);
+  const [apiHostOpen, setApiHostOpen] = useState(false);
 
   const [turnouts, setTurnouts] = useState({ data: null, status: 'idle' });
   const [turnoutList, setTurnoutList] = useState([]);
@@ -65,7 +67,7 @@ function TrackMaster(props) {
   }
 
   const handleSSLAuth = (event) => {
-      window.open(apiHost);
+      window.open(getApiHost());
   }
 
   const handleTurnoutChange = async data => {
@@ -99,19 +101,28 @@ function TrackMaster(props) {
 
   const handleMenuClick = menuChange => {
     console.log(menuChange);
-    const m = {...menu};
-    m[menuChange.menu] = {...m[menuChange.menu], ...menuChange.state};
+    const m = {...menu, ...menuChange};
     console.log(m);
     setMenu(m);
+  }
+
+  const handleApiClick = e => {
+    console.log('handleApiClick');
+    setApiHostOpen(true);
+  }
+
+  const handleApiClose = e => {
+    setApiHostOpen(false);
   }
 
 
         console.log('turnoutList', turnoutList);
   return (
     <MenuContext.Provider value={menu}>
+      <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
       <Box display="flex" flexDirection="column" height="100%" width="100%">
         <Box  >
-          <Header page={page} onSSLAuth={handleSSLAuth} handleMenuClick={handleMenuClick} />
+          <Header page={page} onSSLAuth={handleSSLAuth} handleMenuClick={handleMenuClick} handleApiClick={handleApiClick} />
         </Box>
         <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
           {turnouts.status  === 'done' && (

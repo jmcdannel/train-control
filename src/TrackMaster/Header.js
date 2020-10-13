@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 export const Header = props => {
 
-  const { page, handleMenuClick, onSSLAuth: handleSSLAuth } = props;
+  const { page, handleMenuClick, handleApiClick, onSSLAuth: handleSSLAuth } = props;
 
   const [ anchorEl, setAnchorEl ] = useState(null);
   const [ menu, setMenu ] = useState(null);
@@ -26,18 +26,12 @@ export const Header = props => {
   };
 
   const handleTurnoutsCompactClick = () => {
-    handleMenuClick({ 
-      menu: '/turnouts',
-      state: { view: 'compact' }
-    });
+    handleMenuClick({ view: 'compact' });
     handleClose();
   }
 
   const handleTurnoutsComfyClick = () => {
-    handleMenuClick({ 
-      menu: '/turnouts',
-      state: { view: 'comfy' }
-    });
+    handleMenuClick({ view: 'comfy' });
     handleClose();
   }
 
@@ -68,12 +62,13 @@ export const Header = props => {
           </IconButton>
       </Toolbar>
       <Menu
-        id="/turnouts"
+        id="menu"
         anchorEl={anchorEl}
         keepMounted
         open={menu === '/turnouts'}
         onClose={handleClose}
       >
+        <MenuItem onClick={handleApiClick}>API Host</MenuItem>
         <MenuItem onClick={handleTurnoutsCompactClick}>Compact</MenuItem>
         <MenuItem onClick={handleTurnoutsComfyClick}>Comfy</MenuItem>
       </Menu>

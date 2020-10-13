@@ -9,8 +9,7 @@ export const Turnouts = props => {
 
   const menu = useContext(MenuContext);
   const isCompact = menu
-    && menu['/turnouts'] 
-    && menu['/turnouts'].view === 'compact' ? true : false;
+    && menu.view === 'compact' ? true : false;
 
   const getTurnoutById = id => turnoutList.find(t => id === t.turnoutId);
 

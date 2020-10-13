@@ -9,6 +9,7 @@ import redLineImg from './Layout/images/IDAWANY-redline.png';
 import yellowLineImg from './Layout/images/IDAWANY-yellowline.png';
 
 var emulatedTurnoutsData = require('./Shared/Utils/Emulator/turnouts.emulator.json');
+let apiHost = 'http://0.0.0.0:5000';
 
 async function createTurnout() {
   throw new Error('Not implemented');
@@ -71,7 +72,29 @@ export const linesConfig = [
   { name: 'Purple', color: Colors.purple[500], img: purpleLineImg }
 ];
 
-export const apiHost = 'http://tamarackpi:5000';
+export const setApiHost = val => {
+  apiHost = val;
+  window.localStorage.setItem('apiHost', val);
+}
+
+export const getApiHost = () => {
+  const storedApiHost = window.localStorage.getItem('apiHost');
+  if (storedApiHost) {
+    apiHost = storedApiHost;
+  }
+  return apiHost;
+}
+
+export const getApiHostOptions = () => {
+  return [
+    'http://tamarackpi:5000',
+    'http://localhost:5000',
+    'http://0.0.0.0:5000',
+    'https://traincontrol:5000'
+  ];
+}
+
+// export const apiHost = 'http://tamarackpi:5000';
 // export const apiHost = 'http://192.168.86.22:5000';
 // export const apiHost = 'http://localhost:5000';
 // export const apiHost = 'http://0.0.0.0:5000';
