@@ -1,0 +1,21 @@
+[
+  {
+    "layoutId": "idawany",
+    "name": "IDAWANY",
+    "features": [
+      "turnouts",
+      "conductor",
+      "map"
+    ],
+    "defaultApiHost": "http://traincontrol:5000"
+  },
+  {
+    "layoutId": "tam",
+    "name": "Tamarack Junction",
+    "features": [
+      "turnouts",
+      "throttles"
+    ],
+    "defaultApiHost": "http://tamarackpi:5000"
+  }
+]

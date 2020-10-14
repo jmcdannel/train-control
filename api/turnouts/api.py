@@ -2,9 +2,9 @@ import os
 from flask_cors import CORS
 from flask import json, jsonify, request, abort
 
-path = os.path.dirname(__file__) + '/cn.turnouts.json'
 
-def get(turnout_id=None):
+def get(layout_id, turnout_id=None):
+  path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
   with open(path) as turnout_file:
         data = json.load(turnout_file)
   if turnout_id is not None:
@@ -16,8 +16,8 @@ def get(turnout_id=None):
   else:
     return jsonify(data)
 
-def put(turnout_id):
-       
+def put(layout_id, turnout_id):
+  path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
   with open(path) as turnout_file:
         data = json.load(turnout_file)
   turnouts = [turnout for turnout in data if turnout['turnoutId'] == turnout_id]
