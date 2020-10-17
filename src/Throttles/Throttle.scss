@@ -1,9 +1,10 @@
-$sliderWidth: 3rem;
+$sliderWidth: 7rem;
 
 .throttles {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  height: 100%;
 
 }
 .throttle {
@@ -11,6 +12,11 @@ $sliderWidth: 3rem;
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .MulutiCardHeader-root,
+  .MuiCardActions-root {
+    background-color: rgba(0,0,0,.2);
+  }
 
   .MuiCardHeader-content {
     .MuiCardHeader-title {
@@ -23,9 +29,15 @@ $sliderWidth: 3rem;
     }
   }
 
+  .great-northern { 
+    background-color: #A75733;
+    color: #fff;
+  }
+
   &__container {
     padding: 1rem;
-    width: 320px;
+    min-width: 320px;
+    max-width: 640px;
   }
 
   &__content {
@@ -42,82 +54,121 @@ $sliderWidth: 3rem;
     position: relative;
     height: 100%;
 
-    &__slider {
-      flex: 1;
-      padding: 1rem 1rem 3rem;
+
+    &__status {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      padding: 1rem;
+      &.MuiPaper-root {
+        background-color: rgba(0,0,0,.1);
+      }
+      // button {
+      //   border: 1px solid rgba(244, 67, 54, .5);
+      //   // box-shadow: inset 0px 0px 2px 2px rgba(0,0,0,0.2);
+      //   background-color: rgba(0,0,0,.1);
+      // }
     }
 
     &__speed {
-      width: 100%;
+      flex: 1;
+    }
+
+    &__group {
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      &:first-of-type {
+        padding-left: 0;
+      }
+      &:last-of-type {
+        padding-right: 0;
+      }
     }
   }
 
   &__slider {
     position: relative;
+    flex: 1;
+    text-align: center;
     height: 100%;
+    > .MuiGrid-container {
+      height: 100%;
+    }
+    &__control {
+      text-align: left;
+    }
+    &__switch {
+      margin: 2rem auto;
+    }
+    &__container {
+      // height: 100%;
+      flex: 1;
+    }
+    &__item {
+      // height: 100%;
+      flex: 1;
+    }
 
     &.MuiSlider-root.MuiSlider-vertical {
-      width: $sliderWidth;
+      // width: $sliderWidth;
+      margin-right: auto;
     }
 
     &.MuiSlider-vertical {
 
       .MuiSlider-rail {
         width: $sliderWidth;
-        box-shadow: inset 2px 2px 0px 0px #000000;;
         box-shadow: inset 2px 2px 0px 0px #000000;
-        border-radius: 1rem;
-        border-top-right-radius: 1rem;
-        border-top-left-radius: 1rem;
-        
+        border-radius: 0;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+        margin-left: ($sliderWidth / -2);
+        padding: 1rem 0;        
       }
 
       .MuiSlider-track {
         width: $sliderWidth;
         box-shadow: inset 2px 2px 0px 0px #000000;
-        border-bottom-right-radius: 1rem;
-        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
 
       .MuiSlider-mark {
-        width: calc(3rem - 4px);
-        transform: translate(2px, 0);
+        width: ($sliderWidth / 2);
+        transform: translate(0px, 1rem);
+        left: -2.5rem;
+      }
+      .MuiSlider-markLabel {
+        left: 41px;
+        color: #000;
+        padding-top: 25px;
+        z-index: 2;
+        &:before {
+          position: absolute;
+          content: calc(attr(data-index) + 5) + 'px';
+          left: -130px;
+        }
+
       }
 
       .MuiSlider-thumb {
         left: 50%;
         width: $sliderWidth*2;
         height: $sliderWidth/2;
-        transform: translate(-50%);
+        transform: translate(-50%, 15px);
         margin-left: 0;
         margin-right: 0;
-        border-radius: 2px;
-        border-radius: 1rem;
-        background-color: #222;
-        box-shadow: inset -2px 2px 0px 0px #000000;
-        background-image: linear-gradient(to bottom, #222, #333);
-
-        // background: #A7A7A7;
-        // background-image: linear-gradient(to bottom, #A7A7A7, #5E5E5E);
-        // border-radius: 20px;
-        // color: #FFFFFF;
-        // font-family: Open Sans;
-        // font-size: 0px;
-        // font-weight: 100;
-        // padding: 35px;
-        // box-shadow: inset -1px 1px 0px 0px #000000;
-        // border: solid #000000 1px;
-        // text-decoration: none;
-        // display: inline-block;
+        bottom: 50%;
+        width: 7rem;
+        height: 1rem;
+        border-radius: 3px;
+        opacity: .7;
+        background-image: linear-gradient(rgb(204, 204, 204), rgb(238, 238, 238));
+        box-shadow: rgb(170, 170, 170) -2px 2px 0px 0px;
         cursor: pointer;
         text-align: center;
-        &:hover {
-          // border: solid #000000 1px;
-          // background: #A5D626;
-          // background-image: linear-gradient(to bottom, #A5D626, #8FBA1F);
-          // border-radius: 20px;
-          // text-decoration: none;
-        }
       }
     }
   }
@@ -125,24 +176,70 @@ $sliderWidth: 3rem;
   &__speed {
     padding: 1rem;
     width: 100%;
-    border: 1px solid yellowgreen;
+    border: 1px solid rgba(255,255,255,.15);
+    background: #333;
+    box-shadow: inset 0px 0px 4px 2px rgba(0,0,0,0.3);
     border-radius: .25rem;
     text-align: center;
     font-weight: bold;
     font-size: 2rem;
+    position: relative;
+    &:before,
+    &:after {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-family: "Andale Mono", monospace;
+      left: 0;
+      right: 0;
+      white-space: nowrap;
+    }
+    &:before {
+      content: '↑↑ Forward ↑↑';
+      top: 0;
+      color: rgba(118, 255, 3, .7);
+    }
+    &:after {
+      content: '↓↓ Reverse ↓↓';
+      bottom: 0;
+      color: rgba(244, 67, 54, .7);
+    }
+    &.throttle__speed--reverse {
+      color: rgba(244, 67, 54, .7);
+      &:before {
+        display: none;
+      }
+    }
+
+    &.throttle__speed--forward {
+      color: rgba(118, 255, 3, .7);
+      &:after {
+        display: none;
+      }
+    }
   }
 
   &__functions {
     display: flex;
     flex-direction: column;
     &__container {
+      flex: 1;
+      padding-bottom: 5rem;
+    }
+    &__viewport {
       height: 100%;
       overflow: scroll;
+      max-height: 480px;
+      display: flex;
+      flex-wrap: wrap;
     }
     &__btn.MuiButtonBase-root {
       margin: 0.5rem 0;
-      padding: 0.75rem 0;
-      width: 100%;
+      padding: 0.75rem 0; 
+      min-width: 8rem;
+      flex: 1 0 50%;
 
     }
   }

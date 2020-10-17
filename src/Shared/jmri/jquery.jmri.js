@@ -972,7 +972,7 @@
             if (jmri.socket === null) {
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }
-            $(window).on( "unload", function () {
+            $(window).unload(function () {
                 if (jmri.socket != null) {
                     jmri.socket.close();
                 }

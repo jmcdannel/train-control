@@ -36,6 +36,16 @@
   color: #61dafb;
 }
 
+.grow {
+  flex: 1;
+}
+
+.flex {
+  display: flex;
+}
+
+
+
 
 /* .App-footer {
   position: fixed;

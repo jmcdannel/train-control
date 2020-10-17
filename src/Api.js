@@ -11,20 +11,32 @@ import yellowLineImg from './Layout/images/IDAWANY-yellowline.png';
 var emulatedTurnoutsData = require('./Shared/Utils/Emulator/turnouts.emulator.json');
 let apiHost = 'http://0.0.0.0:5000';
 
+async function readLayout(layoutId = null) {
+  try {
+    const response = layoutId !== null
+      ? await fetch(`${apiHost}/layouts/${layoutId}`)
+      : await fetch(`${apiHost}/layouts`);
+    return response.json();
+  } catch (err) {
+    console.error(err);
+    throw new Error('Unable to read Layouts(s)', layoutId, `layoutId=${layoutId}`);
+  }
+}
+
 async function createTurnout() {
   throw new Error('Not implemented');
 }
 
-async function readTurnout(turnoutId = null) {
+async function readTurnout(layoutId, turnoutId = null) {
   try {
     if (api.emulator) {
       return turnoutId !== null
-        ? emulatedTurnoutsData.find(turnout => turnout.id === turnoutId)
+        ? emulatedTurnoutsData.find(turnout => turnout.turnoutId === turnoutId)
         : emulatedTurnoutsData;
     }
     const response = turnoutId !== null
-      ? await fetch(`${apiHost}/turnouts/${turnoutId}`)
-      : await fetch(`${apiHost}/turnouts`);
+      ? await fetch(`${apiHost}/layouts/${layoutId}/turnouts/${turnoutId}`)
+      : await fetch(`${apiHost}/layouts/${layoutId}/turnouts`);
     return response.json();
   } catch (err) {
     console.error(err);
@@ -32,7 +44,7 @@ async function readTurnout(turnoutId = null) {
   }
 }
 
-async function updateTurnout(data) {
+async function updateTurnout(layoutId, data) {
   try {
     if (api.emulator) {
       return emulatedTurnoutsData.map(turnout => {
@@ -41,7 +53,7 @@ async function updateTurnout(data) {
           : turnout;
       });
     }
-    const response = await fetch(`${apiHost}/turnouts/${data.turnoutId}`, {
+    const response = await fetch(`${apiHost}/layouts/${layoutId}/turnouts/${data.turnoutId}`, {
       method: 'PUT',
       cache: 'no-cache',
       crossDomain: true,
@@ -102,10 +114,15 @@ export const getApiHostOptions = () => {
 
 
 export const api = {
-  get: readTurnout,
-  put: updateTurnout,
-  post: createTurnout,
-  delete: deleteTurnout
+  layouts: {
+    get: readLayout
+  },
+  turnouts: {
+    get: readTurnout,
+    put: updateTurnout,
+    post: createTurnout,
+    delete: deleteTurnout
+  }
 }
 
 export default api;

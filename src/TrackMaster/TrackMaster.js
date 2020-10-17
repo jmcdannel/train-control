@@ -2,12 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
   Switch,
   Route,
-  Link,
   useHistory,
   useLocation
 } from "react-router-dom";
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -18,10 +16,11 @@ import Turnouts from '../Turnouts/Turnouts';
 import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
+import SelectLayout from '../Shared/SelectLayout/SelectLayout';
 import ApiHost from '../Shared/ApiHost/ApiHost';
 import ApiError from '../Shared/ApiError/ApiError';
 import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
-import api, { getApiHost, setApiHost } from '../Api';
+import api, { getApiHost } from '../Api';
 import './TrackMaster.scss';
 
 
@@ -35,6 +34,7 @@ function TrackMaster(props) {
   const [page, setPage] = useState(location && location.pathname);
   const [menu, setMenu] = useState(menuConfig);
   const [apiHostOpen, setApiHostOpen] = useState(false);
+  const [layoutId, setLayoutId] = useState(window.localStorage.getItem('layoutId'));
 
   const [turnouts, setTurnouts] = useState({ data: null, status: 'idle' });
   const [turnoutList, setTurnoutList] = useState([]);
@@ -43,14 +43,13 @@ function TrackMaster(props) {
     const fetchTurnouts = async () => {
       setTurnouts({...turnouts, status: 'pending' });
       try {
-        console.log('f');
-        const response = await api.get();
+        const response = await api.turnouts.get(layoutId);
         setTurnouts({...turnouts, data: response, status: 'done' });
       } catch(err) {
         setTurnouts({...turnouts, status: 'error' });
       }
     }
-    if (turnouts.data === null && turnouts.status === 'idle') {
+    if (layoutId && turnouts.data === null && turnouts.status === 'idle') {
       fetchTurnouts();
     } else {
       setTurnoutList(turnouts.data);
@@ -70,7 +69,7 @@ function TrackMaster(props) {
     async function getResults() {
       let results = [];
       for (let item of data) {
-          let turnout = await api.put(item);
+          let turnout = await api.turnouts.put(layoutId, item);
           results.push(turnout);
       }
       return results;
@@ -111,9 +110,16 @@ function TrackMaster(props) {
       <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
       <Box display="flex" flexDirection="column" height="100%" width="100%">
         <Box>
-          <Header page={page} onSSLAuth={handleSSLAuth} handleMenuClick={handleMenuClick} handleApiClick={handleApiClick} />
+          <Header 
+            page={page} 
+            onSSLAuth={handleSSLAuth} 
+            handleMenuClick={handleMenuClick} 
+            handleApiClick={handleApiClick} 
+          />
         </Box>
         <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
+          
+            <SelectLayout open={!layoutId} setLayoutId={setLayoutId} />
           {turnouts.status  === 'idle' || turnouts.status === 'pending' && (
               <CircularProgress color="primary" className="spinner" />
           )}
