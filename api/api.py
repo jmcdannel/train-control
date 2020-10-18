@@ -9,7 +9,7 @@ from layouts import layoutsapi
 app = Flask(__name__)
 cors = CORS(app)
 # arduino = serial.Serial('/dev/cu.usbmodem146301', 9600)
-# arduino = serial.Serial('/dev/cu.usbmodem14201', 9600)
+arduino = serial.Serial('/dev/cu.usbmodem146401', 9600)
 logging.getLogger('flask_cors').level = logging.DEBUG
 
 def write_serial_command(turnout):
@@ -54,7 +54,7 @@ def get_turnout(layout_id, turnout_id):
 @app.route('/layouts/<string:layout_id>/turnouts/<int:turnout_id>', methods=['PUT'])
 def update_turnout(layout_id, turnout_id):
   response = tunroutsApi.put(layout_id, turnout_id)
-  # write_serial_command(response.get_json())
+  write_serial_command(response.get_json())
   return response
 
 if __name__ == '__main__':
