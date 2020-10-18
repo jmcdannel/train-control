@@ -2,20 +2,36 @@
   {
     "layoutId": "idawany",
     "name": "IDAWANY",
-    "features": [
+    "modules": [
       "turnouts",
       "conductor",
       "map"
     ],
-    "defaultApiHost": "http://traincontrol:5000"
+    "api": {
+      "defaultHost": "http://traincontrol:5000"
+    },
+    "turnouts": {
+      "interface": "api"
+    }
   },
   {
     "layoutId": "tam",
     "name": "Tamarack Junction",
-    "features": [
+    "modules": [
       "turnouts",
       "throttles"
     ],
-    "defaultApiHost": "http://tamarackpi:5000"
+    "jmri": {
+      "defaultHost": "http://localhost:12080"
+    },
+    "api": {
+      "defaultHost": "http://tamarackpi:5000"
+    },
+    "turnouts": {
+      "interface": "api"
+    },
+    "throttles": {
+      "interface": "jmri"
+    }
   }
 ]

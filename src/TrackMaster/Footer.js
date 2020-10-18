@@ -4,7 +4,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import CallSplit from '@material-ui/icons/CallSplit';
 import MapIcon from '@material-ui/icons/Map';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
 import TrainIcon from '@material-ui/icons/Train';
 
 export const Footer = props => {
@@ -14,7 +14,7 @@ export const Footer = props => {
   return (
     <BottomNavigation
       value={page}
-      showlabels
+      // showlabels
       className="App-footer"
       onChange={handleNavigate}
     >

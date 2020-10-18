@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Throttle from './Throttle';
-import throttleApi from './ThrottleApi';
+import { Context } from '../Store/Store';
 
-export const Throttles = () => {
+export const Throttles = props => {
 
-  const [initialized, setIinitialized] = useState(false);
+  const [ state, dispatch ] = useContext(Context);
+  const { jmriApi } = props;
 
-  useEffect(() => {
-    const  setup = async () => {
-      const isSetup = await throttleApi.setup();
-      setIinitialized(isSetup);
-    }
-    if (!initialized) {
-      setup();
-    }
-  }, [initialized]);
-
-  const loco1 = {
-    address: "3",
-    name: "GN-317",
-    road: "Great Northern"
-  };
-
+  
+  // const handleRegisterLoco = loco => {
+  //   console.log('handleRegisterLoco', loco, throttles);
+  //   if (!throttles.includes(loco)) {
+  //     loco.isRegistered = true;
+  //     throttles.push(loco);
+  //   }
+  // }
 
   return (
-    <div className="throttles">
-      {initialized && (
+      <div className="throttles">
         <div className="throttle__container">
-          <Throttle throttleApi={throttleApi} loco={loco1} />
+          {state.locos.map(loco => {
+
+            return (<Throttle 
+              key={loco.address}
+              jmriApi={jmriApi} 
+              loco={loco} 
+            />);
+
+          })}
         </div>
-      )}
-    </div>
+      </div>
   );
 
 }

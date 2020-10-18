@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Switch,
   Route,
@@ -7,9 +7,6 @@ import {
 } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
-
 import Header from './Header';
 import Footer from './Footer';
 import Turnouts from '../Turnouts/Turnouts';
@@ -20,7 +17,11 @@ import SelectLayout from '../Shared/SelectLayout/SelectLayout';
 import ApiHost from '../Shared/ApiHost/ApiHost';
 import ApiError from '../Shared/ApiError/ApiError';
 import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
+import Store, { Context } from '../Store/Store';
+
+import Loading from '../Shared/Loading/Loading';
 import api, { getApiHost } from '../Api';
+import jmriApi from '../Shared/jmri/jmriApi';
 import './TrackMaster.scss';
 
 
@@ -35,9 +36,42 @@ function TrackMaster(props) {
   const [menu, setMenu] = useState(menuConfig);
   const [apiHostOpen, setApiHostOpen] = useState(false);
   const [layoutId, setLayoutId] = useState(window.localStorage.getItem('layoutId'));
-
+  const [jmriInitialized, setJmriInitialized] = useState(false);
+  const [jmriReady, setJmriReady] = useState(false);
+  const [layout, setLayout] = useState({ data: null, status: 'idle' });
   const [turnouts, setTurnouts] = useState({ data: null, status: 'idle' });
   const [turnoutList, setTurnoutList] = useState([]);
+
+  useEffect(() => {
+    const initJmri = async () => {
+      jmriApi.on('ready', handleJmriReady.bind(this));
+      const isSetup = await jmriApi.setup();
+      setJmriInitialized(isSetup);
+    }
+    if (!jmriInitialized) {
+      initJmri();
+    }
+  }, [jmriInitialized]);
+
+  useEffect(() => {
+    const fetchLayout = async () => {
+      setLayout({...layout, status: 'pending' });
+      try {
+        const response = await api.layouts.get(layoutId);
+        console.log('fetchLayout', response);
+        setLayout({...layout, data: response, status: 'done' });
+      } catch(err) {
+        console.error('fetchLayout', err);
+        setLayout({...layout, status: 'error' });
+      }
+    }
+    if (layoutId && layout.data === null && layout.status === 'idle') {
+      fetchLayout();
+    } else {
+      // show "select layout"
+      console.log('select a layout');
+    }
+  }, [layoutId])
 
   useEffect(() => {
     const fetchTurnouts = async () => {
@@ -53,8 +87,13 @@ function TrackMaster(props) {
       fetchTurnouts();
     } else {
       setTurnoutList(turnouts.data);
+    }
+  }, [turnouts, layoutId]);
+
+  const handleJmriReady = isReady => {
+    console.log('handleJmriReady', isReady);
+    setJmriReady(isReady);
   }
-  }, [turnouts]);
 
   const handleNavigate = (event, newValue) => {
     setPage(newValue);
@@ -106,50 +145,56 @@ function TrackMaster(props) {
   }
 
   return (
-    <MenuContext.Provider value={menu}>
-      <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
-      <Box display="flex" flexDirection="column" height="100%" width="100%">
-        <Box>
-          <Header 
-            page={page} 
-            onSSLAuth={handleSSLAuth} 
-            handleMenuClick={handleMenuClick} 
-            handleApiClick={handleApiClick} 
-          />
-        </Box>
-        <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
-          
-            <SelectLayout open={!layoutId} setLayoutId={setLayoutId} />
-          {turnouts.status  === 'idle' || turnouts.status === 'pending' && (
-              <CircularProgress color="primary" className="spinner" />
-          )}
-          {turnouts.status  === 'error' && (
-            <ApiError handleEmulatorClick={handleEmulatorClick} />
-          )}
-          {turnouts.status  === 'done' && (
-            <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
-              <Switch>
-                <Route path="/layout">
-                  <Layout turnouts={turnoutList} />
-                </Route>
-                <Route path="/throttles">
-                  <Throttles />
-                </Route>
-                <Route path="/conductor">
-                  <MapControl turnouts={turnoutList} onChange={handleTurnoutChange} />
-                </Route>
-                <Route path={["/", "/turnouts"]}>
-                  <Turnouts turnoutList={turnoutList} onChange={handleTurnoutChange} />
-                </Route>
-              </Switch>
-            </Container>
-          )}
-        </Box>
-        <Box mt={1}>
-          <Footer page={page} onNavigate={handleNavigate} />
-        </Box>
-      </Box>
-      </MenuContext.Provider>
+    <Store >
+      <MenuContext.Provider value={menu}>
+          <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
+          <Box display="flex" flexDirection="column" height="100%" width="100%">
+            <Box>
+              <Header 
+                page={page} 
+                onSSLAuth={handleSSLAuth} 
+                handleMenuClick={handleMenuClick} 
+                handleApiClick={handleApiClick} 
+                jmriApi={jmriApi}
+                jmriReady={jmriReady}
+                layout={layout}
+              />
+            </Box>
+            <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
+              <Box>
+                <SelectLayout open={!layoutId} setLayoutId={setLayoutId} />
+                {(turnouts.status  === 'idle' || turnouts.status === 'pending') && (
+                    <Loading />
+                )}
+                {turnouts.status  === 'error' && (
+                  <ApiError handleEmulatorClick={handleEmulatorClick} />
+                )}
+                {turnouts.status  === 'done' && (
+                  <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
+                    <Switch>
+                      <Route path="/layout">
+                        <Layout turnouts={turnoutList} />
+                      </Route>
+                      <Route path="/throttles">
+                        <Throttles jmriApi={jmriApi} />
+                      </Route>
+                      <Route path="/conductor">
+                        <MapControl turnouts={turnoutList} onChange={handleTurnoutChange} />
+                      </Route>
+                      <Route path={["/", "/turnouts"]}>
+                        <Turnouts turnoutList={turnoutList} onChange={handleTurnoutChange} />
+                      </Route>
+                    </Switch>
+                  </Container>
+                )}
+                </Box>
+            </Box>
+            <Box mt={1}>
+              <Footer page={page} onNavigate={handleNavigate} />
+            </Box>
+          </Box>
+        </MenuContext.Provider>
+      </Store>
   );
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 export const JmriThrottleController = props => {
 
-    const { throttleApi, speed, address } = props;
+    const { jmriApi, speed, address } = props;
 
     const [ isForward, setIsForward ] = useState(null);
 
@@ -10,14 +10,14 @@ export const JmriThrottleController = props => {
         (async () => {
             if (speed > 0 && !isForward) {
                 setIsForward(true);
-                await throttleApi.changeDirection(address, true);
+                await jmriApi.changeDirection(address, true);
             } else if (speed < 0 && isForward) {
                 setIsForward(false);
-                await throttleApi.changeDirection(address, false);
+                await jmriApi.changeDirection(address, false);
             }
-            throttleApi.throttle(address, Math.abs(speed));   
+            jmriApi.throttle(address, Math.abs(speed));
         })();             
-    });
+    }, [jmriApi, speed, address, isForward, setIsForward]);
 
 
     return (<></>)

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import SwitchImg from './switch.svg';
 import { ReactComponent as Logo } from './switch.svg';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
@@ -11,12 +10,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 import CallSplit from '@material-ui/icons/CallSplit';
 import RestoreIcon from '@material-ui/icons/Restore';
-import MapIcon from '@material-ui/icons/Map';
 import PowerIcon from '@material-ui/icons/Power';
 import TuneIcon from '@material-ui/icons/Tune';
 import Typography from '@material-ui/core/Typography';
@@ -26,15 +23,13 @@ import LinkIcon from '@material-ui/icons/Link';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
 import LinkOffIcon from '@material-ui/icons/LinkOff';
-import Avatar from '@material-ui/core/Avatar';
 import WifiTetheringIcon from '@material-ui/icons/WifiTethering';
 import PortableWifiOffIcon from '@material-ui/icons/PortableWifiOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
 import Settings from './Settings';
-import { api, linesConfig } from '../Api';
-import { ReactComponent as TurnoutMaskLeft4Diverge } from './images/left-4-diverge.svg';
+import { linesConfig } from '../Api';
+// import { ReactComponent as TurnoutMaskLeft4Diverge } from './images/left-4-diverge.svg';
 import './Turnout.scss';
 
 export const Turnout = props => {

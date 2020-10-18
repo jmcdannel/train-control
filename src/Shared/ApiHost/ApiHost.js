@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import api, { getApiHost, setApiHost, getApiHostOptions } from '../../Api';
+import { getApiHost, setApiHost, getApiHostOptions } from '../../Api';
 
 export function ApiHost(props) {
 
@@ -39,7 +39,7 @@ export function ApiHost(props) {
           </DialogContentText>
           <MenuList>
             {getApiHostOptions().map(host => (
-              <MenuItem  onClick={() => handleHostClick(host)}>{host}</MenuItem>
+              <MenuItem key={host} onClick={() => handleHostClick(host)}>{host}</MenuItem>
             ))}
           </MenuList>
           <TextField

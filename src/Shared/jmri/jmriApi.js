@@ -16,7 +16,15 @@ var promises = {
 	acquire: {
 		resolve: () => {},
 		reject: () => {}
-	},
+  },
+  power: {
+    resolve: () => {},
+		reject: () => {}
+  },
+  ready: {
+    resolve: () => {},
+		reject: () => {}
+  },
 	setup: {
 		resolve: () => {},
 		reject: () => {}
@@ -42,8 +50,8 @@ var jmriLostComm = function(message) {
 
 var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 	console.log('__jmriReady', jsonVersion, jmriVersion, railroadName);
-	isReady = true;
-	promises.setup.resolve(isReady);
+  isReady = true;
+  fireEvent('ready', isReady);
 }
 
 //----------------------------------------- [from server] Last selected throttle address
@@ -53,12 +61,12 @@ var throttleState = function(name, address, speed, forward, fs) {
 	if (address !== undefined) throttleAcquisition(address);
 	if (forward !== undefined) throttleDirection(name, forward);
 	if (speed !== undefined) throttleSpeed(name, speed);
-	for (var i = 0; i < 29; i++) if (fs[i] != undefined) throttleFunctionState(name, i, fs[i]);
+	for (var i = 0; i < 29; i++) if (fs[i] !== undefined) throttleFunctionState(name, i, fs[i]);
 };
 
 const throttleAcquisition = address => {
     console.log('__throttleAcquisition', address);
-	promises.acquire.resolve(address);
+    fireEvent('acquire', address);
 }
 
 const throttleDirection = function(name, forward) {
@@ -76,34 +84,22 @@ const throttleFunctionState = function(name, functionNumber, active) {
 };
 
 const layoutPowerState = function(state) {
-    console.log('__layoutPowerState', state);
-	// var power = $('#power');
-	// power.attr('state', state);
-	// power.removeClass('powerUnknown powerOff powerOn');
-	// switch (state) {
-	// 	case $jmri.powerOFF:
-	// 		power.addClass('powerOff');
-	// 		break;
-	// 	case $jmri.powerON:
-	// 		power.addClass('powerOn');
-	// 		break;
-	// 	default:
-	// 		power.addClass('powerUnknown');
-	// 		break;
-	// }
+    console.log('__layoutPowerState', state, eventHandlers);
+    fireEvent('power', state);
 };
 
 const setup = () => {
-		console.log('Setup', $, window.jQuery, window);
+		console.log('Setup', isSetup);
 		if (isSetup) {
 			console.log('throttle API already setup');
-			return;
+			return isSetup;
 		}
-
-    $jmri = $.JMRI('ws://192.168.86.22:12080/json/', {
+    const apiHost = 'ws://tamarackpi:12080/json/';
+    // const apiHost = 'ws://192.168.86.22:12080/json/';
+    $jmri = $.JMRI(apiHost, {
 		//*** Callback Functions available in '$jmri' object
-		toSend: function(data) {$debug && log.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
-		fullData: function(data) {$debug && log.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
+		toSend: function(data) {$debug && log.log(`${new Date()} - ${document.title}\nJSONtoSend: ${data}`);},	//Nothing to do
+		fullData: function(data) {$debug && log.log(`${new Date()} - ${document.title}\nJSONreceived: ${data}`);},	//Nothing to do
                 error: function (code, message) {
                     if (code === 0)
                         jmriLostComm(message);
@@ -127,7 +123,7 @@ const setup = () => {
 	});
 	if (!$jmri) throw new Error('private~Could not open JMRI WebSocket.');
 	isSetup = true;
-	return createPromise('setup');
+	return createPromise('ready');
 }
 
 const throttle = async (address, speed) => {
@@ -157,9 +153,46 @@ const requestLoco = async address => {
 	return createPromise('acquire', 'New loco request action dispatched.');
 }
 
+const power = async state => {
+  console.log('jmriApi.power', state);
+  const payload = state
+    ? { state: state }
+    : {}
+  validateCommand(promises.power.reject) && $jmri.setJMRI('power', null, payload);
+  return createPromise('power', 'New power action dispatched.');
+}
+
+const getState = () =>{
+  return {
+    setup: isSetup,
+    ready: isReady
+  }
+}
+
+const eventHandlers = {};
+
+const attachEvent = (type, callback) => {
+  if (eventHandlers[type]) {
+    eventHandlers[type].push(callback);
+  } else {
+    eventHandlers[type] = [callback];
+  }
+}
+
+const fireEvent = (type, payload) => {
+  if (promises[type]) {
+    promises[type].resolve(payload);
+  }
+  if (eventHandlers[type]) {
+    eventHandlers[type].forEach(handler => handler(payload));
+  }
+}
+
 const createPromise = (obj, rejectMsg) => {
+  if (rejectMsg && promises[obj]) {
+    promises[obj].reject(rejectMsg);
+  }
 	const promise = new Promise((resolve, reject) => {
-		rejectMsg && promises[obj].reject(rejectMsg);
 		promises[obj].resolve = resolve;
 		promises[obj].reject = reject;
 	});
@@ -171,6 +204,7 @@ const validateCommand = reject => {
 	if (!isSetup) {
 		errorMessage =  'Setup not called';
     } else if (!isReady) {
+      // debugger;
 		errorMessage =  'Comm not ready';
 	}
 	if (errorMessage) {
@@ -184,11 +218,14 @@ const validateCommand = reject => {
 	}
 }
     
-export const throttleApi = {
+export const jmriApi = {
     setup, 
     throttle,
 		requestLoco,
-		changeDirection
+    changeDirection,
+    power,
+    on: attachEvent,
+    getState
 };
 
-export default throttleApi;
+export default jmriApi;

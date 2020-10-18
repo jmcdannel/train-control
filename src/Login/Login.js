@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export const Login = props => {
+export const Login = () => {
   return (
     <div>Login <a href="/">go</a></div>
   );

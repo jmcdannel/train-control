@@ -3,3 +3,76 @@
     height: 100%;
   }
 }
+
+.status-monitor {
+  .MuiChip-root {
+    margin: 0 0.5em;
+  }
+  &--unknown.MuiChip-icon {
+    animation: flickerAnimation 1s infinite;
+  }
+  &--connected.MuiChip-icon {
+    background-color: rgb(14, 192, 14);
+    border-radius: 50%;
+  }
+  &--disconnected.MuiChip-icon {
+    background-color: rgb(211, 0, 0);
+    border-radius: 50%;
+  }
+}
+
+.power {
+  &-on, 
+  &-off, 
+  &-unknown, 
+  &-pending {
+    svg.MuiSvgIcon-root {
+      border-radius: 50%;
+      padding: .5rem;
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+  &-on {
+   svg.MuiSvgIcon-root {
+    background-color: rgb(14, 192, 14);
+   }
+  }
+  &-off {
+    svg.MuiSvgIcon-root {
+     background-color: rgb(211, 0, 0);
+    }
+
+  }
+  &-unknown {
+    svg.MuiSvgIcon-root {
+     background-color: rgb(129, 129, 129);
+    }
+
+  }
+
+  &-pending {
+    fill: #999;
+    animation: flickerAnimation 1s infinite;
+  }
+}
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}

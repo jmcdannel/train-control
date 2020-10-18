@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import api, { getApiHost, setApiHost, getApiHostOptions } from '../../Api';
+import api from '../../Api';
 
 export function SelectLayout(props) {
 
@@ -41,19 +37,16 @@ export function SelectLayout(props) {
     <Dialog open={open} onClose={handleLayoutClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Select Layout</DialogTitle>
         <DialogContent>
-            {layouts.status  === 'idle' || layouts.status === 'pending' && (
+            {(layouts.status  === 'idle' || layouts.status === 'pending') && (
               <CircularProgress color="primary" className="spinner" />
             )}
             {layouts.status  === 'error' && (
                 <code>Error</code>
             )}
             {layouts.status  === 'done' && (
-            //   <DialogContentText>
-            //     Current Host: <pre>{getApiHost()}</pre>
-            //   </DialogContentText>
             <MenuList>
                 {layouts.data.map(layout => (
-                <MenuItem  onClick={() => handleLayoutClick(layout.layoutId)}>{layout.name}</MenuItem>
+                <MenuItem key={layout.layoutId}  onClick={() => handleLayoutClick(layout.layoutId)}>{layout.name}</MenuItem>
                 ))}
             </MenuList>
           )}

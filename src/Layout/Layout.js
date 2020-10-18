@@ -3,11 +3,9 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import DoneIcon from '@material-ui/icons/Done';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -18,8 +16,6 @@ import switchesImg from './images/IDAWANY-switches.png';
 import './Layout.scss';
 
 function Layout(props) {
-
-  const { turnouts } = props;
 
   const hideLines = ['Brown', 'Blue', 'Purple'];
   const initialLines = linesConfig.map(line => ({ visible: !hideLines.includes(line.name), ...line }));

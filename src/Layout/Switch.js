@@ -4,15 +4,13 @@ import CallSplit from '@material-ui/icons/CallSplit';
 import { ReactComponent as Turnout4Diverge } from '../Shared/Images/TurnoutMasks/4-divergent.svg';
 import { ReactComponent as Turnout4Straight } from '../Shared/Images/TurnoutMasks/4-straight.svg';
 
-import api from '../Api';
-
 import './Switch.scss';
 
 
 function TurnoutSwitch(props) {
 
   const { config, linked: linkedTurnout, onChange  } = props;
-  const { relay, crossover, reverse, name, turnoutId, label, line, abbr, current, straight, divergent, 'default': defaultOrientation } = config;
+  const { turnoutId, label, current, straight, divergent } = config;
 
   const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
   const [isLoading, setIsLoading] = useState(false);

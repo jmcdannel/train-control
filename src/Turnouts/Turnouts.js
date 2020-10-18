@@ -19,8 +19,6 @@ export const Turnouts = props => {
       : turnout.reverse
         ? getTurnoutById(turnout.reverse)
         : null;
-
-        console.log('menu', menu, isCompact);
   return (
     <Grid container spacing={2} className={`turnouts ${isCompact ? 'turnouts--compact' : 'turnouts--comfy'}`}>
       {turnoutList && turnoutList.map(turnout => (

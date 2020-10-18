@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -15,64 +15,86 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import ReportIcon from '@material-ui/icons/Report';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ThrottleSlider from './ThrottleSlider';
 import ThrottleSpeed from './ThrottleSpeed';
 import JmriThrottleController from './JmriThrottleController';
 import Functions from './Functions';
 import useDebounce from '../Shared/Hooks/useDebounce';
-import usePrevious from '../Shared/Hooks/usePrevious';
+import { Context } from '../Store/Store';
 
 import './Throttle.scss';
 
 export const Throttle = props => {
 
+  const [ state, dispatch ] = useContext(Context);
+
   const maxSpeed = 100;
   const minSpeed = -maxSpeed;
-  const EMERGENCY_STOP = '-1.0';
+  // const EMERGENCY_STOP = '-1.0';
 	const STOP = '0.0';
-  const FULL_SPEED = '1.0';
+  // const FULL_SPEED = '1.0';
 
-  const { throttleApi, loco: { address }, loco } = props;
+  const { jmriApi, loco, loco: { address, isAcquired, speed } } = props;
 
-  const [ locoAcquired, setLocoAcquired ] = useState(false);
-  const [ speed, setSpeed ] = useState(0);
+  const [ initialized, setInitialized ] = useState(false);
+  const [ uiSpeed, setUiSpeed ] = useState(speed);
+  const debouncedSpeed = useDebounce(uiSpeed, 100);
 
   useEffect(() => {
-    const requestLoco = async address => {
-      await throttleApi.requestLoco(address);
-      setLocoAcquired(true);
+    if (!initialized) { // TODO: move to store
+      const jmriState = jmriApi.getState();
+      if (jmriState.ready) {
+        jmriReady();
+      } else {
+        jmriApi.on('ready', jmriReady);
+      }
     }
-    if (!locoAcquired) {
-      requestLoco(address);
+  }, [ initialized, jmriApi ]);
+
+  const jmriReady = () => {
+    setInitialized(true);
+  }
+
+  useEffect(() => {
+    const requestLoco = async () => {
+      jmriApi.on('acquire', handleLocoAcquired)
+      await jmriApi.requestLoco(address);
     }
-  }, [locoAcquired, throttleApi, address]);
+    if (initialized && !isAcquired) {
+      requestLoco();
+    }
+  }, [initialized, isAcquired, jmriApi, address]);
+
+  useEffect(() => {
+    if (isAcquired && uiSpeed === debouncedSpeed) {
+      dispatch({ type: 'UPDATE_LOCO', payload: { address, speed: debouncedSpeed } });
+    }
+  }, [debouncedSpeed, uiSpeed, address, isAcquired]);
   
+  const handleLocoAcquired = address => {
+    dispatch({ type: 'UPDATE_LOCO', payload: { address, isAcquired: true } });
+  }
+
   const handleSliderSpeed = value => {
-    console.log('handleSliderSpeed', value);
-    setSpeed(value);
+    setUiSpeed(value);
   }
 
   const handleStopClick = () => {
-    console.log('handleStopClick', STOP);
-    setSpeed(parseInt(STOP));
+    setUiSpeed(parseInt(STOP));
   }
 
   const handleUpClick = () => {
-    setSpeed(speed + 1);
+    setUiSpeed(uiSpeed + 1);
   }
 
   const handleDownClick = () => {
-    setSpeed(speed - 1);
+    setUiSpeed(uiSpeed - 1);
   }
 
   const roadClassName = () => {
     return loco.road.toLowerCase().replace(/ /g, '-');
   }
-
 
   return (
     <Card className="throttle" >
@@ -82,23 +104,21 @@ export const Throttle = props => {
             {loco.address}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
         title={loco.name}
       />
       <CardContent className="throttle__content">
-        {locoAcquired && 
+        {loco.isAcquired && 
           <Grid container spacing={2}  className="throttle__content__grid">
             <Grid item 
-              xs={5}
-              justify="center"
-              alignItems="center">
+              xs={5}>
                   <div className="throttle__slider">
-                    <JmriThrottleController speed={speed} address={address} throttleApi={throttleApi} />
-                    <ThrottleSlider className="throttle__slider__control" speed={speed} onChange={handleSliderSpeed} />
+                    <JmriThrottleController speed={debouncedSpeed} address={address} jmriApi={jmriApi} />
+                    <ThrottleSlider className="throttle__slider__control" speed={uiSpeed} onChange={handleSliderSpeed} />
                   </div>
             </Grid>
             <Grid item xs={7} className="throttle__controls">
@@ -111,7 +131,7 @@ export const Throttle = props => {
                   <Grid item className="flex grow">
                     <Grid container spacing={2}>
                       <Grid item className="flex grow">
-                        <ThrottleSpeed  speed={speed} />
+                        <ThrottleSpeed  speed={uiSpeed} />
                       </Grid>
                       <Grid item>
                         <ButtonGroup

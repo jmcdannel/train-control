@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -9,8 +9,6 @@ export const ThrottleSlider = props => {
   const { speed, onChange } = props;
   const [ idle, setIdle] = useState(false);
 
-
-
   const scale = 100;
   const step = 10;
   const marks = Array.apply(null, Array(scale * 2 / step + 1)).map((x, i) => {
@@ -20,17 +18,6 @@ export const ThrottleSlider = props => {
       value: mark
     };
   });
-
-
-  // useEffect(() => {
-  //   console.log('useEffect.debouncedSpeed', sliderSpeed);
-  //   onChange(sliderSpeed);
-  // }, [sliderSpeed, onChange]);
-
-  // useEffect(() => {
-  //   console.log('useEffect.speed', speed);
-  //   setSliderSpeed(speed);
-  // }, [speed]);
 
   const handleChange = (event, newValue) => {
     onChange(newValue);
