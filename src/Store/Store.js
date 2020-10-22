@@ -1,9 +1,18 @@
 import React, { createContext, useReducer } from 'react';
 import Reducer from './Reducer';
-import MenuContext from '../Shared/Context/MenuContext';
+import { apiStates } from '../Api';
 
 const initialState = {
+  layout: null,
+  layoutStatus: apiStates.idle,
   locos: [
+    {
+      address: 31,
+      name: "BNSF5931",
+      road: "BNSF",
+      isAcquired: false,
+      speed: 0
+    },
     {
       address: 3,
       name: "GN-317",
@@ -11,7 +20,16 @@ const initialState = {
       isAcquired: false,
       speed: 0
     }
-  ]
+  ],
+  turnouts: [],
+  signals: [],
+  sounds: null,
+  menu: {
+    turnouts: {
+      view: 'compact'
+    }
+  },
+  userPreferences: {}
 };
 
 const Store=({children})=>{

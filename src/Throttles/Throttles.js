@@ -7,6 +7,8 @@ export const Throttles = props => {
   const [ state, dispatch ] = useContext(Context);
   const { jmriApi } = props;
 
+  console.log('locos', state.locos);
+
   
   // const handleRegisterLoco = loco => {
   //   console.log('handleRegisterLoco', loco, throttles);
@@ -18,17 +20,15 @@ export const Throttles = props => {
 
   return (
       <div className="throttles">
-        <div className="throttle__container">
-          {state.locos.map(loco => {
-
-            return (<Throttle 
-              key={loco.address}
-              jmriApi={jmriApi} 
-              loco={loco} 
-            />);
-
-          })}
-        </div>
+        {state.locos.map(loco => 
+          <div className="throttle__container">
+            <Throttle 
+                key={loco.address}
+                jmriApi={jmriApi} 
+                loco={loco} 
+              />
+          </div>
+        )}
       </div>
   );
 

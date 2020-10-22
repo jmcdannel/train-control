@@ -50,19 +50,19 @@ export const StatusMonitor = props => {
   };
 
   const jmriClassName = `status-monitor--${
-      layout && layout.data && layout.data.jmri && jmriReady
+      layout && layout.jmri && jmriReady
         ? 'connected'
         : 'unknown'
     }`;
 
   const apiClassName = `status-monitor--${
-      layout && layout.data && layout.data.api
+      layout && layout.api
         ? 'connected'
         : 'unknown'
     }`;
 
-  const hasJmri = layout && layout.data ? !!layout.data.jmri : true;
-  const hasApi = layout  && layout.data? !!layout.data.api : true;
+  const hasJmri = layout ? !!layout.jmri : true;
+  const hasApi = layout ? !!layout.api : true;
 
   // TODO: handle jmlri disconnected
   // TODO: handle api error

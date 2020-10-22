@@ -4,22 +4,25 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TrackMaster from './TrackMaster/TrackMaster';
 import Login from './Login/Login';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import Store from './Store/Store';
 import theme from './theme';
-import './App.css';
+import './App.scss';
 
 function App() {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <TrackMaster />
-        </Route>
-      </Switch>
+      <Store>
+        <CssBaseline />
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/">
+            <TrackMaster />
+          </Route>
+        </Switch>
+      </Store>
     </MuiThemeProvider>
   );
 }

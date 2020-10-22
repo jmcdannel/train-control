@@ -107,6 +107,13 @@ export const getApiHostOptions = () => {
   ];
 }
 
+export const apiStates = {
+  idle: 'idle',
+  pending: 'pending',
+  done: 'done',
+  error: 'error'
+}
+
 // export const apiHost = 'http://tamarackpi:5000';
 // export const apiHost = 'http://192.168.86.22:5000';
 // export const apiHost = 'http://localhost:5000';

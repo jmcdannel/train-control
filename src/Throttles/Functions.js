@@ -9,7 +9,7 @@ import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 export const Functions = props => {
 
   return (
-    <div className="throttle__functions__container">
+    <div className="throttle__functions">
     <div className="throttle__functions__viewport">
 
     <Button

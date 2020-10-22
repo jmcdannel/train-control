@@ -123,13 +123,14 @@ export const Throttle = props => {
             </Grid>
             <Grid item xs={7} className="throttle__controls">
               <Functions />
+              <div className="throttle__space"></div>
               <Paper elevation={3}  className="throttle__controls__status" >
                 <Grid container spacing={2}>
                   <Grid item className="flex">
                     <Button variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
                   </Grid>
                   <Grid item className="flex grow">
-                    <Grid container spacing={2}>
+                    <Grid container spacing={4}>
                       <Grid item className="flex grow">
                         <ThrottleSpeed  speed={uiSpeed} />
                       </Grid>
@@ -160,7 +161,7 @@ export const Throttle = props => {
           </Grid>
         }
       </CardContent>
-      <CardActions disableSpacing>
+      {/* <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
@@ -172,7 +173,7 @@ export const Throttle = props => {
         <IconButton aria-label="share" color="secondary" className="throttle__actions__primary">
           <ReportIcon fontSize="large" />
         </IconButton>
-      </CardActions>
+      </CardActions> */}
     </Card>
   )
 }

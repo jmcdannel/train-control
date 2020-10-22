@@ -26,11 +26,12 @@
   &-off, 
   &-unknown, 
   &-pending {
+    margin-left: .5rem;
     svg.MuiSvgIcon-root {
       border-radius: 50%;
-      padding: .5rem;
-      width: 3rem;
-      height: 3rem;
+      // padding: .5rem;
+      // width: 3rem;
+      // height: 3rem;
     }
   }
   &-on {

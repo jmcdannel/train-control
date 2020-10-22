@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
 const powerStates = {
@@ -46,9 +46,15 @@ export const Power = props => {
       : 'power-pending';
 
   return (
-    <IconButton onClick={handlePowerClick} className={getClassName()}>
-      <PowerSettingsNewIcon fontSize="large" />
-    </IconButton>)
+    <Button
+      onClick={handlePowerClick} 
+      className={getClassName()}
+      variant="contained"
+      color="primary"
+      startIcon={<PowerSettingsNewIcon />}
+    >
+      Power
+    </Button>)
 }
 
 export default Power;
