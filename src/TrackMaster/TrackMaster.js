@@ -21,6 +21,7 @@ import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
 import { Context } from '../Store/Store';
 
 import Loading from '../Shared/Loading/Loading';
+import { getJmri } from '../config/config';
 import api, { getApiHost, apiStates } from '../Api';
 import fetchLayout from '../Store/FetchLayout';
 import jmriApi from '../Shared/jmri/jmriApi';
@@ -48,7 +49,8 @@ function TrackMaster(props) {
   useEffect(() => {
     const initJmri = async () => {
       jmriApi.on('ready', handleJmriReady.bind(this));
-      const isSetup = await jmriApi.setup();
+      console.log('config', getJmri());
+      const isSetup = await jmriApi.setup(getJmri());
       setJmriInitialized(isSetup);
     }
     if (!jmriInitialized) {

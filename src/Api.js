@@ -7,10 +7,13 @@ import orangeLineImg from './Layout/images/IDAWANY-orangeline.png';
 import purpleLineImg from './Layout/images/IDAWANY-purpleline.png';
 import redLineImg from './Layout/images/IDAWANY-redline.png';
 import yellowLineImg from './Layout/images/IDAWANY-yellowline.png';
+import { getApi as getApiHostName } from './config/config';
 
 var emulatedTurnoutsData = require('./Shared/Utils/Emulator/turnouts.emulator.json');
 // let apiHost = 'http://tamarackpi:5000';
-let apiHost = 'http://localhost:5000';
+let apiHost = getApiHostName();
+
+console.log('apiHost', apiHost);
 // let apiHost = 'http://0.0.0.0:5000';
 
 async function readLayout(layoutId = null) {
