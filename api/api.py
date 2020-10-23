@@ -10,7 +10,8 @@ from layouts import layoutsapi
 app = Flask(__name__)
 cors = CORS(app)
 # arduino = serial.Serial('/dev/cu.usbmodem146301', 115200)
-serialPort = sys.argv[0]
+serialPort = sys.argv[1]
+print(serialPort)
 arduino = serial.Serial(serialPort, 115200)
 logging.getLogger('flask_cors').level = logging.DEBUG
 
