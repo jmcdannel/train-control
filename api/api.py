@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 import serial
 from flask_cors import CORS
@@ -8,8 +9,9 @@ from layouts import layoutsapi
 
 app = Flask(__name__)
 cors = CORS(app)
-# arduino = serial.Serial('/dev/cu.usbmodem146301', 9600)
-arduino = serial.Serial('/dev/cu.usbmodem146401', 9600)
+# arduino = serial.Serial('/dev/cu.usbmodem146301', 115200)
+serialPort = sys.argv[0]
+arduino = serial.Serial(serialPort, 115200)
 logging.getLogger('flask_cors').level = logging.DEBUG
 
 def write_serial_command(turnout):
@@ -58,5 +60,5 @@ def update_turnout(layout_id, turnout_id):
   return response
 
 if __name__ == '__main__':
-    # app.run(host='localhost')
-    app.run(host='0.0.0.0')
+    app.run(host='localhost')
+    # app.run(host='0.0.0.0')

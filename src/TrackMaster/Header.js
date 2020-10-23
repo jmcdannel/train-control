@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -60,7 +61,7 @@ export const Header = props => {
           color="primary"
           startIcon={<PanToolIcon />}
         >
-          Stop All
+          <Hidden smDown>Stop All</Hidden>
         </Button>
         <Power jmriApi={jmriApi} jmriReady={jmriReady} />
         <IconButton 

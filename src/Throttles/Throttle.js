@@ -112,7 +112,7 @@ export const Throttle = props => {
         title={loco.name}
       />
       <CardContent className="throttle__content">
-        {loco.isAcquired && 
+        {(true || loco.isAcquired) && 
           <Grid container spacing={2}  className="throttle__content__grid">
             <Grid item 
               xs={5}>
@@ -124,36 +124,30 @@ export const Throttle = props => {
             <Grid item xs={7} className="throttle__controls">
               <Functions />
               <div className="throttle__space"></div>
-              <Paper elevation={3}  className="throttle__controls__status" >
-                <Grid container spacing={2}>
+              <Paper elevation={3} className="width100" >
+                <ThrottleSpeed  speed={uiSpeed} idleByDefault={loco.idleByDefault} />
+                <Grid container spacing={2} className="throttle__controls__status">
                   <Grid item className="flex">
-                    <Button variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
+                    <Button className="width100" variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
                   </Grid>
-                  <Grid item className="flex grow">
-                    <Grid container spacing={4}>
-                      <Grid item className="flex grow">
-                        <ThrottleSpeed  speed={uiSpeed} />
-                      </Grid>
-                      <Grid item>
-                        <ButtonGroup
-                          orientation="vertical"
-                          color="primary"
-                          variant="outlined"
-                          className="throttle__controls__group"
-                          aria-label="vertical outlined primary button group"
-                        >
-                          <Tooltip title="Speed Increase">
-                            <Button size="large" disabled={speed === maxSpeed} onClick={handleUpClick} >+</Button>
-                          </Tooltip>
-                          {/* <Tooltip title="Idle">
-                            <Button onClick={handleIdleClick} >Idle</Button>
-                          </Tooltip> */}
-                          <Tooltip title="Speed Decrease">
-                            <Button size="large" disabled={speed === minSpeed} onClick={handleDownClick}>-</Button>
-                          </Tooltip>
-                        </ButtonGroup>
-                      </Grid>
-                    </Grid>
+                  <Grid item className="grow">
+                    <ButtonGroup
+                      orientation="vertical"
+                      color="primary"
+                      variant="outlined"
+                      className="throttle__controls__group width100"
+                      aria-label="vertical outlined primary button group"
+                    >
+                      <Tooltip title="Speed Increase">
+                        <Button size="large" disabled={speed === maxSpeed} onClick={handleUpClick} >+</Button>
+                      </Tooltip>
+                      {/* <Tooltip title="Idle">
+                        <Button onClick={handleIdleClick} >Idle</Button>
+                      </Tooltip> */}
+                      <Tooltip title="Speed Decrease">
+                        <Button size="large" disabled={speed === minSpeed} onClick={handleDownClick}>-</Button>
+                      </Tooltip>
+                    </ButtonGroup>
                   </Grid>
                 </Grid>
               </Paper>

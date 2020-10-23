@@ -35,9 +35,9 @@ $sliderWidth: 7rem;
   }
 
   &__container {
+    flex: 1;
     padding: 1rem;
-    min-width: 320px;
-    max-width: 640px;
+    max-width: 640px; 
   }
 
   &__content {
@@ -174,9 +174,9 @@ $sliderWidth: 7rem;
   }
 
   &__speed {
-    margin-top: 1rem;
     padding: 1rem;
-    width: 100%;
+    margin: 0.5rem;
+    // width: 100%;
     border: 1px solid rgba(255,255,255,.15);
     background: #333;
     box-shadow: inset 0px 0px 4px 2px rgba(0,0,0,0.3);
@@ -190,20 +190,21 @@ $sliderWidth: 7rem;
       position: absolute;
       width: 100%;
       text-align: center;
-      font-size: 12px;
+      font-size: 8px;
       text-transform: uppercase;
       font-family: "Andale Mono", monospace;
       left: 0;
       right: 0;
       white-space: nowrap;
+      padding-top: 5px;
     }
     &:before {
-      content: '↑↑ Forward ↑↑';
+      content: '↑↑ FWD ↑↑';
       top: 0;
       color: rgba(118, 255, 3, .7);
     }
     &:after {
-      content: '↓↓ Reverse ↓↓';
+      content: '↓↓ REV ↓↓';
       bottom: 0;
       color: rgba(244, 67, 54, .7);
     }
@@ -223,7 +224,7 @@ $sliderWidth: 7rem;
   }
 
   &__functions {
-    padding-bottom: 1rem;
+    // padding-bottom: 1rem;
     flex: 1 1 auto;
 
     overflow-y: auto;
@@ -236,8 +237,8 @@ $sliderWidth: 7rem;
       flex-wrap: wrap;
     }
     &__btn.MuiButtonBase-root {
-      margin: 0.5rem 0;
-      padding: 0.75rem 0; 
+      margin: 0.25rem 0;
+      padding: 0.5rem 0; 
       min-width: 8rem;
       flex: 1 0 50%;
 
@@ -254,4 +255,40 @@ $sliderWidth: 7rem;
     }
   }
 
+}
+
+@media only screen and (max-width: 1000px) {
+  .throttle {
+    &__controls {
+      &__status {
+        flex-direction: column;
+        > .MuiGrid-item {
+          width: 100%;
+        }
+      }
+
+    }
+
+    &__functions {
+      &__btn.MuiButtonBase-root {
+        min-width: 5rem;
+        flex: 1 0 50%;
+        font-size: 10px;
+
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .throttle {
+    &__functions {
+      &__btn.MuiButtonBase-root {
+        min-width: 5rem;
+        flex: 1 0 100%;
+        font-size: 10px;
+
+      }
+    }
+  }
 }
