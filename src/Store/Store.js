@@ -11,14 +11,16 @@ const initialState = {
       name: "BNSF5931",
       road: "BNSF",
       isAcquired: false,
-      speed: 0
+      speed: 0,
+      idleByDefault: true
     },
     {
       address: 3,
       name: "GN-317",
       road: "Great Northern",
       isAcquired: false,
-      speed: 0
+      speed: 0,
+      idleByDefault: true
     }
   ],
   turnouts: [],

@@ -88,14 +88,14 @@ const layoutPowerState = function(state) {
     fireEvent('power', state);
 };
 
-const setup = () => {
+const setup = (apiHost) => {
 		console.log('Setup', isSetup);
 		if (isSetup) {
 			console.log('throttle API already setup');
 			return isSetup;
 		}
-    const apiHost = 'ws://tamarackpi:12080/json/';
-    // const apiHost = 'ws://192.168.86.22:12080/json/';
+    // const apiHost = 'ws://tamarackpi:12080/json/';
+    // const apiHost = 'ws://localhost:12080/json/';
     $jmri = $.JMRI(apiHost, {
 		//*** Callback Functions available in '$jmri' object
 		toSend: function(data) {$debug && log.log(`${new Date()} - ${document.title}\nJSONtoSend: ${data}`);},	//Nothing to do

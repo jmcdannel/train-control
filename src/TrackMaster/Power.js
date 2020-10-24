@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
 const powerStates = {
@@ -53,7 +54,7 @@ export const Power = props => {
       color="primary"
       startIcon={<PowerSettingsNewIcon />}
     >
-      Power
+      <Hidden smDown>Power</Hidden>
     </Button>)
 }
 

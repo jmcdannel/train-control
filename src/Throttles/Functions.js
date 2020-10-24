@@ -8,164 +8,57 @@ import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 
 export const Functions = props => {
 
+  const functionButtons = new Array(28).fill({}).map((item, idx) => {
+    console.log(idx, item);
+    switch(idx) {
+      case 0:
+        return {
+          label: 'Horn',
+          icon: (<ShareIcon />)
+        }
+      case 1:
+        return {
+          label: 'Light',
+          icon: (<HighlightIcon />)
+        }
+      case 2:
+        return {
+          label: 'Whistle',
+          icon: (<ShareIcon />)
+        }
+      case 3:
+        return {
+          label: 'Bell',
+          icon: (<NotificationsIcon />)
+        }
+      default: 
+        return {
+          label: `Func ${idx+1}`,
+          icon: (<DeviceHubIcon />)
+        }
+    }
+    
+  });
+
+  console.log('functionButtons', functionButtons);
+
   return (
     <div className="throttle__functions">
-    <div className="throttle__functions__viewport">
+      <div className="throttle__functions__viewport">
 
-    <Button
-      variant="outlined"
-      color="primary"
-      className="throttle__functions__btn"
-      startIcon={<ShareIcon />}
-    >Horn
-    </Button>
+        {functionButtons.map(btn => (
+          <Button
+            variant="outlined"
+            size="small"
+            color="primary"
+            className="throttle__functions__btn"
+            startIcon={btn.icon}
+          >
+            {btn.label}
+          </Button>
+        ))}
 
-    <Button
-      variant="outlined"
-      color="primary"
-      className="throttle__functions__btn"
-      startIcon={<ShareIcon />}
-    >Whistle
-    </Button>
-
-    <Button
-      variant="outlined"
-      color="primary"
-      className="throttle__functions__btn"
-      startIcon={<MusicNoteIcon />}
-    >Music
-    </Button>
-
-    <Button
-      variant="outlined"
-      color="primary"
-      className="throttle__functions__btn"
-      startIcon={<NotificationsIcon />}
-    >Bell
-    </Button>
-
-    <Button
-      variant="outlined"
-      color="primary"
-      className="throttle__functions__btn"
-      startIcon={<HighlightIcon />}
-    >Light
-    </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 5
-      </Button>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="throttle__functions__btn"
-        startIcon={<DeviceHubIcon />}
-      >Func 6
-      </Button>
-
-
-    </div>
+      </div>
     </div>
   );
 

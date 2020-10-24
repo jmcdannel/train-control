@@ -75,7 +75,7 @@ void SerialCommand::process(){
     while(INTERFACE.available()>0){    // while there is data on the serial line
      c=INTERFACE.read();
      if (c=='{' || c=='[') { // json
-      String input = Serial.readString();
+      String input = c + Serial.readString();
       handleInput(input);
      } else if(c=='<')                    // start of new command
        sprintf(commandString,"");

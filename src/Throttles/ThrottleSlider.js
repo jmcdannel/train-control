@@ -6,8 +6,8 @@ import Switch from '@material-ui/core/Switch';
 
 export const ThrottleSlider = props => {
 
-  const { speed, onChange } = props;
-  const [ idle, setIdle] = useState(false);
+  const { speed, idleByDefault, onChange } = props;
+  const [ idle, setIdle] = useState(idleByDefault);
 
   const scale = 100;
   const step = 10;
