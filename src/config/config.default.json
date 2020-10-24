@@ -2,5 +2,6 @@
     "api": "http://localhost:5000",
     "apiHost": "localhost",
     "jmri": "http://localhost:12080/json/",
-    "serial": "/tty/dev/ACM0"
+    "serial": "/tty/dev/ACM0",
+    "layoutId": "tam"
 }
