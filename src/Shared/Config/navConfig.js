@@ -10,6 +10,7 @@ export const navConfig = {
   conductor: { link: '/conductor', label: 'Conductor', icon: (<TrainIcon />) },
   turnouts: { link: '/turnouts', label: 'Turnouts', icon: (<CallSplit />) },
   throttles: { link: '/throttles', label: 'Throttle', icon: (<UnfoldMoreIcon />) },
+  'train-control': { link: '/train-control', label: 'Train Control', icon: (<TrainIcon />) },
 }
 
 export const getByLink = link => {

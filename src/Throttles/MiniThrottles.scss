@@ -1,0 +1,51 @@
+.mini-throttles {
+  padding: .5rem 0;
+  background: rgba(0,0,0,.5);
+
+  &__stop {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1.5rem;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 1.5rem;
+  }
+}
+
+.mini-throttle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: .5rem;
+  width: auto;
+
+  &__stop {
+    width: auto;
+    height: 100%;
+  }
+
+  .throttle__speed {
+    width: 7rem;
+    // flex: 1;
+    height: 100%;
+    padding: 0;
+    margin: 0 .5rem;
+    &:after, &:before {
+      display: none;
+    }
+  }
+  .throttle__controls__group {
+    padding: 0 0 0 .5rem;
+    width: auto;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    .MuiButtonBase-root {
+      height: 100%;
+    }
+  }
+}

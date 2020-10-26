@@ -23,9 +23,10 @@ export const Turnouts = props => {
         ? getTurnoutById(turnout.reverse)
         : null;
   return (
-    <Grid container spacing={2} className={`turnouts ${isCompact ? 'turnouts--compact' : 'turnouts--comfy'}`}>
+    <Grid container spacing={2} className={`turnouts turnouts--tiny`}>
+    {/* <Grid container spacing={2} className={`turnouts ${isCompact ? 'turnouts--compact' : 'turnouts--comfy'}`}> */}
       {(turnoutsStatus === apiStates.idle || turnoutsStatus === apiStates.pending) && (
-          <Loading />
+        <Loading />
       )}
       {turnoutsStatus === apiStates.error && (
         <ApiError handleEmulatorClick={() => console.log('Not Implemented')} />

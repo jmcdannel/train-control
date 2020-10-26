@@ -56,22 +56,15 @@ export const Header = props => {
         </Typography>
         <StatusMonitor jmriReady={jmriReady} layout={layout} />
 
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<PanToolIcon />}
-        >
-          <Hidden smDown>Stop All</Hidden>
-        </Button>
         <Power jmriApi={jmriApi} jmriReady={jmriReady} />
-        <IconButton 
+        {/* <IconButton 
           variant="outlined"
           aria-label="display more actions" 
           edge="end" 
           color="inherit"
           onClick={handleClick}>
           <MoreIcon />
-        </IconButton>
+        </IconButton> */}
       </Toolbar>
       <Menu
         id="menu"

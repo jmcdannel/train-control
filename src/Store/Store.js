@@ -12,6 +12,7 @@ const initialState = {
       road: "BNSF",
       isAcquired: false,
       speed: 0,
+      forward: null,
       idleByDefault: true
     },
     {
@@ -20,6 +21,7 @@ const initialState = {
       road: "Great Northern",
       isAcquired: false,
       speed: 0,
+      forward: null,
       idleByDefault: true
     }
   ],

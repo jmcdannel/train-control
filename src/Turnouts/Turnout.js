@@ -105,10 +105,10 @@ export const Turnout = props => {
             icon={<CallSplit />}
             variant="outlined"
             className="chip"
-            size="medium"
+            size="small"
             style={{ backgroundColor: linesConfig.find(l => l.name === line).color }}
           />
-          <Box>
+          <Box className="turnout__header__status">
             {isLoading || isPristine 
               ? <PortableWifiOffIcon style={{color: 'gray'}} /> 
               :  <WifiTetheringIcon style={{color: 'green'}} />}

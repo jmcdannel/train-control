@@ -9,7 +9,6 @@ import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 export const Functions = props => {
 
   const functionButtons = new Array(28).fill({}).map((item, idx) => {
-    console.log(idx, item);
     switch(idx) {
       case 0:
         return {
@@ -40,8 +39,6 @@ export const Functions = props => {
     
   });
 
-  console.log('functionButtons', functionButtons);
-
   return (
     <div className="throttle__functions">
       <div className="throttle__functions__viewport">
@@ -49,6 +46,7 @@ export const Functions = props => {
         {functionButtons.map(btn => (
           <Button
             variant="outlined"
+            key={btn.label}
             size="small"
             color="primary"
             className="throttle__functions__btn"

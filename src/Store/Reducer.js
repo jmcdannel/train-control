@@ -15,10 +15,11 @@ const Reducer=(state, action)=>{
 
     case 'UPDATE_LOCO':
       const locos = state.locos.map(loco => 
-        loco.address === action.payload.address
+        loco.address == action.payload.address
           ? { ...loco, ...action.payload }
           : loco
       );
+      console.log('UPDATE_LOCO', locos, action);
       return {
         ...state,
         locos

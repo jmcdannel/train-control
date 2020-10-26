@@ -14,6 +14,8 @@ import Turnouts from '../Turnouts/Turnouts';
 import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
+import MiniThrottles from '../Throttles/MiniThrottles';
+import LandingMenu from './LandingMenu';
 import SelectLayout from '../Shared/SelectLayout/SelectLayout';
 import ApiHost from '../Shared/ApiHost/ApiHost';
 import ApiError from '../Shared/ApiError/ApiError';
@@ -48,8 +50,8 @@ function TrackMaster(props) {
 
   useEffect(() => {
     const initJmri = async () => {
-      jmriApi.on('ready', handleJmriReady.bind(this));
-      console.log('config', getJmri());
+      jmriApi.on('ready', 'TrackMaster', handleJmriReady.bind(this));
+      console.info('config', getJmri());
       const isSetup = await jmriApi.setup(getJmri());
       setJmriInitialized(isSetup);
     }
@@ -66,8 +68,6 @@ function TrackMaster(props) {
       console.log('select a layout');
     }
   }, [layoutId, dispatch]);
-
-  console.log('turnouts', turnouts, state);
 
   useEffect(() => {
     const fetchTurnouts = async () => {
@@ -87,7 +87,6 @@ function TrackMaster(props) {
   }, [turnouts, turnoutsStatus, layoutId]);
 
   const handleJmriReady = isReady => {
-    console.log('handleJmriReady', isReady);
     setJmriReady(isReady);
   }
 
@@ -147,16 +146,15 @@ function TrackMaster(props) {
             <MapControl turnouts={turnouts} onChange={handleTurnoutChange} />
           </Route>
         );
-      case 'turnouts' :
-        return (
-          <Route path="/turnouts" key={module}>
-            <Turnouts turnouts={turnouts} turnoutsStatus={turnoutsStatus} onChange={handleTurnoutChange} />
-          </Route>
-        );
+        case 'turnouts' :
+          return (
+            <Route path="/turnouts" key={module}>
+              <Turnouts turnouts={turnouts} turnoutsStatus={turnoutsStatus} onChange={handleTurnoutChange} />
+            </Route>
+          );
     }
   }
 
-  console.log('TrackMaster', layoutStatus, layout);
   return (
     <MenuContext.Provider value={menu}>
         <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
@@ -171,6 +169,8 @@ function TrackMaster(props) {
               jmriReady={jmriReady}
               layout={layout}
             />
+            <MiniThrottles locos={state.locos} jmriApi={jmriApi} />
+            
           </Box>
           <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
               <SelectLayout open={!layoutId} setLayoutId={setLayoutId} />
@@ -188,6 +188,9 @@ function TrackMaster(props) {
                       path="/"
                       render={() => (<Redirect to={`/${layout.modules[0]}`} />)}
                     />
+                    <Route path="/train-control" key={module}>
+                      <LandingMenu modules={layout.modules} onNavigate={handleNavigate} />
+                    </Route>
                     {layout.modules.map(getRoutedModule)}
                   </Switch>
                 </Container>

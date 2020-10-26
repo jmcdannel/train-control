@@ -1,6 +1,22 @@
 .trackmaster {
   &__content-container {
     height: 100%;
+    &.MuiContainer-root {
+      display: flex;
+    }
+  }
+  &__menu-item {
+    display: flex;
+    nav {
+      margin: 3rem;
+      width: 100%;
+      background-color: rgba(244, 67, 54, 0.2);
+      display: flex;
+      flex-direction: column-reverse;
+      align-content: center;
+      align-items: center;
+      justify-content: space-around;
+    }
   }
 }
 

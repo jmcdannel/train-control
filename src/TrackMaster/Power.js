@@ -18,7 +18,7 @@ export const Power = props => {
 
   useEffect(() => {
     if (jmriReady && !initialized) {
-      jmriApi.on('power', handlePowerStateChange);
+      jmriApi.on('power', 'Power', handlePowerStateChange);
       jmriApi.power();
       setInitialized(true);
     }

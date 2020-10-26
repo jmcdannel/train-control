@@ -56,8 +56,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 
 //----------------------------------------- [from server] Last selected throttle address
 var throttleState = function(name, address, speed, forward, fs) {
-	// console.log('__throttleState', name, address, speed, forward, fs, arguments);
-	promises.acquire.resolve(address);
+	console.log('__throttleState', name, address, speed, forward, fs, arguments);
 	if (address !== undefined) throttleAcquisition(address);
 	if (forward !== undefined) throttleDirection(name, forward);
 	if (speed !== undefined) throttleSpeed(name, speed);
@@ -70,13 +69,13 @@ const throttleAcquisition = address => {
 }
 
 const throttleDirection = function(name, forward) {
-    console.log('__throttleDirection', name, forward);
-	promises.direction.resolve(forward);
+		console.log('__throttleDirection', name, forward);
+		fireEvent('direction', { name, forward });
 }
 
 const throttleSpeed = function(name, speed) {
     console.log('__throttleSpeed', name, speed);
-	promises.speed.resolve(speed);
+		fireEvent('speed', { name, speed });
 };
 
 const throttleFunctionState = function(name, functionNumber, active) {
@@ -132,6 +131,7 @@ const throttle = async (address, speed) => {
 	if (speedValue === 0) speedValueFormated = $jmri.STOP;
 	if (speedValue === 1) speedValueFormated = $jmri.FULL_SPEED;
 	validateCommand() && $jmri.setJMRI('throttle', address, { 
+		'throttle': address,
 		'speed': speedValueFormated
 	});
 	return createPromise('speed', 'New throttle action dispatched.');
@@ -154,7 +154,6 @@ const requestLoco = async address => {
 }
 
 const power = async state => {
-  console.log('jmriApi.power', state);
   const payload = state
     ? { state: state }
     : {}
@@ -171,12 +170,17 @@ const getState = () =>{
 
 const eventHandlers = {};
 
-const attachEvent = (type, callback) => {
-  if (eventHandlers[type]) {
-    eventHandlers[type].push(callback);
-  } else {
-    eventHandlers[type] = [callback];
-  }
+const attachEvent = (type, src, callback) => {
+	if (!eventHandlers[type]) {
+		eventHandlers[type] = {};
+	}
+	eventHandlers[type][src] = callback;
+}
+
+const dettachEvent = (type, src) => {
+  if (eventHandlers[type] && eventHandlers[type][src]) {
+		delete eventHandlers[type][src];
+	}
 }
 
 const fireEvent = (type, payload) => {
@@ -184,7 +188,10 @@ const fireEvent = (type, payload) => {
     promises[type].resolve(payload);
   }
   if (eventHandlers[type]) {
-    eventHandlers[type].forEach(handler => handler(payload));
+		console.log('fireevent', type, eventHandlers[type]);
+		Object.keys(eventHandlers[type]).forEach(key => {
+			eventHandlers[type][key](payload);
+		});
   }
 }
 
@@ -224,7 +231,8 @@ export const jmriApi = {
 		requestLoco,
     changeDirection,
     power,
-    on: attachEvent,
+		on: attachEvent,
+		off: dettachEvent,
     getState
 };
 

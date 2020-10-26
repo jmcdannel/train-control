@@ -9,7 +9,7 @@ import api from '../../Api';
 
 export function SelectLayout(props) {
 
-  const { open, handleLayoutClose, setLayoutId } = props;
+  const { open, setLayoutId } = props;
   const [ layouts, setLayouts] = useState({ data: null, status: 'idle' });
   
   useEffect(() => {
@@ -30,11 +30,10 @@ export function SelectLayout(props) {
   const handleLayoutClick = layoutId => {
     window.localStorage.setItem('layoutId', layoutId);
     setLayoutId(layoutId);
-    handleLayoutClose();
   }
 
   return (
-    <Dialog open={open} onClose={handleLayoutClose} aria-labelledby="form-dialog-title">
+    <Dialog open={open} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Select Layout</DialogTitle>
         <DialogContent>
             {(layouts.status  === 'idle' || layouts.status === 'pending') && (

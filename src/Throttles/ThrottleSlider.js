@@ -37,23 +37,25 @@ export const ThrottleSlider = props => {
   return (
     <Grid container spacing={2} direction="column-reverse" className="throttle__slider__container">
       <Grid item className="throttle__slider__item">
-        <Slider
-            orientation="vertical"
-            defaultValue={0}
-            min={-scale}
-            max={scale}
-            marks={marks}
-            value={speed}
-            track={false}
-            aria-labelledby="vertical-slider"
-            onChange={handleChange}
-            onChangeCommitted={handleChangeCommitted}
-            className={`throttle__slider 
-            ${speed < 0 
-              ? 'throttle__speed--reverse' 
-              : 'throttle__speed--forward'}`}
-            
-          />
+        <div className="throttle__slider__wrapper">
+          <Slider
+              orientation="vertical"
+              defaultValue={0}
+              min={-scale}
+              max={scale}
+              marks={marks}
+              value={speed}
+              track={false}
+              aria-labelledby="vertical-slider"
+              onChange={handleChange}
+              onChangeCommitted={handleChangeCommitted}
+              className={`throttle__slider 
+              ${speed < 0 
+                ? 'throttle__speed--reverse' 
+                : 'throttle__speed--forward'}`}
+              
+            />
+          </div>
       </Grid>
       <Grid item>
         <FormControlLabel
