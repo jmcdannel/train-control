@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import Throttle from './Throttle';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import { Context } from '../Store/Store';
 
 export const Throttles = props => {
@@ -17,7 +19,7 @@ export const Throttles = props => {
     { label: 'Comfy', value: 'comfy' },
     { label: '2 Up', value: '2up' },
     { label: 'Full', value: 'full' },
-  ]
+  ];
 
   const [view, setView] = useState(window.localStorage.getItem('throttleView') || views[1].value);
 
@@ -27,58 +29,59 @@ export const Throttles = props => {
 
   const handleLocoAcquired = address => {
     dispatch({ type: 'UPDATE_LOCO', payload: { address, isAcquired: true } });
-    jmriApi.off('acquire', 'Throttles');
-  }
-
-  const handleSpeed = ({ name, speed }) => {
-    dispatch({ type: 'UPDATE_LOCO', payload: { address: name, speed } });
-    jmriApi.off('speed', 'Throttles');
-  }
-
-  const handleDirection = async ({ name, forward }) => {
-    dispatch({ type: 'UPDATE_LOCO', payload: { address: name, forward } });
-    jmriApi.off('direction', 'Throttles');
   }
 
   useEffect(() => {
-      jmriApi.on('direction', 'Throttles', handleDirection);
-      jmriApi.on('speed', 'Throttles', handleSpeed);
-      jmriApi.on('acquire', 'Throttles', handleLocoAcquired);
-  }, [jmriApi, handleDirection, handleSpeed]);
+    jmriApi.on('acquire', 'Throttles', handleLocoAcquired);
+  }, [jmriApi, handleLocoAcquired]);
 
-  const handleViewClick = view => {
-    setView(view);
-    window.localStorage.setItem('throttleView', view);
+  const handleViewClick = event => {
+    setView(event.target.value);
+    window.localStorage.setItem('throttleView', event.target.value);
   }
 
   return (
     <Grid container spacing={2} className="throttles">
-      <Grid item xs={1} className="throttles__available">
-        <Grid container spacing={1}>
-
-          {state.locos.filter(loco => !loco.isAcquired).map(loco => 
-            <Grid item key={loco.address}>
-              <Button 
-                variant="outlined"
-                color="primary"
-                key={loco.address}
-                onClick={() => acquireLocoClicked(loco.address)}
-              >{loco.address}
-              </Button>
-            </Grid>
-          )}
-          <Grid item className="throttles__menu">
-            <Paper>
-              <MenuList>
-                {views.map(view => (
-                  <MenuItem key={view.value} onClick={() => handleViewClick(view.value)}>{view.label}</MenuItem>
-                ))}
-              </MenuList>
-            </Paper>
+      <Grid item className="throttles__available" zeroMinWidth>
+        <Grid container spacing={1} direction="column" className="throttles__menu">
+          <Grid item>
+            <ButtonGroup 
+              orientation="vertical"
+              variant="outlined"
+              className="width100"
+              color="primary">
+              {state.locos.filter(loco => !loco.isAcquired).map(loco => 
+                <Button 
+                  key={loco.address}
+                  key={loco.address}
+                  onClick={() => acquireLocoClicked(loco.address)}
+                >
+                  {loco.address}
+                </Button>
+              )}
+            </ButtonGroup>
+          </Grid>
+          <Grid item className="throttles__viewmenu">
+              <FormControl >
+                <InputLabel shrink id="view-throttles-label">
+                  View
+                </InputLabel>
+                <Select
+                  labelId="view-throttles-label"
+                  id="view-throttles"
+                  value={view}
+                  onChange={handleViewClick}
+                  displayEmpty
+                >
+                  {views.map(view => (
+                    <MenuItem key={view.value} value={view.value}>{view.label}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={11} className={`throttles__acquired  throttles__acquired--view-${view}`}>
+      <Grid item className={`throttles__acquired  throttles__acquired--view-${view} grow`}>
         {state.locos.filter(loco => loco.isAcquired).map(loco => 
           <div className="throttle__container" key={loco.address}>
             <Throttle jmriApi={jmriApi} loco={loco} />

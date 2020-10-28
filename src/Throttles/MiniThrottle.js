@@ -25,7 +25,10 @@ export const MiniThrottle = props => {
     forward
   } } = props;
 
-  const [ uiSpeed, setUiSpeed ] = useState(speed ? speed * 100 : 0);
+
+  const initialUiSpeed = speed * 100 * (forward === true ? 1 : -1);
+
+  const [ uiSpeed, setUiSpeed ] = useState(initialUiSpeed);
   const [ dirty, setDirty ] = useState(speed ? speed * 100 : 0);
   const debouncedSpeed = useDebounce(uiSpeed, 100);
 

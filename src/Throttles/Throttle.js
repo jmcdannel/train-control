@@ -40,8 +40,10 @@ export const Throttle = props => {
     forward
   } } = props;
   
+  const initialUiSpeed = speed * 100 * (forward === true ? 1 : -1);
+
   // const [ initialized, setInitialized ] = useState(false);
-  const [ uiSpeed, setUiSpeed ] = useState(speed ? speed * 100 : 0);
+  const [ uiSpeed, setUiSpeed ] = useState(initialUiSpeed);
   const debouncedSpeed = useDebounce(uiSpeed, 100);
 
   // useEffect(() => {
@@ -111,8 +113,8 @@ export const Throttle = props => {
               <Functions />
               <div className="throttle__space"></div>
               <Paper elevation={3} className="width100" >
-                <pre>speed={loco.speed}</pre>
-                <pre>uiSpeed={uiSpeed}</pre>
+                {/* <pre>speed={loco.speed}</pre>
+                <pre>uiSpeed={uiSpeed}</pre> */}
                 <ThrottleSpeed  speed={uiSpeed} idleByDefault={loco.idleByDefault} />
                 <Grid container spacing={2} className="throttle__controls__status">
                   <Grid item className="flex">

@@ -34,7 +34,8 @@ import './Turnout.scss';
 
 export const Turnout = props => {
 
-  const { config, compact, linked: linkedTurnout, onChange  } = props;
+  const { config, view, linked: linkedTurnout, onChange  } = props;
+  
 
   const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
   const [isLoading, setIsLoading] = useState(false);
@@ -98,7 +99,7 @@ export const Turnout = props => {
   }
 
 	return (
-    <Card className={`turnout ${compact ? 'turnout--compact' : 'turnout--comfy'}`}>
+    <Card className={`turnout turnout--compact`}>
       <CardHeader className="turnout__header">
         <Chip
             label={`${label}`}

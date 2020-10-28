@@ -1,6 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { MenuContext } from '../Shared/Context/MenuContext';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Loading from '../Shared/Loading/Loading';
 import ApiError from '../Shared/ApiError/ApiError';
 import { apiStates } from '../Api';
@@ -10,9 +13,17 @@ export const Turnouts = props => {
 
   const { turnouts, turnoutsStatus, onChange } = props;
 
-  const menu = useContext(MenuContext);
-  const isCompact = menu
-    && menu.view === 'compact' ? true : false;
+  const views = [
+    { label: 'Tiny', value: 'tiny' },
+    { label: 'Compact', value: 'compact' },
+    { label: 'Comfy', value: 'comfy' },
+  ];
+  const [view, setView] = useState(window.localStorage.getItem('turnoutView') || views[0].value);
+
+  const handleViewClick = event => {
+    setView(event.target.value);
+    window.localStorage.setItem('throttleView', event.target.value);
+  }
 
   const getTurnoutById = id => turnouts.find(t => id === t.turnoutId);
 
@@ -23,24 +34,48 @@ export const Turnouts = props => {
         ? getTurnoutById(turnout.reverse)
         : null;
   return (
-    <Grid container spacing={2} className={`turnouts turnouts--tiny`}>
-    {/* <Grid container spacing={2} className={`turnouts ${isCompact ? 'turnouts--compact' : 'turnouts--comfy'}`}> */}
+    <Grid container className={`turnouts turnouts--${view}`}>
       {(turnoutsStatus === apiStates.idle || turnoutsStatus === apiStates.pending) && (
         <Loading />
       )}
       {turnoutsStatus === apiStates.error && (
         <ApiError handleEmulatorClick={() => console.log('Not Implemented')} />
       )}
-      {turnoutsStatus === apiStates.done && turnouts && turnouts.length > 0 && turnouts.map(turnout => (
-        <Grid key={turnout.turnoutId} item className="turnout__container">
-            <Turnout 
-              compact={isCompact}
-              config={turnout} 
-              linked={getLinkedTurnout(turnout)}
-              onChange={onChange} />
-        </Grid>
-      ))}
+      {turnoutsStatus === apiStates.done && turnouts && turnouts.length > 0 && (
+        <>
+          <Grid item zeroMinWidth>
+            <FormControl >
+              <InputLabel shrink id="view-turnouts-label">
+                View
+              </InputLabel>
+              <Select
+                labelId="view-throttles-label"
+                id="view-throttles"
+                value={view}
+                onChange={handleViewClick}
+                displayEmpty
+              >
+                {views.map(view => (
+                  <MenuItem key={view.value} value={view.value}>{view.label}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid >
+          <Grid item className="turnout__grid-item">
+            {turnouts.map(turnout => (
+              <div className="turnout__container">
+                <Turnout 
+                  view={view}
+                  config={turnout} 
+                  linked={getLinkedTurnout(turnout)}
+                  onChange={onChange} />
+              </div>
+            ))}
+          </Grid>
+        </>
+      )}
     </Grid>
+    
   );
 
 }

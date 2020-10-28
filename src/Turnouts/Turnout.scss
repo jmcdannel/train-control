@@ -7,11 +7,9 @@ $off: rgba(0,0,0,.4);
 }
 
 .turnouts {
-  display: flex;
-  justify-content: center;
-  align-content: flex-start;
-
-
+  // display: flex;
+  // justify-content: center;
+  // align-content: flex-start;
 
   .turnout {
     display: flex;
@@ -24,6 +22,17 @@ $off: rgba(0,0,0,.4);
       justify-content: space-between;
       width: 100%;
       align-items: center;
+    }
+
+    &__grid-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      flex: 1;
+    }
+
+    &__container {
+      padding: 1rem;
     }
 
     &__desc {
@@ -104,6 +113,7 @@ $off: rgba(0,0,0,.4);
         }
 
       }
+
       
       .svg-wrapper {
         > svg {
@@ -216,7 +226,8 @@ $off: rgba(0,0,0,.4);
 .MuiTextField-root {
   margin: 1rem;
 }
-.turnout--compact {
+.turnout--compact,
+.turnout-tiny {
 
   .compact-hidden {
     display: none;

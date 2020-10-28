@@ -5,13 +5,16 @@ $sliderWidth: 7rem;
   &__available {
     display: flex;
     justify-content: flex-start;
+    border-right: 1px solid rgba(255,0,0,.5);
+
     > .MuiGrid-root {
       align-content: flex-start;
     }
   }
 
   &__menu {
-    align-self: flex-end;
+    justify-content: space-between;
+    padding-left: .5rem;;
   }
 
   &__acquired {
