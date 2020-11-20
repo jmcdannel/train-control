@@ -1,0 +1,35 @@
+[
+  {
+    "signalId": 101,
+    "greenPin": 0,
+    "redPin": 3,
+    "current": "red",
+    "triggers": [
+      {
+        "type": "ir",
+        "pin": 15,
+        "delay": 5,
+        "decay": 10,
+        "clear": "green",
+        "obstructed": "red"
+      }
+    ]
+  },
+
+  {
+    "signalId": 102,
+    "greenPin": 1,
+    "redPin": 2,
+    "current": "red",
+    "triggers": [
+      {
+        "type": "ir",
+        "pin": 8,
+        "delay": 5,
+        "decay": 10,
+        "clear": "green",
+        "obstructed": "red"
+      }
+    ]
+  }
+]

@@ -5,7 +5,7 @@ const locos = [
     address: 31,
     name: "BNSF5931",
     road: "BNSF",
-    isAcquired: false,
+    isAcquired: true,
     speed: 0,
     forward: null,
     idleByDefault: true

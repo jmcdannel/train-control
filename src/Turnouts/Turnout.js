@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as Colors from 'material-ui/colors';
 // import SwitchImg from './switch.svg';
 import { ReactComponent as Logo } from './switch.svg';
 
@@ -28,9 +29,19 @@ import PortableWifiOffIcon from '@material-ui/icons/PortableWifiOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Settings from './Settings';
-import { linesConfig } from '../Api';
-// import { ReactComponent as TurnoutMaskLeft4Diverge } from './images/left-4-diverge.svg';
 import './Turnout.scss';
+// import { linesConfig } from '../Api';
+
+
+export const linesConfig = [
+  { lineId: 'mainred', label: 'Mainline SB', color: Colors.red[500] },
+  { lineId: 'maingreen', label: 'Mainline NB', color: Colors.green[500] },
+  { lineId: 'tam-st-n', label: 'Tamarack Station North', color: Colors.pink[500] },
+  { lineId: 'tam-st-s', label: 'Tamarack Station South', color: Colors.cyan[500] },
+  { lineId: 'industrial', label: 'Industrial Siding', color: Colors.orange[500] }
+];
+// import { ReactComponent as TurnoutMaskLeft4Diverge } from './images/left-4-diverge.svg';
+
 
 export const Turnout = props => {
 
@@ -102,12 +113,12 @@ export const Turnout = props => {
     <Card className={`turnout turnout--compact`}>
       <CardHeader className="turnout__header">
         <Chip
-            label={`${label}`}
+            label={`${abbr}`}
             icon={<CallSplit />}
             variant="outlined"
             className="chip"
             size="small"
-            style={{ backgroundColor: linesConfig.find(l => l.name === line).color }}
+            style={{ backgroundColor: linesConfig.find(l => l.lineId === line).color }}
           />
           <Box className="turnout__header__status">
             {isLoading || isPristine 

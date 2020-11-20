@@ -57,12 +57,12 @@ export const ThrottleSlider = props => {
             />
           </div>
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <FormControlLabel
           control={<Switch checked={idle} onChange={handleIdleChange} name="isIdle" />}
           label="Idle"
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 
