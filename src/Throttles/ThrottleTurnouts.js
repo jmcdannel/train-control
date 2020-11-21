@@ -49,9 +49,12 @@ export const ThrottleTurnouts = props => {
     window.localStorage.setItem('throttleView', event.target.value);
   }
 
-  const toggleTurnout = async turnout => {
-    console.log('toggleTurnout', turnout);
-    turnout = await api.turnouts.put(layout.layoutId, turnout);
+  const toggleTurnout = async ( { turnoutId, current, straight, divergent }) => {
+    console.log('toggleTurnout22', turnoutId, current, straight, divergent);
+    const turnout = await api.turnouts.put(layout.layoutId, {
+      turnoutId,
+      current: current === divergent ? straight : divergent
+    });
     await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
   }
 

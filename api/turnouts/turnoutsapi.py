@@ -5,7 +5,11 @@ from flask import json, jsonify, request, abort
 from config import config
 
 appConfig = config.getConfig()
-if (appconfig['turnouts']['device'] == 'pi' and appConfig['tunrouts']['interface'] =='PCA9685'):
+kit = None
+pwm = None
+print(appConfig)
+print(appConfig['turnouts'])
+if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='PCA9685'):
   try:
     import Adafruit_PCA9685
     pwm = Adafruit_PCA9685.PCA9685()
@@ -14,13 +18,15 @@ if (appconfig['turnouts']['device'] == 'pi' and appConfig['tunrouts']['interface
     pwm.set_pwm_freq(60)
   except ImportError as error:
     # Output expected ImportErrors.
-    print(error.__class__.__name__ + ": " + error.message)
+    print('ImportError')
+    print(error, False)
+    # print(error.__class__.__name__ + ": " + error.message)
   except Exception as exception:
     # Output unexpected Exceptions.
+    print('Exception')
     print(exception, False)
-    print(exception.__class__.__name__ + ": " + exception.message)
 
-if (appconfig['turnouts']['device'] == 'pi' and appConfig['tunrouts']['interface'] =='ServoKit'):
+if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='ServoKit'):
   try:
     from adafruit_servokit import ServoKit
     kit = ServoKit(channels=16)
@@ -39,7 +45,9 @@ def init(layout_id):
   with open(path) as turnout_file:
     data = json.load(turnout_file)
 
-  for turunout in data:
+  print(data)
+  for turnout in data:
+    print(turnout)
     if 'relay' in turnout:
       GPIO.setup(turnout['relay'], GPIO.OUT)
 
@@ -76,15 +84,21 @@ def put(layout_id, turnout_id):
   # Turn servo to current degrees
   if 'servo' in turnout:
     if kit is not None:
+      print('kit Turnout: ' + turnout['current'])
       kit.servo[turnout['servo']].angle = turnout['current']
     if pwm is not None:
+      print('PWM Turnout: ' + turnout['current'])
       pwm.set_pwm(turnout['servo'], 0, turnout['current'])
 
   # Toggle relay if present
   if 'relay' in turnout:
     if turnout['current'] == turnout['straight']:
+      print('Realy Off')
+      print(turnout['relay'])
       GPIO.output(turnout['relay'], False)
     else:
+      print('Realy On')
+      print(turnout['relay'])
       GPIO.output(turnout['relay'], True)
 
   # save all keys

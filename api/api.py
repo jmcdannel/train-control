@@ -11,6 +11,7 @@ app = Flask(__name__)
 cors = CORS(app)
 host = config.getHost()
 logging.getLogger('flask_cors').level = logging.DEBUG
+turnoutsapi.init('tam')
 
 # Layouts
 @app.route('/layouts', methods=['GET'])
