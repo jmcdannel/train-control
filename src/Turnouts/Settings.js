@@ -115,9 +115,10 @@ export const Settings = props => {
   }
 
   const isValidDegrees = value => {
-    const intValue = parseInt(value);
-    return (value === '' || 
-      (/^\d+$/.test(value) && intValue >= 0 && intValue <= 360));
+    return true; // disable
+    // const intValue = parseInt(value);
+    // return (value === '' || 
+    //   (/^\d+$/.test(value) && intValue >= 0 && intValue <= 360));
   }
 
   const handleDivergentChange = e => {
@@ -253,8 +254,8 @@ export const Settings = props => {
                 <Button onClick={() => handleServo(divergent)} disabled={isLoading}>
                   Divergent
                 </Button>
-                <Button onClick={() => handleServo(90)} disabled={isLoading}>
-                  90&deg;
+                <Button onClick={() => handleServo((straight + divergent) / 2)} disabled={isLoading}>
+                  Center&deg;
                 </Button>
               </ButtonGroup>
               
