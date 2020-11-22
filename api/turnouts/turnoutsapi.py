@@ -84,10 +84,8 @@ def put(layout_id, turnout_id):
   # Turn servo to current degrees
   if 'servo' in turnout:
     if kit is not None:
-      print('kit Turnout: ' + turnout['current'])
       kit.servo[turnout['servo']].angle = turnout['current']
     if pwm is not None:
-      print('PWM Turnout: ' + turnout['current'])
       pwm.set_pwm(turnout['servo'], 0, turnout['current'])
 
   # Toggle relay if present
