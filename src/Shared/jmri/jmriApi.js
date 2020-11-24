@@ -139,7 +139,7 @@ const throttle = async (address, speed) => {
 
 const changeDirection = (address, forward) => {
     validateCommand() && $jmri.setJMRI('throttle', address, { 
-		throttle: address, 
+			address, 
 		forward: !!forward
 	 });
 	 return createPromise('direction', 'New direction action dispatched.');
