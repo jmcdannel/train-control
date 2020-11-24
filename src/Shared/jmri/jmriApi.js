@@ -131,7 +131,7 @@ const throttle = async (address, speed) => {
 	if (speedValue === 0) speedValueFormated = $jmri.STOP;
 	if (speedValue === 1) speedValueFormated = $jmri.FULL_SPEED;
 	validateCommand() && $jmri.setJMRI('throttle', address, { 
-		'throttle': address,
+		address,
 		'speed': speedValueFormated
 	});
 	return createPromise('speed', 'New throttle action dispatched.');
