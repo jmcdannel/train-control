@@ -51,7 +51,7 @@ def init(layout_id):
     if 'relay' in turnout:
       GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
     if 'relayCrossover' in turnout:
-      GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
+      GPIO.setup(turnout['relayCrossover']['pin'], GPIO.OUT)
 
 def get(layout_id, turnout_id=None):
   path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
