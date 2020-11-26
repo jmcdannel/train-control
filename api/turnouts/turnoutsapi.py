@@ -47,7 +47,6 @@ def init(layout_id):
 
   print(data)
   for turnout in data:
-    print(turnout)
     if 'relay' in turnout:
       GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
     if 'relayCrossover' in turnout:
