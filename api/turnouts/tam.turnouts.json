@@ -12,6 +12,11 @@
       "straight": true,
       "divergent": false
     },
+    "relayCrossover": {
+      "pin":40,
+      "straight": false,
+      "divergent": true
+    },
     "servo":5,
     "straight":425,
     "turnoutId":106
