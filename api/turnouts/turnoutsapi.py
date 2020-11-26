@@ -99,6 +99,17 @@ def put(layout_id, turnout_id):
       print(turnout['relay'])
       GPIO.output(turnout['relay']['pin'], turnout['relay']['divergent'])
 
+  # Toggle crossover relay if present
+  if 'relayCrossover' in turnout:
+    if turnout['current'] == turnout['straight']:
+      print('Realy straight')
+      print(turnout['relayCrossover'])
+      GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['straight'])
+    else:
+      print('Realy divergent')
+      print(turnout['relayCrossover'])
+      GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['divergent'])
+
   # save all keys
   for key in request.json:
     turnout[key] = request.json.get(key, turnout[key])
