@@ -19,19 +19,8 @@
     "name": "Tamarack Junction",
     "modules": [
       "turnouts",
-      "throttles"
-    ],
-    "jmri": {
-      "defaultHost": "http://localhost:12080"
-    },
-    "api": {
-      "defaultHost": "http://tamarackpi:5000"
-    },
-    "turnouts": {
-      "interface": "api"
-    },
-    "throttles": {
-      "interface": "jmri"
-    }
+      "throttles",
+      "signals"
+    ]
   }
 ]

@@ -3,33 +3,28 @@
     "signalId": 101,
     "greenPin": 0,
     "redPin": 3,
-    "current": "red",
-    "triggers": [
-      {
-        "type": "ir",
-        "pin": 15,
-        "delay": 5,
-        "decay": 10,
-        "clear": "green",
-        "obstructed": "red"
-      }
-    ]
+    "name": "Tamararck Station South Track 1 Signal",
+    "abbr":"TS Sig1"
   },
-
   {
     "signalId": 102,
-    "greenPin": 1,
-    "redPin": 2,
-    "current": "red",
-    "triggers": [
-      {
-        "type": "ir",
-        "pin": 8,
-        "delay": 5,
-        "decay": 10,
-        "clear": "green",
-        "obstructed": "red"
-      }
-    ]
+    "greenPin": 0,
+    "redPin": 3,
+    "name": "Tamararck Station South Track 2 Signal",
+    "abbr":"TS Sig2"
+  },
+  {
+    "signalId": 103,
+    "greenPin": 0,
+    "redPin": 3,
+    "name": "Tamararck Station South Track 3 Signal",
+    "abbr":"TS Sig3"
+  },
+  {
+    "signalId": 104,
+    "greenPin": 0,
+    "redPin": 3,
+    "name": "Tamararck Station South Track 4 Signal",
+    "abbr":"TS Sig4"
   }
 ]

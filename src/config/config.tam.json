@@ -1,0 +1,25 @@
+{
+  "layoutId": "tam","name": "Tamarack Junction",
+  "modules": [
+    "turnouts",
+    "throttles",
+    "signals",
+    "sensors"
+  ],
+  "api": "http://tamarackpi:5000",
+  "apiHost": "tamarackpi",
+  "jmri": "http://tamarackpi:12080/json/",
+  "serial": "/tty/dev/ACM0",
+  "turnouts": {
+      "device": "pi",
+      "interface": "PCA9685"
+  },
+  "signals": {
+      "device": "arduino",
+      "interface": "serial"
+  },
+  "sensors": {
+      "device": "arduino",
+      "interface": "serial"
+  }
+}

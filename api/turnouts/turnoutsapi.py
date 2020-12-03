@@ -1,6 +1,5 @@
 import os
 import RPi.GPIO as GPIO
-from flask_cors import CORS
 from flask import json, jsonify, request, abort
 from config import config
 
