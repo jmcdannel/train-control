@@ -7,7 +7,16 @@
     "label":"TamStation Crossover",
     "line":"mainred",
     "name":"Tamararck Station South Crossover, Switch S1",
-    "relay":18,
+    "relay": {
+      "pin":18,
+      "straight": true,
+      "divergent": false
+    },
+    "relayCrossover": {
+      "pin":40,
+      "straight": false,
+      "divergent": true
+    },
     "servo":5,
     "straight":425,
     "turnoutId":106
@@ -19,7 +28,11 @@
     "label":"TamStation Green S2",
     "line":"maingreen",
     "name":"Tamararck Station South, Greenline, Switch S2",
-    "relay":16,
+    "relay": {
+      "pin":16,
+      "straight": true,
+      "divergent": false
+    },
     "servo":9,
     "divergent":400,
     "straight":500,
@@ -32,7 +45,11 @@
     "label":"TamStation Green S3",
     "line":"mainred",
     "name":"Tamararck Station South, Redline, Switch S3",
-    "relay":15,
+    "relay": {
+      "pin":15,
+      "straight": true,
+      "divergent": false
+    },
     "servo":7,
     "divergent":275,
     "straight":400,
@@ -123,3 +140,4 @@
     "turnoutId":101
   }
 ]
+
