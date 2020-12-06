@@ -33,7 +33,7 @@ def put(signal_id):
 
   signal = signals[0]
   for key in request.json:
-    turnout[key] = request.json.get(key, turnout[key])
+    signal[key] = request.json.get(key, signal[key])
 
   state = 0
   signalId = signal['signalId']
