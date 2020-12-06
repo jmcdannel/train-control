@@ -53,7 +53,7 @@ function LandingMenu({ modules, onNavigate }) {
           break;
     }
     return (
-      <Grid item xs={6} className="trackmaster__menu-item">
+      <Grid item xs={6} className="trackmaster__menu-item" key={module}>
         <nav onClick={e => handleClick(e, module)}>
           {moduleLink}
         </nav>
@@ -66,8 +66,7 @@ function LandingMenu({ modules, onNavigate }) {
   return (
     <Grid container spacing={8}>
 
-      {modules.map(getdModuleLink)}
-      {modules.map(getdModuleLink)}
+      {modules.filter(module => !!navConfig[module]).map(getdModuleLink)}
       
     </Grid>
   )

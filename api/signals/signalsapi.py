@@ -1,5 +1,4 @@
 import os
-import RPi.GPIO as GPIO
 from flask import json, jsonify, abort
 from config import config
 

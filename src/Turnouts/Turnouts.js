@@ -11,14 +11,14 @@ import Turnout from './Turnout';
 
 export const Turnouts = props => {
 
-  const { turnouts, turnoutsStatus, onChange } = props;
+  const { turnouts, turnoutsStatus } = props;
 
   const views = [
     { label: 'Tiny', value: 'tiny' },
     { label: 'Compact', value: 'compact' },
     { label: 'Comfy', value: 'comfy' },
   ];
-  const [view, setView] = useState(window.localStorage.getItem('turnoutView') || views[0].value);
+  const [view, setView] = useState(window.localStorage.getItem('turnoutView') || 'compact');
 
   const handleViewClick = event => {
     setView(event.target.value);
@@ -27,19 +27,13 @@ export const Turnouts = props => {
 
   const getTurnoutById = id => turnouts.find(t => id === t.turnoutId);
 
-  const getLinkedTurnout = turnout => 
-    turnout.crossover
-      ? getTurnoutById(turnout.crossover)
-      : turnout.reverse
-        ? getTurnoutById(turnout.reverse)
-        : null;
   return (
     <Grid container className={`turnouts turnouts--${view}`}>
       {(turnoutsStatus === apiStates.idle || turnoutsStatus === apiStates.pending) && (
         <Loading />
       )}
       {turnoutsStatus === apiStates.error && (
-        <ApiError handleEmulatorClick={() => console.log('Not Implemented')} />
+        <ApiError />
       )}
       {turnoutsStatus === apiStates.done && turnouts && turnouts.length > 0 && (
         <>
@@ -65,10 +59,8 @@ export const Turnouts = props => {
             {turnouts.map(turnout => (
               <div className="turnout__container">
                 <Turnout 
-                  view={view}
                   config={turnout} 
-                  linked={getLinkedTurnout(turnout)}
-                  onChange={onChange} />
+                 />
               </div>
             ))}
           </Grid>

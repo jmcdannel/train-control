@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Box from '@material-ui/core/Box';
@@ -26,6 +26,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import { Context } from '../Store/Store';
+import api from '../Api';
+
 
 const getInverse = degrees => {
   return degrees < 90
@@ -34,7 +37,10 @@ const getInverse = degrees => {
 }
 
 export const Settings = props => {
-  const { open, config, onClose, onChange } = props;
+  const { open, config, onClose } = props;
+
+  const [ state, dispatch ] = useContext(Context);
+
   const { turnoutId } = config;
   const [name, setName] = useState(config.name);
   const [line, setLine] = useState(config.line);
@@ -83,13 +89,14 @@ export const Settings = props => {
     try {
       setIsLoading(true);
       setHasError(false);
-      await onChange([{
+      const turnout = await api.turnouts.put({
         turnoutId,
         name,
         line,
         straight,
         divergent
-      }]);
+      });
+      await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
       onClose();
     } catch (err) {
       console.error(err);
@@ -131,7 +138,9 @@ export const Settings = props => {
     }
   }
   const sendDegrees = async degrees => {
-    return await onChange([{ turnoutId, current: parseInt(degrees) }]);
+    const turnout = await api.turnouts.put({ turnoutId, current: parseInt(degrees) });
+    await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
+    return turnout;
   }
 
   return (

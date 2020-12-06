@@ -5,7 +5,7 @@ import navConfig from '../Shared/Config/navConfig';
 
 export const Footer = props => {
 
-  const { page, layout, onNavigate: handleNavigate } = props;
+  const { page, modules, onNavigate: handleNavigate } = props;
 
   return (
     <BottomNavigation
@@ -13,7 +13,7 @@ export const Footer = props => {
       className="App-footer"
       onChange={handleNavigate}
     >
-      {layout && layout.modules && layout.modules.map(module => (
+      {modules && modules.filter(module => !!navConfig[module]).map(module => (
         <BottomNavigationAction key={module} label={navConfig[module].label} value={`${navConfig[module].link}`} icon={navConfig[module].icon} />
       ))}
       {/* <BottomNavigationAction label="Settings" value="/settings" icon={<SettingsIcon />} /> */}

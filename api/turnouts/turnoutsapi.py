@@ -1,15 +1,18 @@
 import os
-import RPi.GPIO as GPIO
 from flask import json, jsonify, request, abort
 from config import config
 
 appConfig = config.getConfig()
 kit = None
 pwm = None
+GPIO = None
+
 print(appConfig)
 print(appConfig['turnouts'])
+
 if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='PCA9685'):
   try:
+    import RPi.GPIO as GPIO
     import Adafruit_PCA9685
     pwm = Adafruit_PCA9685.PCA9685()
     servo_min = 150  # Min pulse length out of 4096
@@ -27,6 +30,7 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
 
 if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='ServoKit'):
   try:
+    import RPi.GPIO as GPIO
     from adafruit_servokit import ServoKit
     kit = ServoKit(channels=16)
   except ImportError as error:
@@ -37,19 +41,20 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     print(exception, False)
     print(exception.__class__.__name__ + ": " + exception.message)
 
-GPIO.setmode(GPIO.BOARD)
+  GPIO.setmode(GPIO.BOARD)
 
 def init(layout_id):
-  path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
-  with open(path) as turnout_file:
-    data = json.load(turnout_file)
 
-  print(data)
-  for turnout in data:
-    if 'relay' in turnout:
-      GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
-    if 'relayCrossover' in turnout:
-      GPIO.setup(turnout['relayCrossover']['pin'], GPIO.OUT)
+  if GPIO is not None:
+    path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
+    with open(path) as turnout_file:
+      data = json.load(turnout_file)
+
+    for turnout in data:
+      if 'relay' in turnout:
+        GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
+      if 'relayCrossover' in turnout:
+        GPIO.setup(turnout['relayCrossover']['pin'], GPIO.OUT)
 
 def get(layout_id, turnout_id=None):
   path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
@@ -65,13 +70,15 @@ def get(layout_id, turnout_id=None):
     return jsonify(data)
 
 def put(layout_id, turnout_id):
+  # load turnout
   path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
   with open(path) as turnout_file:
     data = json.load(turnout_file)
   turnouts = [turnout for turnout in data if turnout['turnoutId'] == turnout_id]
+
+  # validate
   if len(turnouts) == 0:
     abort(404)
-  turnout = turnouts[0]
   if not request.json:
     abort(400)
   if 'current' in request.json and type(request.json['current']) is not int:
@@ -81,6 +88,7 @@ def put(layout_id, turnout_id):
   if 'divergent' in request.json and type(request.json['divergent']) is not int:
     abort(400)
 
+  turnout = turnouts[0]
   # Turn servo to current degrees
   if 'servo' in turnout:
     if kit is not None:
@@ -88,27 +96,20 @@ def put(layout_id, turnout_id):
     if pwm is not None:
       pwm.set_pwm(turnout['servo'], 0, turnout['current'])
 
-  # Toggle relay if present
-  if 'relay' in turnout:
-    if turnout['current'] == turnout['straight']:
-      print('Realy straight')
-      print(turnout['relay'])
-      GPIO.output(turnout['relay']['pin'], turnout['relay']['straight'])
-    else:
-      print('Realy divergent')
-      print(turnout['relay'])
-      GPIO.output(turnout['relay']['pin'], turnout['relay']['divergent'])
+  if GPIO is not None:
+    # Toggle relay if present
+    if 'relay' in turnout:
+      if turnout['current'] == turnout['straight']:
+        GPIO.output(turnout['relay']['pin'], turnout['relay']['straight'])
+      else:
+        GPIO.output(turnout['relay']['pin'], turnout['relay']['divergent'])
 
-  # Toggle crossover relay if present
-  if 'relayCrossover' in turnout:
-    if turnout['current'] == turnout['straight']:
-      print('Realy straight')
-      print(turnout['relayCrossover'])
-      GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['straight'])
-    else:
-      print('Realy divergent')
-      print(turnout['relayCrossover'])
-      GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['divergent'])
+    # Toggle crossover relay if present
+    if 'relayCrossover' in turnout:
+      if turnout['current'] == turnout['straight']:
+        GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['straight'])
+      else:
+        GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['divergent'])
 
   # save all keys
   for key in request.json:

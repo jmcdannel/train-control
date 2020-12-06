@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import * as Colors from 'material-ui/colors';
 // import SwitchImg from './switch.svg';
 import { ReactComponent as Logo } from './switch.svg';
+import { ReactComponent as TurnoutStriaghtImage } from '../Shared/Images/turnout-straight.svg';
+import { ReactComponent as TurnoutDivergentImage } from '../Shared/Images/turnout-divergent.svg';
+import { ReactComponent as TurnoutDImage } from '../Shared/Images/turnout-export.svg';
 
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
@@ -29,6 +32,8 @@ import PortableWifiOffIcon from '@material-ui/icons/PortableWifiOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Settings from './Settings';
+import { Context } from '../Store/Store';
+import api from '../Api';
 import './Turnout.scss';
 // import { linesConfig } from '../Api';
 
@@ -45,15 +50,15 @@ export const linesConfig = [
 
 export const Turnout = props => {
 
-  const { config, view, linked: linkedTurnout, onChange  } = props;
+  const { config } = props;
   
+  const [ state, dispatch ] = useContext(Context);
 
   const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [isPristine, setIsPristine] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
-  const [isLinked, setIsLinked] = useState(true);
   const { current, relay, crossover, reverse, name, turnoutId, line, label, abbr, straight, divergent, 'default': defaultOrientation } = config;
 
   useEffect(() => {
@@ -65,20 +70,10 @@ export const Turnout = props => {
       return;
     }
     try {
-      const data = [{ turnoutId, current: isDivergent ? straight : divergent }];
       setIsLoading(true);
       setIsPristine(false);
-
-      if (linkedTurnout && isLinked) {
-        data.push({
-          turnoutId: linkedTurnout.turnoutId,
-          current: isDivergent 
-            ? linkedTurnout.straight 
-            : linkedTurnout.divergent
-        })
-      }
-      await onChange(data);
-
+      const turnout = await api.turnouts.put({ turnoutId, current: isDivergent ? straight : divergent });
+      await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
     } catch (err) {
       console.error(err);
       setError(err.toString());
@@ -88,10 +83,9 @@ export const Turnout = props => {
     
   }
 
-
   const handleReset = async e => {
-    const data = { turnoutId, current: defaultOrientation === 'straight' ? straight : divergent };
-    await onChange([data]);
+    const turnout = await api.turnouts.put({ turnoutId, current: defaultOrientation === 'straight' ? straight : divergent });
+    await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
   }
 
   const handleSettings = () => setShowSettings(true);
@@ -104,10 +98,6 @@ export const Turnout = props => {
     }
     setError(undefined);
   };
-
-  const handleLinkedChange = event => {
-    setIsLinked(event.target.checked);
-  }
 
 	return (
     <Card className={`turnout turnout--compact`}>
@@ -141,7 +131,8 @@ export const Turnout = props => {
             className="media-container"        
           >
             <div className="svg-wrapper">
-              <Logo width="90" className={`turnout-image ${isDivergent ? 'divergent' : 'straight'}`} />
+              {/* <Logo width="90" className={`turnout-image ${isDivergent ? 'divergent' : 'straight'}`} /> */}
+              {isDivergent ? <TurnoutDivergentImage width="90" /> : <TurnoutStriaghtImage width="90" />}
             </div>
             {isLoading && (<CircularProgress color="primary" className="spinner" />)}
           </CardMedia>
@@ -154,11 +145,11 @@ export const Turnout = props => {
           <Typography component="small" gutterBottom>
             Angle: {current}
           </Typography>
-          {(crossover || reverse) && (
+          {/* {(crossover || reverse) && (
           <Box className="turnout__link">
               {crossover && (
                 <Chip
-                  label={`Crossover: ${linkedTurnout.label}`}
+                  label={`Crossover`}
                   icon={<ShuffleIcon />}
                   color={`${isLinked ? 'primary' : 'default'}`}
                   size="small"
@@ -177,7 +168,7 @@ export const Turnout = props => {
                     ? <LinkIcon style={{color: 'green'}} />
                     : <LinkOffIcon style={{color: 'gray'}} />
                   }
-          </Box>)}
+          </Box>)} */}
           
         </Box>
 
@@ -207,7 +198,6 @@ export const Turnout = props => {
         open={showSettings} 
         config={config} 
         onClose={hideSettings}
-        onChange={onChange} 
       />
 
       <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose} message={error} />

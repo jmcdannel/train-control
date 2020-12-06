@@ -7,58 +7,30 @@ import orangeLineImg from './Layout/images/IDAWANY-orangeline.png';
 import purpleLineImg from './Layout/images/IDAWANY-purpleline.png';
 import redLineImg from './Layout/images/IDAWANY-redline.png';
 import yellowLineImg from './Layout/images/IDAWANY-yellowline.png';
-import { getApi as getApiHostName } from './config/config';
+import { getApi as getApiHostName, getConfig } from './config/config';
 
-var emulatedTurnoutsData = require('./Shared/Utils/Emulator/turnouts.emulator.json');
-// let apiHost = 'http://tamarackpi:5000';
+const appConfig = getConfig();
 let apiHost = getApiHostName();
-
-console.log('apiHost', apiHost);
-// let apiHost = 'http://0.0.0.0:5000';
-
-async function readLayout(layoutId = null) {
-  try {
-    const response = layoutId !== null
-      ? await fetch(`${apiHost}/layouts/${layoutId}`)
-      : await fetch(`${apiHost}/layouts`);
-    return response.json();
-  } catch (err) {
-    console.error(err);
-    throw new Error('Unable to read Layouts(s)', layoutId, `layoutId=${layoutId}`);
-  }
-}
 
 async function createTurnout() {
   throw new Error('Not implemented');
 }
 
-async function readTurnout(layoutId, turnoutId = null) {
+async function readTurnout(turnoutId = null) {
   try {
-    if (api.emulator) {
-      return turnoutId !== null
-        ? emulatedTurnoutsData.find(turnout => turnout.turnoutId === turnoutId)
-        : emulatedTurnoutsData;
-    }
     const response = turnoutId !== null
-      ? await fetch(`${apiHost}/layouts/${layoutId}/turnouts/${turnoutId}`)
-      : await fetch(`${apiHost}/layouts/${layoutId}/turnouts`);
+      ? await fetch(`${apiHost}/turnouts/${turnoutId}`)
+      : await fetch(`${apiHost}/turnouts`);
     return response.json();
   } catch (err) {
     console.error(err);
-    throw new Error('Unable to read Turnout(s)', turnoutId, `turnoutId=${turnoutId}`);
+    throw new Error('Unable to read Turnout(s)', `turnoutId=${turnoutId}`);
   }
 }
 
-async function updateTurnout(layoutId, data) {
+async function updateTurnout(data) {
   try {
-    if (api.emulator) {
-      return emulatedTurnoutsData.map(turnout => {
-        return (turnout.turnoutId === data.turnoutId) 
-          ? Object.assign({}, turnout, data)
-          : turnout;
-      });
-    }
-    const response = await fetch(`${apiHost}/layouts/${layoutId}/turnouts/${data.turnoutId}`, {
+    const response = await fetch(`${apiHost}/turnouts/${data.turnoutId}`, {
       method: 'PUT',
       cache: 'no-cache',
       crossDomain: true,
@@ -75,7 +47,31 @@ async function updateTurnout(layoutId, data) {
 }
 
 async function deleteTurnout(turnoutId) {
-  throw new Error('Not implemented');
+  throw new Error('Not implemented', turnoutId);
+}
+
+async function readSignal(signalId = null) {
+  try {
+    const response = signalId !== null
+      ? await fetch(`${apiHost}/signals/${signalId}`)
+      : await fetch(`${apiHost}/signals`);
+    return response.json();
+  } catch (err) {
+    console.error(err);
+    throw new Error('Unable to read Signal(s)', `signalId=${signalId}`);
+  }
+}
+
+async function readSensor(sensorId = null) {
+  try {
+    const response = sensorId !== null
+      ? await fetch(`${apiHost}/sensors/${sensorId}`)
+      : await fetch(`${apiHost}/sensors`);
+    return response.json();
+  } catch (err) {
+    console.error(err);
+    throw new Error('Unable to read Sensors(s)', `sensorId=${sensorId}`);
+  }
 }
 
 export const linesConfig = [
@@ -89,28 +85,6 @@ export const linesConfig = [
   { name: 'Purple', color: Colors.purple[500], img: purpleLineImg }
 ];
 
-export const setApiHost = val => {
-  apiHost = val;
-  window.localStorage.setItem('apiHost', val);
-}
-
-export const getApiHost = () => {
-  const storedApiHost = window.localStorage.getItem('apiHost');
-  if (storedApiHost) {
-    apiHost = storedApiHost;
-  }
-  return apiHost;
-}
-
-export const getApiHostOptions = () => {
-  return [
-    'http://tamarackpi:5000',
-    'http://localhost:5000',
-    'http://0.0.0.0:5000',
-    'https://traincontrol:5000'
-  ];
-}
-
 export const apiStates = {
   idle: 'idle',
   pending: 'pending',
@@ -118,22 +92,18 @@ export const apiStates = {
   error: 'error'
 }
 
-// export const apiHost = 'http://tamarackpi:5000';
-// export const apiHost = 'http://192.168.86.22:5000';
-// export const apiHost = 'http://localhost:5000';
-// export const apiHost = 'http://0.0.0.0:5000';
-// export const apiHost = 'https://traincontrol:5000';
-
-
 export const api = {
-  layouts: {
-    get: readLayout
-  },
   turnouts: {
     get: readTurnout,
     put: updateTurnout,
     post: createTurnout,
     delete: deleteTurnout
+  },
+  signals: {
+    get: readSignal
+  },
+  sensors: {
+    get: readSensor
   }
 }
 

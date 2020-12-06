@@ -20,27 +20,35 @@ layoutId = appConfig['layoutId']
 turnoutsapi.init('tam')
   
 # /turnouts
-@app.route('/<string:layout_id>/turnouts', methods=['GET'])
-def turnouts(layout_id):
-  return turnoutsapi.get(layout_id)
+@app.route('/turnouts', methods=['GET'])
+def turnouts():
+  return turnoutsapi.get(layoutId)
 
-@app.route('/<string:layout_id>/turnouts/<int:turnout_id>', methods=['GET'])
-def get_turnout(layout_id, turnout_id):
-  return turnoutsapi.get(layout_id. turnout_id)
+@app.route('/turnouts/<int:turnout_id>', methods=['GET'])
+def get_turnout(turnout_id):
+  return turnoutsapi.get(layoutId. turnout_id)
 
-@app.route('/<string:layout_id>/turnouts/<int:turnout_id>', methods=['PUT'])
-def update_turnout(layout_id, turnout_id):
-  return turnoutsapi.put(layout_id, turnout_id)
+@app.route('/turnouts/<int:turnout_id>', methods=['PUT'])
+def update_turnout(turnout_id):
+  return turnoutsapi.put(layoutId, turnout_id)
 
 # /signals
+@app.route('/signals', methods=['GET'])
+def signals():
+  return signalsapi.get(layoutId)
+
 @app.route('/<string:layout_id>/signals', methods=['GET'])
-def signals(signal_id):
-  return signalsapi.get(signal_id)
+def get_signal(signal_id):
+  return signalsapi.get(layoutId, signal_id)
 
 # /sensors
+@app.route('/sensors', methods=['GET'])
+def sensors():
+  return sensorsapi.get(layoutId)
+
 @app.route('/<string:layout_id>/sensors', methods=['GET'])
-def sensors(sensor_id):
-  return sensorsapi.get(sensor_id)
+def get_sensor(sensor_id):
+  return sensorsapi.get(layoutId, sensor_id)
 
 if __name__ == '__main__':
     app.run(host=host)

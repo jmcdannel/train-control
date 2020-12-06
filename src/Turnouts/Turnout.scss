@@ -197,30 +197,30 @@ $off: rgba(0,0,0,.4);
 
 .turnout-image {
   
-  text {
-    fill: #fff;
-  }
-  path {
-    stroke: $on;
-  }
-  #Label {
-    display: none; 
-  }
-  #divergent-inner,
-  #divergent-outer {
-    stroke: $off;
-  }
+  // text {
+  //   fill: #fff;
+  // }
+  // path {
+  //   stroke: $on;
+  // }
+  // #Label {
+  //   display: none; 
+  // }
+  // #divergent-inner,
+  // #divergent-outer {
+  //   stroke: $off;
+  // }
 
-  &.divergent {
-    #straight-inner,
-    #straight-outer {
-      stroke: $off;
-    }
-    #divergent-inner,
-    #divergent-outer {
-      stroke: $on;
-    }
-  }
+  // &.divergent {
+  //   #straight-inner,
+  //   #straight-outer {
+  //     stroke: $off;
+  //   }
+  //   #divergent-inner,
+  //   #divergent-outer {
+  //     stroke: $on;
+  //   }
+  // }
 }
 
 .MuiTextField-root {

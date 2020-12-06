@@ -10,48 +10,50 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Header from './Header';
 import Footer from './Footer';
+
+// Modules
 import Turnouts from '../Turnouts/Turnouts';
 import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
 import MiniThrottles from '../Throttles/MiniThrottles';
 import LandingMenu from './LandingMenu';
-import SelectLayout from '../Shared/SelectLayout/SelectLayout';
-import ApiHost from '../Shared/ApiHost/ApiHost';
-import ApiError from '../Shared/ApiError/ApiError';
+
+// Store
 import { MenuContext, menuConfig } from '../Shared/Context/MenuContext';
 import { Context } from '../Store/Store';
 
-import Loading from '../Shared/Loading/Loading';
-import { getJmri } from '../config/config';
-import api, { getApiHost, apiStates } from '../Api';
-import fetchLayout from '../Store/FetchLayout';
+// APIs
+import { getJmri , getApiHost, getConfig } from '../config/config';
+import api, { apiStates } from '../Api';
 import jmriApi from '../Shared/jmri/jmriApi';
-import './TrackMaster.scss';
 
+import './TrackMaster.scss';
 
 function TrackMaster(props) {
 
-  // api.emulator = true;
-  
   let location = useLocation();
   let history = useHistory();
 
+  const appConfig = getConfig();
+  const layoutId = appConfig.layoutId;
+
   const [ state, dispatch ] = useContext(Context);
-  const { turnouts, layout, layoutStatus } = state;
+  const { turnouts } = state;
 
   const [page, setPage] = useState(location && location.pathname);
   const [menu, setMenu] = useState(menuConfig);
-  const [apiHostOpen, setApiHostOpen] = useState(false);
-  const [layoutId, setLayoutId] = useState(window.localStorage.getItem('layoutId'));
+
   const [jmriInitialized, setJmriInitialized] = useState(false);
   const [jmriReady, setJmriReady] = useState(false);
+
+  // TODO: onload load if module in config
   const [turnoutsStatus, setTurnoutsStatus] = useState(apiStates.idle);
 
+  // Initialize JMRI Websocket connection
   useEffect(() => {
     const initJmri = async () => {
       jmriApi.on('ready', 'TrackMaster', handleJmriReady.bind(this));
-      console.info('config', getJmri());
       const isSetup = await jmriApi.setup(getJmri());
       setJmriInitialized(isSetup);
     }
@@ -60,20 +62,12 @@ function TrackMaster(props) {
     }
   }, [jmriInitialized]);
 
-  useEffect(() => {
-    if (layoutId && layout === null && layoutStatus === apiStates.idle) {
-      fetchLayout(layoutId, dispatch);
-    } else {
-      // show "select layout"
-      console.log('select a layout');
-    }
-  }, [layoutId, dispatch]);
-
+   // TODO: onload load if module in config
   useEffect(() => {
     const fetchTurnouts = async () => {
       setTurnoutsStatus(apiStates.pending);
       try {
-        const payload = await api.turnouts.get(layoutId);
+        const payload = await api.turnouts.get();
         await dispatch({ type: 'UPDATE_TURNOUTS', payload });
         setTurnoutsStatus(apiStates.done)
       } catch(err) {
@@ -86,6 +80,7 @@ function TrackMaster(props) {
     }
   }, [turnouts, turnoutsStatus, layoutId]);
 
+  // Event Handlers
   const handleJmriReady = isReady => {
     setJmriReady(isReady);
   }
@@ -95,6 +90,7 @@ function TrackMaster(props) {
     history.push(newValue);
   }
 
+  // Deprecate(d)
   const handleSSLAuth = (event) => {
       window.open(getApiHost());
   }
@@ -106,24 +102,9 @@ function TrackMaster(props) {
     }
   }
 
-  const handleEmulatorClick = () => { // TODO: move to settings
-    if (!api.emulator) {
-      api.emulator = true;
-      Object.freeze(api);
-    }
-  }
-
   const handleMenuClick = menuChange => {
     const m = {...menu, ...menuChange};
     setMenu(m);
-  }
-
-  const handleApiClick = e => {
-    setApiHostOpen(true);
-  }
-
-  const handleApiClose = e => {
-    setApiHostOpen(false);
   }
 
   const getRoutedModule = module => {
@@ -146,58 +127,50 @@ function TrackMaster(props) {
             <MapControl turnouts={turnouts} onChange={handleTurnoutChange} />
           </Route>
         );
-        case 'turnouts' :
-          return (
-            <Route path="/turnouts" key={module}>
-              <Turnouts turnouts={turnouts} turnoutsStatus={turnoutsStatus} onChange={handleTurnoutChange} />
-            </Route>
-          );
+      case 'turnouts' :
+        return (
+          <Route path="/turnouts" key={module}>
+            <Turnouts turnouts={turnouts} turnoutsStatus={turnoutsStatus} />
+          </Route>
+        );
     }
+    // TODO: add signals
   }
 
   return (
     <MenuContext.Provider value={menu}>
-        <ApiHost handleApiClose={handleApiClose} open={apiHostOpen} />
         <Box display="flex" flexDirection="column" height="100%" width="100%">
           <Box>
+
             <Header 
               page={page} 
               onSSLAuth={handleSSLAuth} 
               handleMenuClick={handleMenuClick} 
-              handleApiClick={handleApiClick} 
               jmriApi={jmriApi}
               jmriReady={jmriReady}
-              layout={layout}
             />
             <MiniThrottles locos={state.locos} jmriApi={jmriApi} />
             
           </Box>
           <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
-              <SelectLayout open={!layoutId} setLayoutId={setLayoutId} />
-              {(layoutStatus === apiStates.idle || layoutStatus === apiStates.pending) && (
-                  <Loading />
-              )}
-              {layoutStatus === apiStates.error && (
-                <ApiError handleEmulatorClick={handleEmulatorClick} />
-              )}
-              {layoutStatus === apiStates.done && (
-                <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
-                  <Switch>
-                    <Route
-                      exact
-                      path="/"
-                      render={() => (<Redirect to={`/${layout.modules[0]}`} />)}
-                    />
-                    <Route path="/train-control" key={module}>
-                      <LandingMenu modules={layout.modules} onNavigate={handleNavigate} />
-                    </Route>
-                    {layout.modules.map(getRoutedModule)}
-                  </Switch>
-                </Container>
-              )}
+
+            <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
+              <Switch>
+                <Route path="/" exact>
+                  <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
+                </Route>
+                <Route path="/train-control" exact>
+                  <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
+                </Route>
+                {appConfig.modules.map(getRoutedModule)}
+              </Switch>
+            </Container>
+
           </Box>
           <Box mt={1}>
-            <Footer page={page} onNavigate={handleNavigate} layout={layout} />
+
+            <Footer page={page} onNavigate={handleNavigate} modules={appConfig.modules} />
+
           </Box>
         </Box>
       </MenuContext.Provider>

@@ -1,5 +1,6 @@
 {
-  "layoutId": "tam","name": "Tamarack Junction",
+  "layoutId": "tam",
+  "name": "Tamarack Junction",
   "modules": [
     "turnouts",
     "throttles",

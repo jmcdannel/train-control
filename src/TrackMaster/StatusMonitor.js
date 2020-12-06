@@ -3,10 +3,11 @@ import Chip from '@material-ui/core/Chip';
 import CallSplit from '@material-ui/icons/CallSplit';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import Tooltip from '@material-ui/core/Tooltip';
+import { getConfig } from '../config/config';
 
-export const StatusMonitor = props => {
+export const StatusMonitor = ({ jmriReady }) => {
 
-  const { jmriApi, jmriReady, layout } = props;
+  const appConfig = getConfig();
 
   // const [ powerStatus, setPowerStatus ] = useState(powerStates.unknown);
   // const [ initialized, setInitialized ] = useState(false);
@@ -44,25 +45,24 @@ export const StatusMonitor = props => {
   //     : 'power-pending';
 
   const handleClick = () => { 
-    console.log('Not Implements');
+    console.log('Not Implemented');
 
     // TODO: allow user to modify api or jmri settings
   };
+  const hasJmri = !!appConfig.jmri;
+  const hasApi = !!appConfig.apie;
 
   const jmriClassName = `status-monitor--${
-      layout && layout.jmri && jmriReady
-        ? 'connected'
-        : 'unknown'
+    hasJmri && jmriReady
+      ? 'connected'
+      : 'unknown'
     }`;
 
   const apiClassName = `status-monitor--${
-      layout && layout.api
-        ? 'connected'
-        : 'unknown'
+    hasApi
+      ? 'connected'
+      : 'unknown'
     }`;
-
-  const hasJmri = layout ? !!layout.jmri : true;
-  const hasApi = layout ? !!layout.api : true;
 
   // TODO: handle jmlri disconnected
   // TODO: handle api error

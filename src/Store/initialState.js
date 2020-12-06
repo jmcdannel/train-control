@@ -23,11 +23,10 @@ const locos = [
 
 export const initialState = {
   layout: null,
-  layoutStatus: apiStates.idle,
   locos,
   turnouts: [],
   signals: [],
-  sounds: null,
+  sensors: [],
   menu: {
     turnouts: {
       view: 'compact'
