@@ -3,7 +3,7 @@ from flask import json, jsonify, request, abort
 from config import config
 
 appConfig = config.getConfig()
-layoutId = appConfig.layoutId
+layoutId = appConfig['layoutId']
 kit = None
 pwm = None
 GPIO = None

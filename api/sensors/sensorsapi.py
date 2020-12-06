@@ -3,7 +3,7 @@ from flask import json, jsonify, abort
 from config import config
 
 appConfig = config.getConfig()
-layoutId = appConfig.layoutId
+layoutId = appConfig['layoutId']
 
 def get(sensor_id=None):
   path = os.path.dirname(__file__) + '/' + layoutId + '.sensors.json'
