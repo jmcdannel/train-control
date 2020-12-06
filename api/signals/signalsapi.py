@@ -52,8 +52,8 @@ def put(signal_id):
     state = signal['state']
 
   cmd = '<Z %d %d>' % (signalId, state)
-  print('DCC Command %s' % cmd)
-
+  print('DCC Command %s %d' % cmd, state)
+  print(request.json)
   
 
     # int('00100001', 2)
