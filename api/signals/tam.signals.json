@@ -17,16 +17,16 @@
   },
   {
     "signalId": 103,
-    "greenPin": 0,
-    "redPin": 3,
+    "greenPin": 30,
+    "redPin": 33,
     "name": "Tamararck Station South Track 3 Signal",
     "abbr":"TS Sig3",
     "state": 0
   },
   {
     "signalId": 104,
-    "greenPin": 0,
-    "redPin": 3,
+    "greenPin": 40,
+    "redPin": 43,
     "name": "Tamararck Station South Track 4 Signal",
     "abbr":"TS Sig4",
     "state": 0
