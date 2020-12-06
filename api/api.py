@@ -17,6 +17,7 @@ logging.getLogger('flask_cors').level = logging.DEBUG
 appConfig = config.getConfig()
 host = appConfig['apiHost']
 turnoutsapi.init()
+signals.init()
   
 # /turnouts
 @app.route('/turnouts', methods=['GET'])

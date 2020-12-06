@@ -48,8 +48,8 @@ def put(signal_id):
 
   state = 0
   signalId = signal['signalId']
-  if 'state' in signal and signal['state'] is True:
-    state = 1
+  if 'state' in signal:
+    state = signal['state']
 
   cmd = '<Z %d %d>' % (signalId, state)
   print('DCC Command %s' % cmd)
