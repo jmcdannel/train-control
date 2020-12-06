@@ -1,5 +1,5 @@
 import os
-from flask import json, jsonify, abort
+from flask import json, jsonify, abort, request
 from config import config
 
 appConfig = config.getConfig()
@@ -32,6 +32,9 @@ def put(signal_id):
     abort(400)
 
   signal = signals[0]
+  for key in request.json:
+    turnout[key] = request.json.get(key, turnout[key])
+
   state = 0
   signalId = signal['signalId']
   if 'state' in signal and signal['state'] is True:

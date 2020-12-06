@@ -4,16 +4,16 @@ import api from '../Api';
 
 export const Signal = props => {
 
-  const { signal } = props;
+  const { signal, signal: { signalId } } = props;
 
   const handleGreenClick = event => {
     console.log('handleGreenClick', event);
-    api.signals.put({ ...signal, state: 1 });
+    api.signals.put({ signalId, state: 1 });
   }
 
   const handleRedClick = event => {
     console.log('handleRedClick', event);
-    api.signals.put({ ...signal, state: 0 });
+    api.signals.put({ signalId, state: 0 });
   }
 
   return (

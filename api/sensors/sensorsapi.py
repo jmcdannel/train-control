@@ -1,5 +1,5 @@
 import os
-from flask import json, jsonify, abort
+from flask import json, jsonify, abort, request
 from config import config
 
 appConfig = config.getConfig()

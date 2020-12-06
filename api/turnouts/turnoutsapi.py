@@ -8,9 +8,6 @@ kit = None
 pwm = None
 GPIO = None
 
-print(appConfig)
-print(appConfig['turnouts'])
-
 if appConfig['turnouts']['device'] == 'pi':
   try:
     import RPi.GPIO as GPIO
@@ -19,7 +16,6 @@ if appConfig['turnouts']['device'] == 'pi':
     # Output expected ImportErrors.
     print('ImportError')
     print(error, False)
-    # print(error.__class__.__name__ + ": " + error.message)
   except Exception as exception:
     # Output unexpected Exceptions.
     print('Exception')
@@ -36,7 +32,6 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     # Output expected ImportErrors.
     print('ImportError')
     print(error, False)
-    # print(error.__class__.__name__ + ": " + error.message)
   except Exception as exception:
     # Output unexpected Exceptions.
     print('Exception')
@@ -101,6 +96,9 @@ def put(turnout_id):
     abort(400)
 
   turnout = turnouts[0]
+  for key in request.json:
+    turnout[key] = request.json.get(key, turnout[key])
+    
   # Turn servo to current degrees
   if 'servo' in turnout:
     if kit is not None:
@@ -124,8 +122,7 @@ def put(turnout_id):
         GPIO.output(turnout['relayCrossover']['pin'], turnout['relayCrossover']['divergent'])
 
   # save all keys
-  for key in request.json:
-    turnout[key] = request.json.get(key, turnout[key])
+  
   with open(path, 'w') as turnout_file:
         json.dump(data, turnout_file)
 

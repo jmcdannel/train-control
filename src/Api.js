@@ -81,8 +81,7 @@ export const api = {
     put: args => put('signal', args)
   },
   sensors: {
-    get: args => get('sensor', args),
-    put: args => put('sensor', args)
+    get: args => get('sensor', args)
   }
 }
 
