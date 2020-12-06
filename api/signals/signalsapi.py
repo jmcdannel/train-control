@@ -4,6 +4,20 @@ from config import config
 
 appConfig = config.getConfig()
 layoutId = appConfig['layoutId']
+arduino = None
+
+if (appConfig['signals']['device'] == 'arduino' and appConfig['signals']['interface'] =='serial'):
+  try:
+    import serial
+    arduino = serial.Serial(appConfig['serial'], 115200)
+  except ImportError as error:
+    # Output expected ImportErrors.
+    print('ImportError')
+    print(error, False)
+  except Exception as exception:
+    # Output unexpected Exceptions.
+    print('Exception')
+    print(exception, False)
 
 def init():
   path = os.path.dirname(__file__) + '/' + layoutId + '.signals.json'
@@ -54,6 +68,9 @@ def put(signal_id):
   cmd = '<Z %d %d>' % (signalId, state)
   print('DCC Command %s %d' % (cmd, state))
   print(request.json)
+
+  if arduino is not None:
+    arduino.write(cmd)
   
 
     # int('00100001', 2)
