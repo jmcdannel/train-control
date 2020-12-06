@@ -12,9 +12,9 @@ def init():
 
   for signal in data:
     cmd = '<Z 6%d %d %d>' % (signal['signalId'], signal['greenPin'], int('00000000', 2))
-    print cmd
+    print('DCC Command %s' % cmd)
     cmd = '<Z 7%d %d %d>' % (signal['signalId'], signal['redPin'], int('00000100', 2))
-    print cmd
+    print('DCC Command %s' % cmd)
 
 def get(signal_id=None):
   path = os.path.dirname(__file__) + '/' + layoutId + '.signals.json'
