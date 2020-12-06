@@ -5,6 +5,17 @@ from config import config
 appConfig = config.getConfig()
 layoutId = appConfig['layoutId']
 
+def init():
+  path = os.path.dirname(__file__) + '/' + layoutId + '.signals.json'
+  with open(path) as signal_file:
+    data = json.load(signal_file)
+
+  for signal in data:
+    cmd = '<Z 6%d %d %d>' % (signal['signalId'], signal['greenPin'], int('00000000', 2))
+    print cmd
+    cmd = '<Z 7%d %d %d>' % (signal['signalId'], signal['redPin'], int('00000100', 2))
+    print cmd
+
 def get(signal_id=None):
   path = os.path.dirname(__file__) + '/' + layoutId + '.signals.json'
   with open(path) as signal_file:
@@ -46,3 +57,10 @@ def put(signal_id):
   
 
     # int('00100001', 2)
+  
+  # save all keys
+  
+  with open(path, 'w') as signal_file:
+        json.dump(data, signal_file)
+
+  return jsonify(signal)
