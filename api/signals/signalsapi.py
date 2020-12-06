@@ -70,6 +70,7 @@ def put(signal_id):
   print(request.json)
 
   if arduino is not None:
+    print('Writing to DCC serial')
     arduino.write(cmd)
   
 
