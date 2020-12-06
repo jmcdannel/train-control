@@ -10,7 +10,7 @@ GPIO = None
 print(appConfig)
 print(appConfig['turnouts'])
 
-if (appConfig['turnouts']['device'] == 'pi':
+if appConfig['turnouts']['device'] == 'pi':
   try:
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BOARD)
