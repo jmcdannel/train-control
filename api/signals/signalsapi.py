@@ -10,6 +10,7 @@ if (appConfig['signals']['device'] == 'arduino' and appConfig['signals']['interf
   try:
     import serial
     arduino = serial.Serial(appConfig['serial'], 115200)
+    print('IMPORTED ARDUINO SERIAL')
   except ImportError as error:
     # Output expected ImportErrors.
     print('ImportError')
@@ -68,10 +69,11 @@ def put(signal_id):
   cmd = '<Z %d %d>' % (signalId, state)
   print('DCC Command %s %d' % (cmd, state))
   print(request.json)
+  print(arduino)
 
   if arduino is not None:
     print('Writing to DCC serial')
-    arduino.write(cmd)
+    arduino.write(cmd.encode())
   
 
     # int('00100001', 2)

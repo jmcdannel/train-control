@@ -10,7 +10,7 @@
   "api": "http://tamarackpi:5000",
   "apiHost": "0.0.0.0",
   "jmri": "http://tamarackpi:12080/json/",
-  "serial": "/tty/dev/ACM0",
+  "serial": "/dev/ttyACM0",
   "turnouts": {
       "device": "pi",
       "interface": "PCA9685"
