@@ -14,7 +14,7 @@ if appConfig['turnouts']['device'] == 'pi':
     GPIO.setmode(GPIO.BOARD)
   except ImportError as error:
     # Output expected ImportErrors.
-    print('ImportError')
+    print('RPi.GPIO ImportError')
     print(error, False)
   except Exception as exception:
     # Output unexpected Exceptions.
@@ -30,7 +30,7 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     pwm.set_pwm_freq(60)
   except ImportError as error:
     # Output expected ImportErrors.
-    print('ImportError')
+    print('Adafruit_PCA9685 ImportError')
     print(error, False)
   except Exception as exception:
     # Output unexpected Exceptions.
@@ -98,7 +98,7 @@ def put(turnout_id):
   turnout = turnouts[0]
   for key in request.json:
     turnout[key] = request.json.get(key, turnout[key])
-    
+
   # Turn servo to current degrees
   if 'servo' in turnout:
     if kit is not None:

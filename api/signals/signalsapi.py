@@ -13,12 +13,17 @@ if (appConfig['signals']['device'] == 'arduino' and appConfig['signals']['interf
     print('IMPORTED ARDUINO SERIAL')
   except ImportError as error:
     # Output expected ImportErrors.
-    print('ImportError')
+    print('serial ImportError')
     print(error, False)
   except Exception as exception:
     # Output unexpected Exceptions.
     print('Exception')
     print(exception, False)
+
+def _sendCommand(cmd):
+  if arduino is not None:
+    print('cmd: %s' % cmd)
+    arduino.write(cmd.encode())
 
 def init():
   path = os.path.dirname(__file__) + '/' + layoutId + '.signals.json'
@@ -27,9 +32,9 @@ def init():
 
   for signal in data:
     cmd = '<Z 6%d %d %d>' % (signal['signalId'], signal['greenPin'], int('00000000', 2))
-    print('DCC Command %s' % cmd)
+    _sendCommand(cmd)
     cmd = '<Z 7%d %d %d>' % (signal['signalId'], signal['redPin'], int('00000100', 2))
-    print('DCC Command %s' % cmd)
+    _sendCommand(cmd)
 
 def get(signal_id=None):
   path = os.path.dirname(__file__) + '/' + layoutId + '.signals.json'
@@ -66,18 +71,18 @@ def put(signal_id):
   if 'state' in signal:
     state = signal['state']
 
-  cmd = '<Z %d %d>' % (signalId, state)
-  print('DCC Command %s %d' % (cmd, state))
-  print(request.json)
-  print(arduino)
+  if  state == 1:
+    cmd = '<Z 6%d 1>' % signalId
+    _sendCommand(cmd)
+    cmd = '<Z 7%d 0>' % signalId
+    _sendCommand(cmd)
+  else:
+    cmd = '<Z 6%d 0>' % signalId
+    _sendCommand(cmd)
+    cmd = '<Z 7%d 1>' % signalId
+    _sendCommand(cmd)
 
-  if arduino is not None:
-    print('Writing to DCC serial')
-    arduino.write(cmd.encode())
-  
 
-    # int('00100001', 2)
-  
   # save all keys
   
   with open(path, 'w') as signal_file:
