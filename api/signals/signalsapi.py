@@ -31,9 +31,9 @@ def init():
     data = json.load(signal_file)
 
   for signal in data:
-    cmd = '<Z 6%d %d %d>' % (signal['signalId'], signal['greenPin'], int('00000000', 2))
+    cmd = '<Z 6%d %d 0 %d>' % (signal['signalId'], signal['greenPin'], int('00000000', 2))
     _sendCommand(cmd)
-    cmd = '<Z 7%d %d %d>' % (signal['signalId'], signal['redPin'], int('00000100', 2))
+    cmd = '<Z 7%d %d 1 %d>' % (signal['signalId'], signal['redPin'], int('00000100', 2))
     _sendCommand(cmd)
 
 def get(signal_id=None):
