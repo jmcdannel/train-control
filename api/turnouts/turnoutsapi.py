@@ -3,6 +3,7 @@ from flask import json, jsonify, request, abort
 from config import config
 
 appConfig = config.getConfig()
+layoutId = appConfig.layoutId
 kit = None
 pwm = None
 GPIO = None
@@ -54,10 +55,10 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     print(exception.__class__.__name__ + ": " + exception.message)
 
 
-def init(layout_id):
+def init():
 
   if GPIO is not None:
-    path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
+    path = os.path.dirname(__file__) + '/' + layoutId + '.turnouts.json'
     with open(path) as turnout_file:
       data = json.load(turnout_file)
 
@@ -67,8 +68,8 @@ def init(layout_id):
       if 'relayCrossover' in turnout:
         GPIO.setup(turnout['relayCrossover']['pin'], GPIO.OUT)
 
-def get(layout_id, turnout_id=None):
-  path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
+def get(turnout_id=None):
+  path = os.path.dirname(__file__) + '/' + layoutId + '.turnouts.json'
   with open(path) as turnout_file:
     data = json.load(turnout_file)
   if turnout_id is not None:
@@ -80,9 +81,9 @@ def get(layout_id, turnout_id=None):
   else:
     return jsonify(data)
 
-def put(layout_id, turnout_id):
+def put(turnout_id):
   # load turnout
-  path = os.path.dirname(__file__) + '/' + layout_id + '.turnouts.json'
+  path = os.path.dirname(__file__) + '/' + layoutId + '.turnouts.json'
   with open(path) as turnout_file:
     data = json.load(turnout_file)
   turnouts = [turnout for turnout in data if turnout['turnoutId'] == turnout_id]

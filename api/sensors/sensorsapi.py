@@ -3,9 +3,10 @@ from flask import json, jsonify, abort
 from config import config
 
 appConfig = config.getConfig()
+layoutId = appConfig.layoutId
 
-def get(layout_id, sensor_id=None):
-  path = os.path.dirname(__file__) + '/' + layout_id + '.sensors.json'
+def get(sensor_id=None):
+  path = os.path.dirname(__file__) + '/' + layoutId + '.sensors.json'
   with open(path) as sensor_file:
     data = json.load(sensor_file)
   if sensor_id is not None:

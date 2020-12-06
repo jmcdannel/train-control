@@ -2,6 +2,7 @@ import React from 'react';
 import CallSplit from '@material-ui/icons/CallSplit';
 import MapIcon from '@material-ui/icons/Map';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+import TrafficIcon from '@material-ui/icons/Traffic';
 // import SettingsIcon from '@material-ui/icons/Settings';
 import TrainIcon from '@material-ui/icons/Train';
 
@@ -10,6 +11,7 @@ export const navConfig = {
   conductor: { link: '/conductor', label: 'Conductor', icon: (<TrainIcon />) },
   turnouts: { link: '/turnouts', label: 'Turnouts', icon: (<CallSplit />) },
   throttles: { link: '/throttles', label: 'Throttle', icon: (<UnfoldMoreIcon />) },
+  signals: { link: '/signals', label: 'Signals', icon: (<TrafficIcon />) },
   'train-control': { link: '/train-control', label: 'Train Control', icon: (<TrainIcon />) },
 }
 
