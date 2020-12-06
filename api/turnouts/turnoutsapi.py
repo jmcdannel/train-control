@@ -10,9 +10,22 @@ GPIO = None
 print(appConfig)
 print(appConfig['turnouts'])
 
-if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='PCA9685'):
+if (appConfig['turnouts']['device'] == 'pi'
   try:
     import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BOARD)
+  except ImportError as error:
+    # Output expected ImportErrors.
+    print('ImportError')
+    print(error, False)
+    # print(error.__class__.__name__ + ": " + error.message)
+  except Exception as exception:
+    # Output unexpected Exceptions.
+    print('Exception')
+    print(exception, False)
+
+if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='PCA9685'):
+  try:
     import Adafruit_PCA9685
     pwm = Adafruit_PCA9685.PCA9685()
     servo_min = 150  # Min pulse length out of 4096
@@ -30,7 +43,6 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
 
 if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface'] =='ServoKit'):
   try:
-    import RPi.GPIO as GPIO
     from adafruit_servokit import ServoKit
     kit = ServoKit(channels=16)
   except ImportError as error:
@@ -41,7 +53,6 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     print(exception, False)
     print(exception.__class__.__name__ + ": " + exception.message)
 
-  GPIO.setmode(GPIO.BOARD)
 
 def init(layout_id):
 
