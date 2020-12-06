@@ -9,8 +9,6 @@ export const Signals = props => {
 
   const { signals, signalsStatus, sensors, sensrosStatus } = props;
 
-  console.log(signals, sensors);
-
   return (
     <Grid container className={`signals`}>
       {(signalsStatus === apiStates.idle || signalsStatus === apiStates.pending) && (
@@ -20,15 +18,13 @@ export const Signals = props => {
         <ApiError />
       )}
       {signalsStatus === apiStates.done && signals && signals.length > 0 && (
-        <>
-          <Grid item className="signals__grid-item">
-            {signals.map(signal => (
-              <div className="signals__container">
-                <Signal signal={signal} sensors={sensors} />
-              </div>
-            ))}
-          </Grid>
-        </>
+        <Grid item className="signals__grid-item">
+          {signals.map(signal => (
+            <div className="signals__container" key={signal.signalId}>
+              <Signal signal={signal} sensors={sensors} />
+            </div>
+          ))}
+        </Grid>
       )}
     </Grid>
     
