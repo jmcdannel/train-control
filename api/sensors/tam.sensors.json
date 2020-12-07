@@ -40,47 +40,5 @@
         "action": "red"
       }
     ]
-  },
-  {
-    "sensorId": 403,
-    "name": "Tamararck Station South IR 3",
-    "abbr":"TS IR 3",
-    "type": "ir",
-    "pin": 15,
-    "delay": 5,
-    "decay": 10,
-    "HIGH": [
-      { 
-        "signalId": 103,
-        "action": "green"
-      }
-    ],
-    "LOW": [
-      { 
-        "signalId": 103,
-        "action": "red"
-      }
-    ]
-  },
-  {
-    "sensorId": 404,
-    "name": "Tamararck Station South IR 4",
-    "abbr":"TS IR 4",
-    "type": "ir",
-    "pin": 15,
-    "delay": 5,
-    "decay": 10,
-    "HIGH": [
-      { 
-        "signalId": 104,
-        "action": "green"
-      }
-    ],
-    "LOW": [
-      { 
-        "signalId": 104,
-        "action": "red"
-      }
-    ]
   }
 ]
