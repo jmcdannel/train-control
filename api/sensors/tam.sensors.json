@@ -4,7 +4,7 @@
     "name": "Tamararck Station South IR 1",
     "abbr":"TS IR 1",
     "type": "ir",
-    "pin": 15,
+    "pin": 22,
     "delay": 5,
     "decay": 10,
     "HIGH": [
@@ -25,7 +25,7 @@
     "name": "Tamararck Station South IR 2",
     "abbr":"TS IR 2",
     "type": "ir",
-    "pin": 15,
+    "pin": 25,
     "delay": 5,
     "decay": 10,
     "HIGH": [

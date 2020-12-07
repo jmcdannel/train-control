@@ -18,6 +18,7 @@ appConfig = config.getConfig()
 host = appConfig['apiHost']
 turnoutsapi.init()
 signalsapi.init()
+sensorsapi.init()
   
 # /turnouts
 @app.route('/turnouts', methods=['GET'])
