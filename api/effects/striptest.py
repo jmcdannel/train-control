@@ -58,6 +58,7 @@ def rainbow(strip, wait_ms=20, iterations=1):
         for i in range(strip.numPixels()):
             lastColor = (i+j) & 255
             strip.setPixelColor(i, wheel(lastColor))
+            print(lastColor)
         strip.show()
         time.sleep(wait_ms/1000.0)
 
