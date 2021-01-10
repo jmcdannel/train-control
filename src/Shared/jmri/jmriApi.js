@@ -4,6 +4,7 @@ var $jmri = null;
 var $debug = false;
 var $ = window.jQuery;
 var log = new window.Logger();
+var sensros = [];
 var promises = {
 	speed: {
 		resolve: () => {},
@@ -50,7 +51,7 @@ var jmriLostComm = function(message) {
 
 var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 	console.log('__jmriReady', jsonVersion, jmriVersion, railroadName);
-  isReady = true;
+	isReady = true;
   fireEvent('ready', isReady);
 }
 
@@ -61,6 +62,12 @@ var throttleState = function(name, address, speed, forward, fs) {
 	if (forward !== undefined) throttleDirection(name, forward);
 	if (speed !== undefined) throttleSpeed(name, speed);
 	for (var i = 0; i < 29; i++) if (fs[i] !== undefined) throttleFunctionState(name, i, fs[i]);
+};
+
+//----------------------------------------- [from server] Last selected throttle address
+var sensorState = function(name, userName, comment, inverted, state) {
+	console.log('__sensorState', name, userName, comment, inverted, state);
+	fireEvent('sensor', { name, inverted, state });
 };
 
 const throttleAcquisition = address => {
@@ -88,7 +95,6 @@ const layoutPowerState = function(state) {
 };
 
 const setup = (apiHost) => {
-		console.log('Setup', isSetup);
 		if (isSetup) {
 			console.log('throttle API already setup');
 			return isSetup;
@@ -112,7 +118,7 @@ const setup = (apiHost) => {
 		throttle: function(name, address, speed, forward, fs) {throttleState(name, address, speed, forward, fs);},
 		light: function(name, userName, comment, state) {},	//Nothing to do
 		reporter: function(name, userName, state, comment, report, lastReport) {},	//Nothing to do
-		sensor: function(name, userName, comment, inverted, state) {},	//Nothing to do
+		sensor: function(name, userName, comment, inverted, state) {sensorState(name, userName, comment, inverted, state)},	//Nothing to do
 		// turnout: function(name, userName, comment, inverted, state) {layoutTurnoutState(name, userName, comment, inverted, state);},
 		signalHead: function(name, userName, comment, lit, appearance, held, state, appearanceName) {},	//Nothing to do
 		signalMast: function(name, userName, aspect, lit, held, state) {},	//Nothing to do
@@ -122,7 +128,14 @@ const setup = (apiHost) => {
 	});
 	if (!$jmri) throw new Error('private~Could not open JMRI WebSocket.');
 	isSetup = true;
+	// setTimeout(() => {
+	// 	$jmri.getJMRI('sensor', 'DS25');
+	// }, 5000);
 	return createPromise('ready');
+}
+
+const watchSensors = sensors => {
+	sensors.forEach(sensor => $jmri.getJMRI('sensor', `DS${sensor.pin}`));
 }
 
 const throttle = async (address, speed) => {
@@ -229,6 +242,7 @@ export const jmriApi = {
     setup, 
     throttle,
 		requestLoco,
+		watchSensors,
     changeDirection,
     power,
 		on: attachEvent,

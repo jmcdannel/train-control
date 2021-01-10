@@ -27,6 +27,7 @@ export const initialState = {
   turnouts: [],
   signals: [],
   sensors: [],
+  effects: [],
   menu: {
     turnouts: {
       view: 'compact'

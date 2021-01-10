@@ -80,6 +80,10 @@ export const api = {
     get: args => get('signal', args),
     put: args => put('signal', args)
   },
+  effects: {
+    get: args => get('effect', args),
+    put: args => put('effect', args)
+  },
   sensors: {
     get: args => get('sensor', args)
   }

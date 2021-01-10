@@ -1,7 +1,30 @@
 {
+    "layoutId": "tam",
+    "name": "Emulator Junction",
+    "modules": [
+      "turnouts",
+      "throttles",
+      "signals",
+      "sensors",
+      "effects"
+    ],
     "api": "http://localhost:5000",
     "apiHost": "localhost",
     "jmri": "http://localhost:12080/json/",
-    "serial": "/tty/dev/ACM0",
-    "layoutId": "tam"
+    "turnouts": {
+        "device": "localhost",
+        "interface": "emulator"
+    },
+    "signals": {
+        "device": "localhost",
+        "interface": "emulator"
+    },
+    "sensors": {
+        "device": "arduino",
+        "interface": "serial"
+    },
+    "effects": {
+        "arduino": ["emulator"],
+        "pi": ["analogaudio", "PCA9685","GPIO"]
+    }
 }

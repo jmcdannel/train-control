@@ -35,6 +35,7 @@
                     .bind('message', function (e) {
                         var m = JSON.parse(e.originalEvent.data);
                         var h = settings.events[m.type];
+                        console.log('message', h, m);
                         if (h) h.call(this, m);
                     });
                 ws._send = ws.send;

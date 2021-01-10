@@ -17,6 +17,7 @@ import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
 import Throttles from '../Throttles/Throttles';
 import Signals from '../Signals/Signals';
+import Effects from '../Effects/Effects';
 import MiniThrottles from '../Throttles/MiniThrottles';
 import LandingMenu from './LandingMenu';
 
@@ -40,17 +41,19 @@ function TrackMaster(props) {
   const layoutId = appConfig.layoutId;
 
   const [ state, dispatch ] = useContext(Context);
-  const { turnouts, signals, sensors } = state;
+  const { turnouts, signals, effects, sensors } = state;
 
   const [page, setPage] = useState(location && location.pathname);
   const [menu, setMenu] = useState(menuConfig);
 
   const [jmriInitialized, setJmriInitialized] = useState(false);
+  const [sensorsInitialized, setSensorsInitialized] = useState(false);
   const [jmriReady, setJmriReady] = useState(false);
 
   // TODO: onload load if module in config
   const [turnoutsStatus, setTurnoutsStatus] = useState(apiStates.idle);
   const [signalsStatus, setSignalsStatus] = useState(apiStates.idle);
+  const [effectsStatus, setEffectsStatus] = useState(apiStates.idle);
   const [sensorsStatus, setSensorsStatus] = useState(apiStates.idle);
 
   // Initialize JMRI Websocket connection
@@ -64,6 +67,16 @@ function TrackMaster(props) {
       initJmri();
     }
   }, [jmriInitialized]);
+
+
+  useEffect(() => {
+    if (!sensorsInitialized && jmriReady && sensorsStatus === apiStates.done && sensors.length > 0) {
+      console.log('watchSensors', sensors);
+      jmriApi.watchSensors([...sensors]);
+      jmriApi.on('sensor', 'TrackMaster', handleSensor);
+      setSensorsInitialized(true);
+    }
+  }, [jmriApi, jmriReady, sensorsInitialized, sensors, sensorsStatus]);
 
   // TODO: onload load if module in config
  useEffect(() => {
@@ -85,20 +98,38 @@ function TrackMaster(props) {
 
  // TODO: onload load if module in config
 useEffect(() => {
-  const fetchSignals = async () => {
-    setSignalsStatus(apiStates.pending);
+  const fetchEffects = async () => {
+    setEffectsStatus(apiStates.pending);
     try {
-      const payload = await api.signals.get();
-      await dispatch({ type: 'UPDATE_SIGNALS', payload });
-      setSignalsStatus(apiStates.done)
+      const payload = await api.effects.get();
+      await dispatch({ type: 'UPDATE_EFFECTS', payload });
+      setEffectsStatus(apiStates.done)
     } catch(err) {
       console.error(err);
-      setSignalsStatus(apiStates.error)
+      setEffectsStatus(apiStates.error)
     }
   }
-  if (layoutId && (signals && signals.length === 0) && signalsStatus === 'idle') {
-    fetchSignals();
+  if ((effects && effects.length === 0) && effectsStatus === 'idle') {
+    fetchEffects();
   }
+}, [effects, effectsStatus]);
+
+// TODO: onload load if module in config
+useEffect(() => {
+ const fetchSignals = async () => {
+   setSignalsStatus(apiStates.pending);
+   try {
+     const payload = await api.signals.get();
+     await dispatch({ type: 'UPDATE_SIGNALS', payload });
+     setSignalsStatus(apiStates.done)
+   } catch(err) {
+     console.error(err);
+     setSignalsStatus(apiStates.error)
+   }
+ }
+ if (layoutId && (signals && signals.length === 0) && signalsStatus === 'idle') {
+   fetchSignals();
+ }
 }, [signals, signalsStatus, layoutId]);
 
 // TODO: onload load if module in config
@@ -122,6 +153,21 @@ useEffect(() => {
   // Event Handlers
   const handleJmriReady = isReady => {
     setJmriReady(isReady);
+  }
+
+  const handleSensor = ({ name, inverted, state }) =>{
+    const setSignal = (action, actionState) => {
+      if (actionState === 4) {
+        api.signals.put({ 
+          signalId: action.signalId, 
+          state: actionState === 4 ? 1 :0 
+        });
+      }
+      return action;
+    }
+    const sensor = sensors.find(sensor => sensor.pin == parseInt(name.substring(2)));
+    sensor.HIGH.map(sensorAction => setSignal(sensorAction, state));
+    sensor.LOW.map(sensorAction => setSignal(sensorAction, state));
   }
 
   const handleNavigate = (event, newValue) => {
@@ -176,6 +222,12 @@ useEffect(() => {
         return (
           <Route path="/signals" key={module}>
             <Signals signals={signals} sensors={sensors} signalsStatus={signalsStatus} sensorsStatus={sensorsStatus} />
+          </Route>
+        )
+      case 'effects' :
+        return (
+          <Route path="/effects" key={module}>
+            <Effects effects={effects} sensors={sensors} effectsStatus={effectsStatus} sensorsStatus={sensorsStatus} />
           </Route>
         )
     }

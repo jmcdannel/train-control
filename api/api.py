@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask import Flask, json
 from turnouts import turnoutsapi
 from signals import signalsapi
+from effects import effectsapi
 from sensors import sensorsapi
 from config import config
 
@@ -18,6 +19,7 @@ appConfig = config.getConfig()
 host = appConfig['apiHost']
 turnoutsapi.init()
 signalsapi.init()
+effectsapi.init()
 sensorsapi.init()
   
 # /turnouts
@@ -45,6 +47,19 @@ def get_signal(signal_id):
 @app.route('/signals/<int:signal_id>', methods=['PUT'])
 def update_signal(signal_id):
   return signalsapi.put(signal_id)
+
+# /effects
+@app.route('/effects', methods=['GET'])
+def effects():
+  return effectsapi.get()
+
+@app.route('/effects/<int:effect_id>', methods=['GET'])
+def get_effect(effect_id):
+  return effectsapi.get(effect_id)
+
+@app.route('/effects/<int:effect_id>', methods=['PUT'])
+def update_effect(effect_id):
+  return effectsapi.put(effect_id)
 
 # /sensors
 @app.route('/sensors', methods=['GET'])

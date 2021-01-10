@@ -30,6 +30,12 @@ const Reducer=(state, action)=>{
         turnouts
       };
 
+    case 'UPDATE_EFFECTS':
+      return {
+        ...state,
+        effects: action.payload
+      };
+
     case 'UPDATE_SIGNALS':
       return {
         ...state,
