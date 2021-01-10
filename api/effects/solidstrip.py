@@ -37,6 +37,6 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(209, 197, 59))
+        strip.setPixelColor(i, Color(255, 235, 0)
         strip.show()
 
