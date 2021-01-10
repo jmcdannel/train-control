@@ -56,8 +56,8 @@ def rainbow(strip, wait_ms=20, iterations=1):
     """Draw rainbow that fades across all pixels at once."""
     for j in range(256*iterations):
         for i in range(strip.numPixels()):
-            lastColor = wheel((i+j) & 255)
-            strip.setPixelColor(i, lastColor)
+            lastColor = (i+j) & 255
+            strip.setPixelColor(i, wheel(lastColor))
         strip.show()
         time.sleep(wait_ms/1000.0)
 
