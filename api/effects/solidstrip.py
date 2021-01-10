@@ -29,5 +29,5 @@ if __name__ == '__main__':
 
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, LED_COLOR)
-        strip.show()
+    strip.show()
 
