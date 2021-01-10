@@ -113,6 +113,7 @@ if __name__ == '__main__':
             # theaterChaseRainbow(strip)
 
     except KeyboardInterrupt:
+        print('Last Color')
         print(lastColor)
         if args.clear:
             colorWipe(strip, Color(0,0,0), 10)
