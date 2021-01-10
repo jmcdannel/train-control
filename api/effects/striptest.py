@@ -20,7 +20,7 @@ LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
-
+lastColor = Color(0, 0, 0)
 
 # Define functions which animate LEDs in various ways.
 def colorWipe(strip, color, wait_ms=50):
@@ -56,7 +56,8 @@ def rainbow(strip, wait_ms=20, iterations=1):
     """Draw rainbow that fades across all pixels at once."""
     for j in range(256*iterations):
         for i in range(strip.numPixels()):
-            strip.setPixelColor(i, wheel((i+j) & 255))
+            lastColor = wheel((i+j) & 255)
+            strip.setPixelColor(i, lastColor)
         strip.show()
         time.sleep(wait_ms/1000.0)
 
@@ -98,19 +99,20 @@ if __name__ == '__main__':
     try:
 
         while True:
-            print ('Color wipe animations.')
-            colorWipe(strip, Color(255, 0, 0))  # Red wipe
-            colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-            colorWipe(strip, Color(0, 0, 255))  # Green wipe
-            print ('Theater chase animations.')
-            theaterChase(strip, Color(127, 127, 127))  # White theater chase
-            theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-            theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-            print ('Rainbow animations.')
+            # print ('Color wipe animations.')
+            # colorWipe(strip, Color(255, 0, 0))  # Red wipe
+            # colorWipe(strip, Color(0, 255, 0))  # Blue wipe
+            # colorWipe(strip, Color(0, 0, 255))  # Green wipe
+            # print ('Theater chase animations.')
+            # theaterChase(strip, Color(127, 127, 127))  # White theater chase
+            # theaterChase(strip, Color(127,   0,   0))  # Red theater chase
+            # theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
+            # print ('Rainbow animations.')
             rainbow(strip)
-            rainbowCycle(strip)
-            theaterChaseRainbow(strip)
+            # rainbowCycle(strip)
+            # theaterChaseRainbow(strip)
 
     except KeyboardInterrupt:
+        print(lastColor)
         if args.clear:
             colorWipe(strip, Color(0,0,0), 10)
