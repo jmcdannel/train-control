@@ -10,7 +10,7 @@ import time
 from rpi_ws281x import *
 import argparse
 
-LED_COLOR       = Color(255, 0, 0)
+LED_COLOR       = Color(200, 0, 50)
 
 # LED strip configuration:
 LED_COUNT      = 12      # Number of LED pixels.
@@ -39,6 +39,6 @@ if __name__ == '__main__':
     strip.begin()
 
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, wheel(113))
+        strip.setPixelColor(i, LED_COLOR)
     strip.show()
 
