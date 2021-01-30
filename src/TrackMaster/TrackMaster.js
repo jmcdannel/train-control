@@ -12,6 +12,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 // Modules
+import Conductor from '../Conductor/Conductor';
 import Turnouts from '../Turnouts/Turnouts';
 import Layout from '../Layout/Layout';
 import MapControl from '../Layout/MapControl';
@@ -258,6 +259,9 @@ useEffect(() => {
                 </Route>
                 <Route path="/train-control" exact>
                   <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
+                </Route>
+                <Route path="/conductor" exact>
+                  <Conductor />
                 </Route>
                 {appConfig.modules.map(getRoutedModule)}
               </Switch>
