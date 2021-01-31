@@ -66,15 +66,6 @@ export const apiStates = {
   error: 'error'
 }
 
-const getMethod = verb => {
-  switch(verb) {
-    case 'get':
-      return get;
-    case 'put':
-      return put;
-  }
-}
-
 export const api = {
   initialize,
   get,
