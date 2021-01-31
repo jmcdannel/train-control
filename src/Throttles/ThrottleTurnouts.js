@@ -16,11 +16,9 @@ import { Context } from '../Store/Store';
 import Turnout from '../Turnouts/Turnout';
 
 export const linesConfig = [
-  { lineId: 'mainred', label: 'Mainline SB', color: Colors.red[500] },
-  { lineId: 'maingreen', label: 'Mainline NB', color: Colors.green[500] },
-  { lineId: 'tam-st-n', label: 'Tamarack Station North', color: Colors.pink[500] },
-  { lineId: 'tam-st-s', label: 'Tamarack Station South', color: Colors.cyan[500] },
-  { lineId: 'industrial', label: 'Industrial Siding', color: Colors.orange[500] }
+  { lineId: 'Mainline Red', label: 'Mainline SB', color: Colors.red[500] },
+  { lineId: 'Mainline Green', label: 'Mainline NB', color: Colors.green[500] },
+  { lineId: 'Tamarack Station', label: 'Tamarack Station North', color: Colors.cyan[500] }
 ];
 
 export const districtsConfig = [
