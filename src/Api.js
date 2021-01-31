@@ -35,6 +35,12 @@ async function get(type, Id = null) {
   }
 }
 
+async function initialize() {
+  const getModules = appConfig.modules.reduce((reqs, module) => api[module] && api[module].get ? [...reqs, module] : [...reqs], []);
+  const results = await Promise.all(getModules.map(req => api[req].get()));
+  return getModules.reduce((state, module, index) => ({ ...state, [module]: results[index] }), {});
+}
+
 async function put(type, data) {
   try {
     const response = await fetch(`${apiHost}/${type}s/${data[`${type}Id`]}`, {
@@ -70,6 +76,7 @@ const getMethod = verb => {
 }
 
 export const api = {
+  initialize,
   get,
   put,
   turnouts: {

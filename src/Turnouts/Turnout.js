@@ -107,6 +107,8 @@ export const Turnout = props => {
             className="chip"
             size="small"
             style={{ backgroundColor: linesConfig.find(l => l.lineId === line).color }}
+            clickable
+            onClick={handleToggle}
           />
           <Box className="turnout__header__status">
             {isLoading || isPristine 

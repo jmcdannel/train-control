@@ -42,7 +42,7 @@ function TrackMaster(props) {
   const layoutId = appConfig.layoutId;
 
   const [ state, dispatch ] = useContext(Context);
-  const { turnouts, signals, effects, sensors } = state;
+  const { signals, effects, sensors, turnouts } = state;
 
   const [page, setPage] = useState(location && location.pathname);
   const [menu, setMenu] = useState(menuConfig);
@@ -51,11 +51,15 @@ function TrackMaster(props) {
   const [sensorsInitialized, setSensorsInitialized] = useState(false);
   const [jmriReady, setJmriReady] = useState(false);
 
-  // TODO: onload load if module in config
-  const [turnoutsStatus, setTurnoutsStatus] = useState(apiStates.idle);
-  const [signalsStatus, setSignalsStatus] = useState(apiStates.idle);
-  const [effectsStatus, setEffectsStatus] = useState(apiStates.idle);
-  const [sensorsStatus, setSensorsStatus] = useState(apiStates.idle);
+
+  useEffect(() => {
+    const initialize = async function() {
+      const apiInitState = await api.initialize();
+      await dispatch({ type: 'INIT_STATE', payload: apiInitState });
+    };
+    
+    initialize();
+  }, []);
 
   // Initialize JMRI Websocket connection
   useEffect(() => {
@@ -71,85 +75,14 @@ function TrackMaster(props) {
 
 
   useEffect(() => {
-    if (!sensorsInitialized && jmriReady && sensorsStatus === apiStates.done && sensors.length > 0) {
+    if (!sensorsInitialized && jmriReady && sensors.length > 0) {
       console.log('watchSensors', sensors);
       jmriApi.watchSensors([...sensors]);
       jmriApi.on('sensor', 'TrackMaster', handleSensor);
       setSensorsInitialized(true);
     }
-  }, [jmriApi, jmriReady, sensorsInitialized, sensors, sensorsStatus]);
+  }, [jmriApi, jmriReady, sensorsInitialized, sensors]);
 
-  // TODO: onload load if module in config
- useEffect(() => {
-   const fetchTurnouts = async () => {
-     setTurnoutsStatus(apiStates.pending);
-     try {
-       const payload = await api.turnouts.get();
-       await dispatch({ type: 'UPDATE_TURNOUTS', payload });
-       setTurnoutsStatus(apiStates.done)
-     } catch(err) {
-       console.error(err);
-       setTurnoutsStatus(apiStates.error)
-     }
-   }
-   if (layoutId && (turnouts && turnouts.length === 0) && turnoutsStatus === 'idle') {
-     fetchTurnouts();
-   }
- }, [turnouts, turnoutsStatus, layoutId]);
-
- // TODO: onload load if module in config
-useEffect(() => {
-  const fetchEffects = async () => {
-    setEffectsStatus(apiStates.pending);
-    try {
-      const payload = await api.effects.get();
-      await dispatch({ type: 'UPDATE_EFFECTS', payload });
-      setEffectsStatus(apiStates.done)
-    } catch(err) {
-      console.error(err);
-      setEffectsStatus(apiStates.error)
-    }
-  }
-  if ((effects && effects.length === 0) && effectsStatus === 'idle') {
-    fetchEffects();
-  }
-}, [effects, effectsStatus]);
-
-// TODO: onload load if module in config
-useEffect(() => {
- const fetchSignals = async () => {
-   setSignalsStatus(apiStates.pending);
-   try {
-     const payload = await api.signals.get();
-     await dispatch({ type: 'UPDATE_SIGNALS', payload });
-     setSignalsStatus(apiStates.done)
-   } catch(err) {
-     console.error(err);
-     setSignalsStatus(apiStates.error)
-   }
- }
- if (layoutId && (signals && signals.length === 0) && signalsStatus === 'idle') {
-   fetchSignals();
- }
-}, [signals, signalsStatus, layoutId]);
-
-// TODO: onload load if module in config
-useEffect(() => {
- const fetchSensors = async () => {
-   setSensorsStatus(apiStates.pending);
-   try {
-     const payload = await api.sensors.get();
-     await dispatch({ type: 'UPDATE_SENSORS', payload });
-     setSensorsStatus(apiStates.done)
-   } catch(err) {
-     console.error(err);
-     setSensorsStatus(apiStates.error)
-   }
- }
- if (layoutId && (sensors && sensors.length === 0) && sensorsStatus === 'idle') {
-  fetchSensors();
- }
-}, [sensors, sensorsStatus, layoutId]);
 
   // Event Handlers
   const handleJmriReady = isReady => {
@@ -182,10 +115,10 @@ useEffect(() => {
   }
 
   const handleTurnoutChange = async data => {
-    for (let item of data) {
-        let turnout = await api.turnouts.put(layoutId, item);
-        await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
-    }
+    // for (let item of data) {
+    //     let turnout = await api.turnouts.put(layoutId, item);
+    //     await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
+    // }
   }
 
   const handleMenuClick = menuChange => {
@@ -207,28 +140,28 @@ useEffect(() => {
             <Throttles jmriApi={jmriApi} />
           </Route>
         );
-      case 'conductor' :
-        return (
-          <Route path="/conductor" key={module}>
-            <MapControl turnouts={turnouts} onChange={handleTurnoutChange} />
-          </Route>
-        );
+      // case 'conductor' :
+      //   return (
+      //     <Route path="/map" key={module}>
+      //       <MapControl turnouts={turnouts} onChange={handleTurnoutChange} />
+      //     </Route>
+      //   );
       case 'turnouts' :
         return (
           <Route path="/turnouts" key={module}>
-            <Turnouts turnouts={turnouts} turnoutsStatus={turnoutsStatus} />
+            <Turnouts />
           </Route>
         );
       case 'signals' :
         return (
           <Route path="/signals" key={module}>
-            <Signals signals={signals} sensors={sensors} signalsStatus={signalsStatus} sensorsStatus={sensorsStatus} />
+            <Signals signals={signals} sensors={sensors} />
           </Route>
         )
       case 'effects' :
         return (
           <Route path="/effects" key={module}>
-            <Effects effects={effects} sensors={sensors} effectsStatus={effectsStatus} sensorsStatus={sensorsStatus} />
+            <Effects effects={effects} sensors={sensors} />
           </Route>
         )
     }

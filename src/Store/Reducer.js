@@ -1,6 +1,9 @@
 const Reducer=(state, action)=>{
   switch(action.type) {
 
+    case 'INIT_STATE':
+      return {...state, ...action.payload};
+
     case 'UPDATE_LOCO':
       const locos = state.locos.map(loco => 
         loco.address == action.payload.address
