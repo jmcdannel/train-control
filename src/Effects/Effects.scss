@@ -1,0 +1,17 @@
+.effects {
+  &__grid-item {
+   display: flex; 
+   flex-wrap: wrap;
+  }
+
+}
+.effect {
+  &__container {
+    padding: 0.5rem;
+
+    flex: 1 1 50%;
+    // width: 200px;
+    min-width: 10rem;
+    max-width: 50%;
+  }
+}

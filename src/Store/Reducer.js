@@ -39,6 +39,17 @@ const Reducer=(state, action)=>{
         effects: action.payload
       };
 
+    case 'UPDATE_EFFECT':
+      const effects = state.effects.map(effect => 
+        effect.effectId === action.payload.effectId
+          ? { ...effect, ...action.payload }
+          : effect
+      );
+      return {
+        ...state,
+        effects
+      };
+
     case 'UPDATE_SIGNALS':
       return {
         ...state,
@@ -52,6 +63,7 @@ const Reducer=(state, action)=>{
       };
 
     default:
+      console.warn('REDUCER NOT FOUND: ', action);
       return state;    
   }
 }

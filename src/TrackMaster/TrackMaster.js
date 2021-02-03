@@ -161,7 +161,7 @@ function TrackMaster(props) {
       case 'effects' :
         return (
           <Route path="/effects" key={module}>
-            <Effects effects={effects} sensors={sensors} />
+            <Effects />
           </Route>
         )
     }

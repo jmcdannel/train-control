@@ -37,7 +37,7 @@ export const Turnouts = props => {
     <Grid item sm={12} className="turnout__grid-item">
       <h3>{title}</h3>
     </Grid>
-  )
+  );
 
 
   return (
