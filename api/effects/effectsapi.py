@@ -103,12 +103,15 @@ def put(effect_id):
     abort(400)
 
   efx = efx[0]
+
+  efx['state'] = state
   
   for action in efx['actions']:
-    action['state'] = state
+    
+    actionState = getActionState(efx, action['actionId'], state)
     if(action['type'] == 'DCCOutput' and arduino is not None):
       # DCC Output Command
-      _sendCommand('<Z %d %d>' % (action['pin'], action['state']))
+      _sendCommand('<Z %d %d>' % (action['pin'], actionState))
     elif(action['type'] == 'Arduino Script'):
       # Arduino Script
       print('Arduino Script: Not implemented')
@@ -119,8 +122,19 @@ def put(effect_id):
       # RPi GPIO Output
       GPIO.output(action['pin'], action['state'])
 
-  # save all keys
+  # save
   with open(path, 'w') as json_file:
     json.dump(data, json_file)
 
   return jsonify(efx)
+
+def getActionState(efx, action, state):
+  if efx['states'] is None:
+    return state
+  elif efx['states'][str(state)] is None:
+    return state
+  elif efx['states'][str(state)][action] is None:
+    return state
+  else:
+    return efx['states'][str(state)][action]
+    
