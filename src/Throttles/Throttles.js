@@ -9,21 +9,14 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import { Context } from '../Store/Store';
+import jmriApi from '../Shared/jmri/jmriApi';
 
 export const Throttles = props => {
 
   const [ state, dispatch ] = useContext(Context);
-  const { jmriApi } = props;
-
-  const views = [
-    { label: 'Compact', value: 'compact' },
-    { label: 'Comfy', value: 'comfy' },
-    { label: '2 Up', value: '2up' },
-    { label: 'Full', value: 'full' },
-  ];
-
-  const [view, setView] = useState(window.localStorage.getItem('throttleView') || views[1].value);
-
+  // const { jmriApi } = props;
+  const { locos } = state;
+  
   const acquireLocoClicked = async address => {
     await jmriApi.requestLoco(address);
   }
@@ -36,10 +29,7 @@ export const Throttles = props => {
     jmriApi.on('acquire', 'Throttles', handleLocoAcquired);
   }, [jmriApi, handleLocoAcquired]);
 
-  const handleViewClick = event => {
-    setView(event.target.value);
-    window.localStorage.setItem('throttleView', event.target.value);
-  }
+  console.log('locos', locos);
 
   return (
     <Grid 
@@ -63,9 +53,8 @@ export const Throttles = props => {
             variant="outlined"
             className="width100"
             color="primary">
-            {state.locos.filter(loco => !loco.isAcquired).map(loco => 
+            {locos.filter(loco => !loco.isAcquired).map(loco => 
               <Button 
-                key={loco.address}
                 key={loco.address}
                 onClick={() => acquireLocoClicked(loco.address)}
               >
@@ -74,31 +63,12 @@ export const Throttles = props => {
             )}
           </ButtonGroup>
         </Grid>
-        <Grid item className="throttles__viewmenu">
-          
-            <FormControl >
-              <InputLabel shrink id="view-throttles-label">
-                View
-              </InputLabel>
-              <Select
-                labelId="view-throttles-label"
-                id="view-throttles"
-                value={view}
-                onChange={handleViewClick}
-                displayEmpty
-              >
-                {views.map(view => (
-                  <MenuItem key={view.value} value={view.value}>{view.label}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-        </Grid>
       </Grid>
-      <Grid item xs={12} className={`throttles__acquired  throttles__acquired--view-${view} grow`}>
+      <Grid item xs={12} className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
       
-        {state.locos.filter(loco => loco.isAcquired).map(loco => 
+        {locos.filter(loco => loco.isAcquired).map(loco => 
           <div className="throttle__container" key={loco.address}>
-            <FullThrottle jmriApi={jmriApi} loco={loco} />
+            <Throttle jmriApi={jmriApi} loco={loco} />
           </div>
         )}
         

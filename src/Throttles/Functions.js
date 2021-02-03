@@ -8,7 +8,7 @@ import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 
 export const Functions = props => {
 
-  const functionButtons = new Array(28).fill({}).map((item, idx) => {
+  const functionButtons = new Array(8).fill({}).map((item, idx) => {
     switch(idx) {
       case 0:
         return {

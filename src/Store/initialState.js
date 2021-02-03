@@ -1,34 +1,18 @@
 import { apiStates } from '../Api';
 
-const locos = [
-  {
-    address: 31,
-    name: "BNSF5931",
-    road: "BNSF",
-    isAcquired: true,
-    speed: 0,
-    forward: null,
-    idleByDefault: true
-  },
-  {
-    address: 3,
-    name: "GN-317",
-    road: "Great Northern",
-    isAcquired: false,
-    speed: 0,
-    forward: null,
-    idleByDefault: true
-  }
-];
-
 export const initialState = {
   layout: null,
-  locos,
+  locos: [],
   turnouts: [],
   signals: [],
   sensors: [],
   effects: [],
   menu: {
+    view: 'pill',
+    showMaps: true,
+    group: '',
+    lineFilters: [],
+    sectionFilters: [],
     turnouts: {
       view: 'compact'
     }

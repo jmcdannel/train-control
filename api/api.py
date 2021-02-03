@@ -7,6 +7,7 @@ from turnouts import turnoutsapi
 from signals import signalsapi
 from effects import effectsapi
 from sensors import sensorsapi
+from locos import locosapi
 from config import config
 
 # intialize server
@@ -69,6 +70,15 @@ def sensors():
 @app.route('/sensors/<int:sensor_id>', methods=['GET'])
 def get_sensor(sensor_id):
   return sensorsapi.get(sensor_id)
+
+# /locos
+@app.route('/locos', methods=['GET'])
+def locos():
+  return locosapi.get()
+
+@app.route('/locos/<int:loco_id>', methods=['GET'])
+def get_loco(loco_id):
+  return locosapi.get(loco_id)
 
 if __name__ == '__main__':
     app.run(host=host)

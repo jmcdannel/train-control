@@ -82,6 +82,9 @@ export const api = {
     get: args => get('effect', args),
     put: args => put('effect', args)
   },
+  locos: {
+    get: args => get('loco', args)
+  },
   sensors: {
     get: args => get('sensor', args)
   }

@@ -6,6 +6,8 @@ import Box from '@material-ui/core/Box';
 
 import ConductorMenu from './ConductorMenu';
 import Turnouts from '../Turnouts/Turnouts';
+import Throttles from '../Throttles/Throttles';
+import Effects from '../Effects/Effects';
 
 import './Conductor.scss';
 
@@ -48,7 +50,7 @@ export const Conductor = props => {
   return (
     <Grid container spacing={8}>
       <Grid item xs={6}>
-        Throttles
+        <Throttles />
       </Grid>
       <Grid item xs={6}>
         <ConductorMenu 
@@ -61,6 +63,8 @@ export const Conductor = props => {
           groupBy={menu.group}
           filter={filterTurnouts} 
         />
+        <h2>Effects</h2>
+        <Effects />
       </Grid>
     </Grid>
 
