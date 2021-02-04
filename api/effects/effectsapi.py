@@ -80,6 +80,7 @@ def init():
   if GPIO is not None:
     for efx in data:
       print(efx)
+      print(efx.actions)
       for action in efx.actions:
         if action['type'] == 'GPIO':
           GPIO.setup(action['pin'], GPIO.OUT)
