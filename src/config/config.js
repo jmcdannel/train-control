@@ -43,6 +43,7 @@ export const effectsConfig = [
     { effectId: 'Light', color: Colors.red[500] },
     { effectId: 'Lighting Animation', color: Colors.amber[500] },
     { effectId: 'Sound Loop', color: Colors.teal[500] },
+    { effectId: 'Sound', color: Colors.indigo[500] },
     { effectId: 'Signal', color: Colors.green[500] }
 ];
 
@@ -58,7 +59,6 @@ export const getLineColor = lineId => {
 
 export const getEffectColor = effectId => {
     const effect = effectsConfig.find(s => s.effectId === effectId);
-    console.log('getEffectColor', effectId, effect);
     return effect ? effect.color : defaultColor;
 }
 

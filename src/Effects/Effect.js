@@ -19,7 +19,6 @@ import Signal from './Signal';
 import { Context } from '../Store/Store';
 import api from '../Api';
 import { getSectionColor, getLineColor, getEffectColor } from '../config/config';
-import { AutoComplete } from 'material-ui';
 
 
 
@@ -84,7 +83,7 @@ export const Effect = props => {
   );
 
   const isSmallView = (view === 'pill' || view === 'tiny');
-  const size = isSmallView ? 'small' : null;
+  const size = isSmallView ? 'small' : 'large';
 
   const getAvatar = () => {
     switch(effect.type) {
@@ -94,6 +93,7 @@ export const Effect = props => {
         return (<MovieFilterIcon fontSize={size} />);
       case 'Signal':
         return (<TrafficIcon fontSize={size} />);
+      case 'Sound':
       case 'Sound Loop':
         return (<MusicNoteIcon fontSize={size} />);
       default:
@@ -119,7 +119,7 @@ export const Effect = props => {
       default:
         return (
           <Switch
-            checked={effect.state}
+            checked={!!effect.state}
             onChange={handleSwitchChange}
             name="effectSwitch"
             inputProps={{ 'aria-label': 'secondary checkbox' }}

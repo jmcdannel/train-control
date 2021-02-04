@@ -3,11 +3,26 @@
   &.effects--pill,
   &.effects--tiny {
     .effect {
+      flex: 1;
       &__meta {
         display: none;
       }
+      .MuiCardHeader-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.8rem;
+        padding-left: 0.5rem;
+      }
+      .MuiCardHeader-root {
+        padding: 0.5rem;
+      }
       .MuiCardContent-root {
+        padding: 0.5rem;
         padding-top: 0;
+      }
+      .MuiCardHeader-avatar {
+        margin-right: 0;
       }
     }
   }
@@ -18,6 +33,10 @@
 
   &.effects--comfy {
 
+  }
+
+  &__grid-item {
+    display: flex;    
   }
 
 }

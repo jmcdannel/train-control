@@ -19,72 +19,62 @@ export const Turnouts = props => {
   const [ state, dispatch ] = useContext(Context);
   const { turnouts } = state;
 
-  const getLines = () => filter(turnouts).reduce((acc, curr) => {
+  const lines = filter(turnouts).reduce((acc, curr) => {
     if (!acc.includes(curr.line)) {
       acc.push(curr.line);
     }
     return acc;
   }, []);
 
-  const getSections = () => filter(turnouts).reduce((acc, curr) => {
+  const sections = filter(turnouts).reduce((acc, curr) => {
     if (!acc.includes(curr.section)) {
       acc.push(curr.section);
     }
     return acc;
   }, []);
 
-  const groupHeader = title => (
-    <Grid item sm={12} className="turnout__grid-item">
-      <h3>{title}</h3>
-    </Grid>
-  );
-
-
   return (
     <Grid container className={`turnouts turnouts--${view}`}>
-      {/* {(turnoutsStatus === apiStates.idle || turnoutsStatus === apiStates.pending) && (
-        <Loading />
+      {groupBy === '' && (
+        <Grid item sm={12} className="turnout__grid-item">
+          {turnouts.map(turnout => (
+            <div key={`turnout${groupBy}${turnout.turnoutId}`} className="turnout__container">
+            {console.log('none', turnout, turnout.turnoutId)}
+              <Turnout config={turnout} />
+            </div>
+          ))}
+        </Grid>
       )}
-      {turnoutsStatus === apiStates.error && (
-        <ApiError />
-      )}
-      {turnoutsStatus === apiStates.done && turnouts && turnouts.length > 0 && ( */}
+      {groupBy === 'line' && lines.map(line => (
         <>
-        {groupBy === '' && (
           <Grid item sm={12} className="turnout__grid-item">
-            {filter(turnouts).map(turnout => (
-              <div key={turnout.turnoutId} className="turnout__container">
+            <h3>{line}</h3>
+          </Grid>
+          <Grid item sm={12} className="turnout__grid-item">
+            {turnouts.filter(t => t.line === line).map(turnout => (
+              <div key={`turnout${groupBy}${turnout.turnoutId}`} className="turnout__container">
+              {console.log('line', turnout, turnout.turnoutId)}
                 <Turnout config={turnout} />
               </div>
             ))}
           </Grid>
-        )}
-        {groupBy === 'line' && getLines().map(line => (
-          <>
-            {groupHeader(line)}
-            <Grid item sm={12} className="turnout__grid-item">
-              {filter(turnouts.filter(t => t.line === line)).map(turnout => (
-                <div key={turnout.turnoutId} className="turnout__container">
-                  <Turnout config={turnout} />
-                </div>
-              ))}
-            </Grid>
-          </>
-        ))}
-        {groupBy === 'board' && getSections().map(section => (
-          <>
-            {groupHeader(section)}
-            <Grid item sm={12} className="turnout__grid-item">
-              {filter(turnouts.filter(t => t.section === section)).map(turnout => (
-                <div key={turnout.turnoutId} className="turnout__container">
-                  <Turnout config={turnout} />
-                </div>
-              ))}
-            </Grid>
-          </>
-        ))}
         </>
-      {/* )} */}
+      ))}
+      {groupBy === 'board' && sections.map(section => (
+        <>
+          <Grid item sm={12} className="turnout__grid-item">
+            <h3>{section}</h3>
+          </Grid>
+          <Grid item sm={12} className="turnout__grid-item">
+            {turnouts.filter(t => t.section === section).map(turnout => (
+              <div key={`turnout${groupBy}${turnout.turnoutId}`} className="turnout__container">
+                {console.log('board', `turnout${groupBy}${turnout.turnoutId}`, turnout.turnoutId)}
+                <Turnout config={turnout} />
+              </div>
+            ))}
+          </Grid>
+        </>
+      ))}
     </Grid>
     
   );

@@ -15,7 +15,7 @@ export const Effects = props => {
   return (
     <Grid container className={`effects  effects--${view}`} spacing={2}>  
       {effects.map(effect => (
-        <Grid item className="effects__grid-item" xs={isSmallView ? 4 : 6}>
+        <Grid key={`effect${effect.effectId}`} item className="effects__grid-item" xs={isSmallView ? 4 : 6}>
             <Effect effect={effect} sensors={sensors} view={view} key={effect.effectId} />
         </Grid>
       ))}
