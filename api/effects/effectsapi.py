@@ -72,16 +72,13 @@ def init():
 
   if arduino is not None:
     for efx in data:
-      print(efx)
-      for action in efx.actions:
+      for action in efx['actions']:
         if action['type'] == 'DCCOutput':
           _sendCommand('<Z %d %d 0>' % (action['pin'], action['pin']))
 
   if GPIO is not None:
     for efx in data:
-      print(efx)
-      print(efx.actions)
-      for action in efx.actions:
+      for action in efx['actions']:
         if action['type'] == 'GPIO':
           GPIO.setup(action['pin'], GPIO.OUT)
 
