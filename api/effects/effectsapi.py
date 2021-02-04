@@ -1,6 +1,7 @@
 import os
 from flask import json, jsonify, abort, request
 from config import config
+from . import soundfx
 
 appConfig = config.getConfig()
 layoutId = appConfig['layoutId']
@@ -67,6 +68,7 @@ def _sendCommand(cmd):
 
 def init():
   data = get_file()
+  soundfx.init()
 
   if arduino is not None:
     for efx in data:
@@ -117,7 +119,12 @@ def put(effect_id):
       print('Arduino Script: Not implemented')
     elif(action['type'] == 'Sound Loop'):
       # Sound Loop
-      print('Sound Loop: Not implemented')
+      print('Sound Loop: ' + action["sound"])
+      soundfx.play(action["sound"], 'right')
+    elif(action['type'] == 'Sound'):
+      # Sound
+      print('Sound: ' + action["sound"])
+      soundfx.play(action["sound"], 'left')
     elif(action['type'] == 'GPIO' and GPIO is not None):
       # RPi GPIO Output
       GPIO.output(action['pin'], action['state'])
@@ -129,7 +136,7 @@ def put(effect_id):
   return jsonify(efx)
 
 def getActionState(efx, action, state):
-  if efx['states'] is None:
+  if 'states' not in efx:
     return state
   elif efx['states'][str(state)] is None:
     return state

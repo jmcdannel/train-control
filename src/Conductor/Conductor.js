@@ -64,7 +64,8 @@ export const Conductor = props => {
           filter={filterTurnouts} 
         />
         <h2>Effects</h2>
-        <Effects />
+        <Effects
+          view={menu.view} />
       </Grid>
     </Grid>
 

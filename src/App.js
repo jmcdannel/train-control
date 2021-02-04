@@ -4,11 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TrackMaster from './TrackMaster/TrackMaster';
 import Login from './Login/Login';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import Store, { Context } from './Store/Store';
-import api from './Api';
+import Store from './Store/Store';
 import theme from './theme';
 import './App.scss';
-import initialState from './Store/initialState';
 
 function App() {
 

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import * as Colors from 'material-ui/colors';
+import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -18,19 +19,24 @@ import Signal from './Signal';
 import { Context } from '../Store/Store';
 import api from '../Api';
 import { getSectionColor, getLineColor, getEffectColor } from '../config/config';
+import { AutoComplete } from 'material-ui';
 
 
 
 export const Effect = props => {
 
-  const { effect, effect: { effectId } } = props;
+  const { effect, effect: { effectId }, view } = props;
 
   const [ state, dispatch ] = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
   const [isPristine, setIsPristine] = useState(true);
 
-  const handleChange = (event) => {
+  const handleSwitchChange = (event) => {
     updateEffect({ effectId, state: event.target.checked ? 1 : 0 })
+  };
+
+  const handleButtonClick = (event) => {
+    updateEffect({ effectId, state: 1 })
   };
 
   const updateEffect = async (changedEffect) => {
@@ -50,49 +56,92 @@ export const Effect = props => {
   }
 
   const getMetaData = effect => (
-    <>
-    <Chip 
-      label={`Line: ${effect.line}`} 
-      size="small"
-      variant="outlined"
-      style={{  
-        margin: '0.25rem',
-        borderColor: getLineColor(effect.line) 
-      }}
-    />
-    <Chip 
-      label={`Section: ${effect.section}`} 
-      size="small"
-      variant="outlined"
-      style={{  
-        margin: '0.25rem',
-        borderColor: getSectionColor(effect.section)
-      }}
-    />
-    </>
+    <div className="effect__meta">
+      <p>
+        <strong>{effect.actions.length}</strong> Actions 
+        | 
+        State: <strong>{effect.state}</strong>
+      </p>
+      {effect.line && (<Chip 
+        label={`Line: ${effect.line}`} 
+        size="small"
+        variant="outlined"
+        style={{  
+          margin: '0.25rem',
+          borderColor: getLineColor(effect.line) 
+        }}
+      />)}
+      {effect.section && (<Chip 
+        label={`Section: ${effect.section}`} 
+        size="small"
+        variant="outlined"
+        style={{  
+          margin: '0.25rem',
+          borderColor: getSectionColor(effect.section)
+        }}
+      />)}
+    </div>
   );
 
-  const getAvatar = type => {
-    switch(type) {
+  const isSmallView = (view === 'pill' || view === 'tiny');
+  const size = isSmallView ? 'small' : null;
+
+  const getAvatar = () => {
+    switch(effect.type) {
       case 'Light':
-        return (<HighlightIcon />);
+        return (<HighlightIcon fontSize={size} />);
       case 'Lighting Animation':
-        return (<MovieFilterIcon />);
+        return (<MovieFilterIcon fontSize={size} />);
       case 'Signal':
-        return (<TrafficIcon />);
+        return (<TrafficIcon fontSize={size} />);
       case 'Sound Loop':
-        return (<MusicNoteIcon />);
+        return (<MusicNoteIcon fontSize={size} />);
       default:
-        return type.substring(0, 1);                                                                                
+        return effect.type.substring(0, 1);                                                                                
+    }
+  }
+
+  const getAction = () => {
+    switch(effect.type) {
+      case 'Signal':
+        return null;
+      case 'Sound':
+        return (
+            <Button 
+              onClick={handleButtonClick} 
+              color="secondary" 
+              size="small"
+              variant="outlined" 
+              startIcon={<MusicNoteIcon />}>
+                Play
+            </Button>
+          );
+      default:
+        return (
+          <Switch
+            checked={effect.state}
+            onChange={handleSwitchChange}
+            name="effectSwitch"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+        )                    
     }
   }
 
   const renderContent = () => {
     switch(effect.type) {
       case 'Signal':
-        return (<Signal effect={effect} getMetaData={getMetaData} onChange={updateEffect} />);
+        return (<Signal effect={effect} getMetaData={getMetaData} onChange={updateEffect} view={view} />);
       default:
-        return getMetaData(effect);
+        return (
+        <Grid container direction="row">
+          {!isSmallView && (<Grid item xs={9}>
+            {getMetaData(effect)}
+          </Grid>)}
+          <Grid item xs={isSmallView ? 12 : 3}>
+            {getAction()}
+          </Grid>
+        </Grid>);
     }
   }
 
@@ -101,25 +150,13 @@ export const Effect = props => {
       <CardHeader
         avatar={
           <Avatar style={{
-            backgroundColor: getEffectColor(effect.type)
+            backgroundColor: getEffectColor(effect.type),
+            width: isSmallView ? '20px' : 'auto',
+            height: isSmallView ? '20px' : 'auto'
           }}>
-            {getAvatar(effect.type)}
-          </Avatar>
-        }
-        action={
-          <Switch
-            checked={effect.state}
-            onChange={handleChange}
-            name="effectSwitch"
-            inputProps={{ 'aria-label': 'secondary checkbox' }}
-          />
-        }
+            {getAvatar()}
+          </Avatar>}
         title={effect.name}
-        subheader={(<>
-            <strong>{effect.actions.length}</strong> Actions 
-            | 
-            State: <strong>${effect.state}</strong>
-          </>)}
       />
       <CardContent>
           {renderContent()}

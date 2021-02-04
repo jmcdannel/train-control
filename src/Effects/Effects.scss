@@ -1,17 +1,23 @@
 .effects {
-  &__grid-item {
-   display: flex; 
-   flex-wrap: wrap;
+
+  &.effects--pill,
+  &.effects--tiny {
+    .effect {
+      &__meta {
+        display: none;
+      }
+      .MuiCardContent-root {
+        padding-top: 0;
+      }
+    }
   }
 
-}
-.effect {
-  &__container {
-    padding: 0.5rem;
+  &.effects--compact {
 
-    flex: 1 1 50%;
-    // width: 200px;
-    min-width: 10rem;
-    max-width: 50%;
   }
+
+  &.effects--comfy {
+
+  }
+
 }

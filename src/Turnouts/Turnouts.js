@@ -92,7 +92,6 @@ export const Turnouts = props => {
 }
 
 Turnouts.defaultProps = {
-  enableMenu: true, 
   initialView: 'compact',
   groupBy: '',
   filter: turnouts => turnouts
