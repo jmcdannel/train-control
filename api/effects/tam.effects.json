@@ -40,7 +40,7 @@
         "actionId": "relay",
         "name": "Station Building",
         "pin": 30,
-        "type": "DCCOutput"
+        "type": "DCCOutput.disabled"
       },
       {
         "actionId": "weldarc1",

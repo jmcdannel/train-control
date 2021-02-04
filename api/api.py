@@ -4,7 +4,7 @@ import logging
 from flask_cors import CORS
 from flask import Flask, json
 from turnouts import turnoutsapi
-from signals import signalsapi
+# from signals import signalsapi
 from effects import effectsapi
 from sensors import sensorsapi
 from locos import locosapi
@@ -19,7 +19,7 @@ logging.getLogger('flask_cors').level = logging.DEBUG
 appConfig = config.getConfig()
 host = appConfig['apiHost']
 turnoutsapi.init()
-signalsapi.init()
+# signalsapi.init()
 effectsapi.init()
 sensorsapi.init()
   
@@ -37,17 +37,17 @@ def update_turnout(turnout_id):
   return turnoutsapi.put(turnout_id)
 
 # /signals
-@app.route('/signals', methods=['GET'])
-def signals():
-  return signalsapi.get()
+# @app.route('/signals', methods=['GET'])
+# def signals():
+#   return signalsapi.get()
 
-@app.route('/signals/<int:signal_id>', methods=['GET'])
-def get_signal(signal_id):
-  return signalsapi.get(signal_id)
+# @app.route('/signals/<int:signal_id>', methods=['GET'])
+# def get_signal(signal_id):
+#   return signalsapi.get(signal_id)
 
-@app.route('/signals/<int:signal_id>', methods=['PUT'])
-def update_signal(signal_id):
-  return signalsapi.put(signal_id)
+# @app.route('/signals/<int:signal_id>', methods=['PUT'])
+# def update_signal(signal_id):
+#   return signalsapi.put(signal_id)
 
 # /effects
 @app.route('/effects', methods=['GET'])
