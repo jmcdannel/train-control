@@ -24,6 +24,29 @@ export const Effects = props => {
 
 }
 
+/*
+red: 32
+yellow: 33
+green: 34
+
+red: 35
+yellow: 36
+green: 37
+
+red: 38
+yellow: 39
+green: 40
+
+red: 22
+yellow: 23
+green: 24
+
+red: 25
+yellow: 26
+green: 27
+
+*/
+
 Effects.defaultProps = {
   initialView: 'compact',
   groupBy: '',

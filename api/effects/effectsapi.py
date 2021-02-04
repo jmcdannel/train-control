@@ -1,7 +1,7 @@
 import os
 from flask import json, jsonify, abort, request
 from config import config
-from . import soundfx
+# from . import soundfx
 
 appConfig = config.getConfig()
 layoutId = appConfig['layoutId']
@@ -68,7 +68,7 @@ def _sendCommand(cmd):
 
 def init():
   data = get_file()
-  soundfx.init()
+  # soundfx.init()
 
   if arduino is not None:
     for efx in data:
@@ -120,11 +120,11 @@ def put(effect_id):
     elif(action['type'] == 'Sound Loop'):
       # Sound Loop
       print('Sound Loop: ' + action["sound"])
-      soundfx.play(action["sound"], 'right')
+      # soundfx.play(action["sound"], 'right')
     elif(action['type'] == 'Sound'):
       # Sound
       print('Sound: ' + action["sound"])
-      soundfx.play(action["sound"], 'left')
+      # soundfx.play(action["sound"], 'left')
     elif(action['type'] == 'GPIO' and GPIO is not None):
       # RPi GPIO Output
       GPIO.output(action['pin'], action['state'])
