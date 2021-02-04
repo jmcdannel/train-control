@@ -111,6 +111,9 @@ def put(effect_id):
   for action in efx['actions']:
     
     actionState = getActionState(efx, action['actionId'], state)
+    print(action['type'])
+    print(action['pin'])
+    print(arduino is None)
     if(action['type'] == 'DCCOutput' and arduino is not None):
       # DCC Output Command
       _sendCommand('<Z %d %d>' % (action['pin'], actionState))
