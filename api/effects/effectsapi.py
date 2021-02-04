@@ -72,6 +72,7 @@ def init():
 
   if arduino is not None:
     for efx in data:
+      print(efx)
       for action in efx.actions:
         if action['type'] == 'DCCOutput':
           _sendCommand('<Z %d %d 0>' % (action['pin'], action['pin']))
