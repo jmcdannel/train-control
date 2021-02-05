@@ -15,7 +15,7 @@ GPIO = None
 if ('pi' in appConfig['effects'] and 'GPIO' in appConfig['effects']['pi']):
   try:
     import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
   except ImportError as error:
     # Output expected ImportErrors.
     print('RPi.GPIO ImportError')
