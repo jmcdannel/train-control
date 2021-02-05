@@ -11,7 +11,7 @@ GPIO = None
 if appConfig['turnouts']['device'] == 'pi':
   try:
     import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     print('GPIO Mode set to BOARD')
   except ImportError as error:
     # Output expected ImportErrors.
