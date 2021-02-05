@@ -46,11 +46,11 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     print('Loaded adafruit_servokit')
   except ImportError as error:
     # Output expected ImportErrors.
-    print(error.__class__.__name__ + ": " + error.message)
+    print(error.__class__.__name__ + ": " + error['message'])
   except Exception as exception:
     # Output unexpected Exceptions.
     print(exception, False)
-    print(exception.__class__.__name__ + ": " + exception.message)
+    print(exception.__class__.__name__ + ": " + exception['message'])
 
 
 def init():
@@ -62,6 +62,7 @@ def init():
 
     for turnout in data:
       if 'relay' in turnout:
+        print(turnout['relay'])
         GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
       if 'relayCrossover' in turnout:
         GPIO.setup(turnout['relayCrossover']['pin'], GPIO.OUT)
