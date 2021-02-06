@@ -26,9 +26,6 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
   try:
     import Adafruit_PCA9685
     pwm = Adafruit_PCA9685.PCA9685()
-    servo_min = 150  # Min pulse length out of 4096
-    servo_max = 600  # Max pulse length out of 4096
-    pwm.set_pwm_freq(60)
     print('Loaded Adafruit_PCA9685')
   except ImportError as error:
     # Output expected ImportErrors.
@@ -54,6 +51,11 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
 
 
 def init():
+
+  if pwm is not None:
+    servo_min = 150  # Min pulse length out of 4096
+    servo_max = 600  # Max pulse length out of 4096
+    pwm.set_pwm_freq(60)
 
   if GPIO is not None:
     path = os.path.dirname(__file__) + '/' + layoutId + '.turnouts.json'
