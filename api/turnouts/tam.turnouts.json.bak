@@ -1,0 +1,302 @@
+[
+  {
+    "abbr": "TS X S1",
+    "current": 425,
+    "default": "straight",
+    "divergent": 275,
+    "label": "TamStation Crossover",
+    "line": "Mainline Red",
+    "name": "Tamararck Station South Crossover, Switch S1",
+    "relay": {
+      "divergent": false,
+      "pin": 6,
+      "straight": true
+    },
+    "relayCrossover": {
+      "divergent": true,
+      "pin": 26,
+      "straight": false
+    },
+    "section": "Tamarack South",
+    "servo": 5,
+    "straight": 425,
+    "turnoutId": 106
+  },
+  {
+    "abbr": "TS S2",
+    "current": 500,
+    "default": "straight",
+    "divergent": 400,
+    "label": "TamStation Green S2",
+    "line": "Mainline Green",
+    "name": "Tamararck Station South, Greenline, Switch S2",
+    "relay": {
+      "divergent": false,
+      "pin": 13,
+      "straight": true
+    },
+    "section": "Tamarack South",
+    "servo": 9,
+    "straight": 500,
+    "turnoutId": 109
+  },
+  {
+    "abbr": "TS S3",
+    "current": 400,
+    "default": "straight",
+    "divergent": 275,
+    "label": "TamStation Green S3",
+    "line": "Mainline Red",
+    "name": "Tamararck Station South, Redline, Switch S3",
+    "relay": {
+      "divergent": false,
+      "pin": 19,
+      "straight": true
+    },
+    "section": "Tamarack South",
+    "servo": 7,
+    "straight": 400,
+    "turnoutId": 110
+  },
+  {
+    "abbr": "TS S4",
+    "current": 275,
+    "default": "straight",
+    "divergent": 450,
+    "label": "TamStation S4",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S4",
+    "section": "Tamarack South",
+    "servo": 8,
+    "straight": 325,
+    "turnoutId": 108
+  },
+  {
+    "abbr": "TS S5",
+    "current": 300,
+    "default": "straight",
+    "divergent": 425,
+    "label": "TamStation S5",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S5",
+    "section": "Tamarack South",
+    "servo": 6,
+    "straight": 300,
+    "turnoutId": 107
+  },
+  {
+    "abbr": "TS S6",
+    "current": 300,
+    "default": "straight",
+    "divergent": 425,
+    "label": "TamStation S6",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S6",
+    "section": "Tamarack South",
+    "servo": 4,
+    "straight": 300,
+    "turnoutId": 105
+  },
+  {
+    "abbr": "TS S7",
+    "current": 325,
+    "default": "straight",
+    "divergent": 325,
+    "label": "TamStation S7",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S7",
+    "section": "Tamarack South",
+    "servo": 3,
+    "straight": 425,
+    "turnoutId": 104
+  },
+  {
+    "abbr": "TS S8",
+    "current": 500,
+    "default": "straight",
+    "divergent": 500,
+    "label": "TamStation S8",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S8",
+    "section": "Tamarack South",
+    "servo": 2,
+    "straight": 325,
+    "turnoutId": 103
+  },
+  {
+    "abbr": "TS S9",
+    "current": 300,
+    "default": "straight",
+    "divergent": 300,
+    "label": "TamStation S9",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S9",
+    "section": "Tamarack South",
+    "servo": 1,
+    "straight": 450,
+    "turnoutId": 102
+  },
+  {
+    "abbr": "TS S10",
+    "current": 240,
+    "default": "straight",
+    "divergent": 120,
+    "label": "TamStation S10",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station South, Switch S10",
+    "section": "Tamarack South",
+    "servo": 0,
+    "straight": 240,
+    "turnoutId": 101
+  },
+  {
+    "abbr": "TN X S1",
+    "current": 425,
+    "default": "straight",
+    "divergent": 275,
+    "label": "TamStation Crossover",
+    "line": "Mainline Red",
+    "name": "Tamararck Station North Crossover, Switch S1",
+    "relay": {
+      "divergent": false,
+      "pin": 18,
+      "straight": true
+    },
+    "relayCrossover": {
+      "divergent": true,
+      "pin": 40,
+      "straight": false
+    },
+    "section": "Tamarack North",
+    "servo": 5,
+    "straight": 425,
+    "turnoutId": 206
+  },
+  {
+    "abbr": "TN S2",
+    "current": 325,
+    "default": "straight",
+    "divergent": 400,
+    "label": "TamStation Green S2",
+    "line": "Mainline Green",
+    "name": "Tamararck Station North, Greenline, Switch S2",
+    "relay": {
+      "divergent": false,
+      "pin": 16,
+      "straight": true
+    },
+    "section": "Tamarack North",
+    "servo": 9,
+    "straight": 500,
+    "turnoutId": 209
+  },
+  {
+    "abbr": "TN S3",
+    "current": 400,
+    "default": "straight",
+    "divergent": 275,
+    "label": "TamStation Green S3",
+    "line": "Mainline Red",
+    "name": "Tamararck Station North, Redline, Switch S3",
+    "relay": {
+      "divergent": false,
+      "pin": 15,
+      "straight": true
+    },
+    "section": "Tamarack North",
+    "servo": 7,
+    "straight": 400,
+    "turnoutId": 210
+  },
+  {
+    "abbr": "TN S4",
+    "current": 275,
+    "default": "straight",
+    "divergent": 450,
+    "label": "TamStation S4",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S4",
+    "section": "Tamarack North",
+    "servo": 8,
+    "straight": 325,
+    "turnoutId": 208
+  },
+  {
+    "abbr": "TN S5",
+    "current": 300,
+    "default": "straight",
+    "divergent": 425,
+    "label": "TamStation S5",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S5",
+    "section": "Tamarack North",
+    "servo": 6,
+    "straight": 300,
+    "turnoutId": 207
+  },
+  {
+    "abbr": "TN S6",
+    "current": 300,
+    "default": "straight",
+    "divergent": 425,
+    "label": "TamStation S6",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S6",
+    "section": "Tamarack North",
+    "servo": 4,
+    "straight": 300,
+    "turnoutId": 205
+  },
+  {
+    "abbr": "TN S7",
+    "current": 325,
+    "default": "straight",
+    "divergent": 325,
+    "label": "TamStation S7",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S7",
+    "section": "Tamarack North",
+    "servo": 3,
+    "straight": 425,
+    "turnoutId": 204
+  },
+  {
+    "abbr": "TN S8",
+    "current": 500,
+    "default": "straight",
+    "divergent": 500,
+    "label": "TamStation S8",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S8",
+    "section": "Tamarack North",
+    "servo": 2,
+    "straight": 325,
+    "turnoutId": 203
+  },
+  {
+    "abbr": "TN S9",
+    "current": 300,
+    "default": "straight",
+    "divergent": 300,
+    "label": "TamStation S9",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S9",
+    "section": "Tamarack North",
+    "servo": 1,
+    "straight": 450,
+    "turnoutId": 202
+  },
+  {
+    "abbr": "TN S10",
+    "current": 240,
+    "default": "straight",
+    "divergent": 220,
+    "label": "TamStation S10",
+    "line": "Tamarack Station",
+    "name": "Tamararck Station North, Switch S10",
+    "section": "Tamarack North",
+    "servo": 0,
+    "straight": 240,
+    "turnoutId": 201
+  }
+]

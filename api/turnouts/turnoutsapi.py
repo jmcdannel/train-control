@@ -12,6 +12,7 @@ if appConfig['turnouts']['device'] == 'pi':
   try:
     import RPi.GPIO as GPIO
     GPIO.setmode(GPIO.BOARD)
+    print('GPIO Mode set to BOARD')
   except ImportError as error:
     # Output expected ImportErrors.
     print('RPi.GPIO ImportError')
@@ -28,6 +29,7 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
     servo_min = 150  # Min pulse length out of 4096
     servo_max = 600  # Max pulse length out of 4096
     pwm.set_pwm_freq(60)
+    print('Loaded Adafruit_PCA9685')
   except ImportError as error:
     # Output expected ImportErrors.
     print('Adafruit_PCA9685 ImportError')
@@ -41,13 +43,14 @@ if (appConfig['turnouts']['device'] == 'pi' and appConfig['turnouts']['interface
   try:
     from adafruit_servokit import ServoKit
     kit = ServoKit(channels=16)
+    print('Loaded adafruit_servokit')
   except ImportError as error:
     # Output expected ImportErrors.
-    print(error.__class__.__name__ + ": " + error.message)
+    print(error.__class__.__name__ + ": " + error['message'])
   except Exception as exception:
     # Output unexpected Exceptions.
     print(exception, False)
-    print(exception.__class__.__name__ + ": " + exception.message)
+    print(exception.__class__.__name__ + ": " + exception['message'])
 
 
 def init():
@@ -59,6 +62,7 @@ def init():
 
     for turnout in data:
       if 'relay' in turnout:
+        print(turnout['relay'])
         GPIO.setup(turnout['relay']['pin'], GPIO.OUT)
       if 'relayCrossover' in turnout:
         GPIO.setup(turnout['relayCrossover']['pin'], GPIO.OUT)
