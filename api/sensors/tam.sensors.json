@@ -9,14 +9,14 @@
     "decay": 10,
     "HIGH": [
       { 
-        "signalId": 101,
-        "action": "green"
+        "effectId": 101,
+        "state": "0"
       }
     ],
     "LOW": [
       { 
-        "signalId": 101,
-        "action": "red"
+        "effectId": 101,
+        "action": "2"
       }
     ]
   },
@@ -30,14 +30,14 @@
     "decay": 10,
     "HIGH": [
       { 
-        "signalId": 102,
-        "action": "green"
+        "effectId": 102,
+        "state": "0"
       }
     ],
     "LOW": [
       { 
-        "signalId": 102,
-        "action": "red"
+        "effectId": 102,
+        "state": "1"
       }
     ]
   }

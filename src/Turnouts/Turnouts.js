@@ -9,6 +9,7 @@ import ApiError from '../Shared/ApiError/ApiError';
 import api, { apiStates } from '../Api';
 import { getConfig } from '../config/config';
 import Turnout from './Turnout';
+import tamarackStationSouthImage from '../Layout/images/tam/tamarack-station-south.png';
 
 import { Context } from '../Store/Store';
 
@@ -72,6 +73,12 @@ export const Turnouts = props => {
                 <Turnout config={turnout} />
               </div>
             ))}
+          </Grid>
+          <Grid item sm={12} className="turnout__grid-item">
+            <div class="turnout__layout">
+              <img src={tamarackStationSouthImage} />
+              <button className="turnout__layout__switch turnout__layout__switch--ts10 turnout__layout__switch--ts10--divergent"><span>TS10</span></button>
+            </div>
           </Grid>
         </>
       ))}

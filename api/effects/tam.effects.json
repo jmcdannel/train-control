@@ -34,18 +34,149 @@
     "type": "Signal"
   },
   {
+    "abbr": "TS Sig2",
+    "actions": [
+      {
+        "actionId": "greenLED",
+        "name": "Green LED",
+        "pin": 34,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "yellowLED",
+        "name": "Yellow LED",
+        "pin": 33,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "redLED",
+        "name": "Red LED",
+        "pin": 32,
+        "type": "DCCOutput"
+      }
+    ],
+    "effectId": 102,
+    "line": "Tamarack Station",
+    "name": "Track 2 Signal",
+    "section": "Tamarack South",
+    "state": "0",
+    "states": {
+      "0": { "greenLED": 1, "redLED": 0, "yellowLED": 0 },
+      "1": { "greenLED": 0, "redLED": 1, "yellowLED": 0 },
+      "2": { "greenLED": 0, "redLED": 0, "yellowLED": 1 }
+    },
+    "type": "Signal"
+  },
+  {
+    "abbr": "TS Sig3",
+    "actions": [
+      {
+        "actionId": "greenLED",
+        "name": "Green LED",
+        "pin": 34,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "yellowLED",
+        "name": "Yellow LED",
+        "pin": 33,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "redLED",
+        "name": "Red LED",
+        "pin": 32,
+        "type": "DCCOutput"
+      }
+    ],
+    "effectId": 103,
+    "line": "Tamarack Station",
+    "name": "Track 3 Signal",
+    "section": "Tamarack South",
+    "state": "0",
+    "states": {
+      "0": { "greenLED": 1, "redLED": 0, "yellowLED": 0 },
+      "1": { "greenLED": 0, "redLED": 1, "yellowLED": 0 },
+      "2": { "greenLED": 0, "redLED": 0, "yellowLED": 1 }
+    },
+    "type": "Signal"
+  },
+  {
+    "abbr": "TS Sig4",
+    "actions": [
+      {
+        "actionId": "greenLED",
+        "name": "Green LED",
+        "pin": 34,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "yellowLED",
+        "name": "Yellow LED",
+        "pin": 33,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "redLED",
+        "name": "Red LED",
+        "pin": 32,
+        "type": "DCCOutput"
+      }
+    ],
+    "effectId": 104,
+    "line": "Tamarack Station",
+    "name": "Track 4 Signal",
+    "section": "Tamarack South",
+    "state": "0",
+    "states": {
+      "0": { "greenLED": 1, "redLED": 0, "yellowLED": 0 },
+      "1": { "greenLED": 0, "redLED": 1, "yellowLED": 0 },
+      "2": { "greenLED": 0, "redLED": 0, "yellowLED": 1 }
+    },
+    "type": "Signal"
+  },
+  {
+    "abbr": "TS Sig5",
+    "actions": [
+      {
+        "actionId": "greenLED",
+        "name": "Green LED",
+        "pin": 34,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "yellowLED",
+        "name": "Yellow LED",
+        "pin": 33,
+        "type": "DCCOutput"
+      },
+      {
+        "actionId": "redLED",
+        "name": "Red LED",
+        "pin": 32,
+        "type": "DCCOutput"
+      }
+    ],
+    "effectId": 105,
+    "line": "Tamarack Station",
+    "name": "Track 5 Signal",
+    "section": "Tamarack South",
+    "state": "0",
+    "states": {
+      "0": { "greenLED": 1, "redLED": 0, "yellowLED": 0 },
+      "1": { "greenLED": 0, "redLED": 1, "yellowLED": 0 },
+      "2": { "greenLED": 0, "redLED": 0, "yellowLED": 1 }
+    },
+    "type": "Signal"
+  },
+  {
     "abbr": "TSS Lights",
     "actions": [
       {
         "actionId": "relay",
         "name": "Station Building",
         "pin": 30,
-        "type": "DCCOutput.disabled"
-      },
-      {
-        "actionId": "weldarc1",
-        "name": "Warehouse Welding",
-        "type": "Arduino Script"
+        "type": "DCCOutput"
       }
     ],
     "effectId": 201,
@@ -53,23 +184,19 @@
     "name": "Club Station Lights",
     "section": "Tamarack South",
     "state": 1,
-    "states": {
-      "0": { "relay": 0, "weldarc1": 0 },
-      "1": { "relay": 1, "weldarc1": 1 }
-    },
     "type": "Light"
   },
   {
     "abbr": "TSP Lights",
     "actions": [
       {
-        "actionId": "relay",
+        "actionId": "led",
         "name": "Station Plaza",
         "pin": 30,
-        "type": "GPIO.disable"
+        "type": "LEDStrip"
       }
     ],
-    "effectId": 301,
+    "effectId": 202,
     "line": "Tamarack Station",
     "name": "Station Plaza Lights",
     "section": "Tamarack Plaza",
@@ -77,20 +204,55 @@
     "type": "Light"
   },
   {
-    "abbr": "Weld1",
+    "abbr": "TSS E Lot",
     "actions": [
       {
-        "actionId": "weldarc1",
-        "name": "Warehouse Welding",
-        "type": "Arduino Script"
+        "actionId": "relay",
+        "name": "Parking East",
+        "pin": 30,
+        "type": "DCCOutput"
       }
     ],
-    "effectId": 401,
-    "line": "Mainline Red",
-    "name": "Warehouse Welding",
-    "section": "City North",
-    "state": 0,
-    "type": "Lighting Animation"
+    "effectId": 203,
+    "line": "Tamarack Station",
+    "name": "Parking East Lights",
+    "section": "Tamarack South",
+    "state": 1,
+    "type": "Light"
+  },
+  {
+    "abbr": "TSS W Lot",
+    "actions": [
+      {
+        "actionId": "relay",
+        "name": "Parking West",
+        "pin": 30,
+        "type": "DCCOutput"
+      }
+    ],
+    "effectId": 204,
+    "line": "Tamarack Station",
+    "name": "Parking West Lights",
+    "section": "Tamarack South",
+    "state": 1,
+    "type": "Light"
+  },
+  {
+    "abbr": "TSS Lights",
+    "actions": [
+      {
+        "actionId": "relay",
+        "name": "Club Platform",
+        "pin": 30,
+        "type": "DCCOutput"
+      }
+    ],
+    "effectId": 205,
+    "line": "Tamarack Station",
+    "name": "Club Platform Lights",
+    "section": "Tamarack South",
+    "state": 1,
+    "type": "Light"
   },
   {
     "abbr": "Bike Horn",
