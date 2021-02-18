@@ -153,7 +153,7 @@
       {
         "actionId": "redLED",
         "name": "Red LED",
-        "pin": 39a,
+        "pin": 39,
         "type": "DCCOutput"
       }
     ],
