@@ -5,19 +5,19 @@
       {
         "actionId": "greenLED",
         "name": "Green LED",
-        "pin": 34,
+        "pin": 30,
         "type": "DCCOutput"
       },
       {
         "actionId": "yellowLED",
         "name": "Yellow LED",
-        "pin": 33,
+        "pin": 32,
         "type": "DCCOutput"
       },
       {
         "actionId": "redLED",
         "name": "Red LED",
-        "pin": 32,
+        "pin": 34,
         "type": "DCCOutput"
       }
     ],
@@ -39,19 +39,19 @@
       {
         "actionId": "greenLED",
         "name": "Green LED",
-        "pin": 34,
+        "pin": 36,
         "type": "DCCOutput"
       },
       {
         "actionId": "yellowLED",
         "name": "Yellow LED",
-        "pin": 33,
+        "pin": 38,
         "type": "DCCOutput"
       },
       {
         "actionId": "redLED",
         "name": "Red LED",
-        "pin": 32,
+        "pin": 40,
         "type": "DCCOutput"
       }
     ],
@@ -73,19 +73,19 @@
       {
         "actionId": "greenLED",
         "name": "Green LED",
-        "pin": 34,
+        "pin": 23,
         "type": "DCCOutput"
       },
       {
         "actionId": "yellowLED",
         "name": "Yellow LED",
-        "pin": 33,
+        "pin": 25,
         "type": "DCCOutput"
       },
       {
         "actionId": "redLED",
         "name": "Red LED",
-        "pin": 32,
+        "pin": 27,
         "type": "DCCOutput"
       }
     ],
@@ -107,19 +107,19 @@
       {
         "actionId": "greenLED",
         "name": "Green LED",
-        "pin": 34,
+        "pin": 29,
         "type": "DCCOutput"
       },
       {
         "actionId": "yellowLED",
         "name": "Yellow LED",
-        "pin": 33,
+        "pin": 31,
         "type": "DCCOutput"
       },
       {
         "actionId": "redLED",
         "name": "Red LED",
-        "pin": 32,
+        "pin": 33,
         "type": "DCCOutput"
       }
     ],
@@ -141,19 +141,19 @@
       {
         "actionId": "greenLED",
         "name": "Green LED",
-        "pin": 34,
+        "pin": 35,
         "type": "DCCOutput"
       },
       {
         "actionId": "yellowLED",
         "name": "Yellow LED",
-        "pin": 33,
+        "pin": 37,
         "type": "DCCOutput"
       },
       {
         "actionId": "redLED",
         "name": "Red LED",
-        "pin": 32,
+        "pin": 39a,
         "type": "DCCOutput"
       }
     ],
@@ -175,7 +175,7 @@
       {
         "actionId": "relay",
         "name": "Station Building",
-        "pin": 30,
+        "pin": 22,
         "type": "DCCOutput"
       }
     ],
@@ -192,7 +192,7 @@
       {
         "actionId": "led",
         "name": "Station Plaza",
-        "pin": 30,
+        "pin": 16,
         "type": "LEDStrip"
       }
     ],
@@ -209,7 +209,7 @@
       {
         "actionId": "relay",
         "name": "Parking East",
-        "pin": 30,
+        "pin": 24,
         "type": "DCCOutput"
       }
     ],
@@ -226,7 +226,7 @@
       {
         "actionId": "relay",
         "name": "Parking West",
-        "pin": 30,
+        "pin": 26,
         "type": "DCCOutput"
       }
     ],
@@ -243,7 +243,7 @@
       {
         "actionId": "relay",
         "name": "Club Platform",
-        "pin": 30,
+        "pin": 28,
         "type": "DCCOutput"
       }
     ],
