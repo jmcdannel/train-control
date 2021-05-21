@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Loading from '../Shared/Loading/Loading';
-import ApiError from '../Shared/ApiError/ApiError';
-import api, { apiStates } from '../Api';
-import { getConfig } from '../config/config';
 import Turnout from './Turnout';
+import MapTurnout from './MapTurnout';
 import tamarackStationSouthImage from '../Layout/images/tam/tamarack-station-south.png';
+import { ReactComponent as Turnout4Left } from '../Shared/Images/TurnoutMasks/4-left.svg';
 
 import { Context } from '../Store/Store';
+import api from '../Api';
 
 export const Turnouts = props => {
 
@@ -69,15 +64,21 @@ export const Turnouts = props => {
           <Grid item sm={12} className="turnout__grid-item">
             {turnouts.filter(t => t.section === section).map(turnout => (
               <div key={`turnout${groupBy}${turnout.turnoutId}`} className="turnout__container">
-                {console.log('board', `turnout${groupBy}${turnout.turnoutId}`, turnout.turnoutId)}
                 <Turnout config={turnout} />
               </div>
             ))}
           </Grid>
           <Grid item sm={12} className="turnout__grid-item">
-            <div class="turnout__layout">
+            
+
+            <div className="turnout__layout">
               <img src={tamarackStationSouthImage} />
-              <button className="turnout__layout__switch turnout__layout__switch--ts10 turnout__layout__switch--ts10--divergent"><span>TS10</span></button>
+              {/* <button className="turnout__layout__switch turnout__layout__switch--ts10 turnout__layout__switch--ts10--divergent"><Turnout4Left className="turnout__layout__switch__img" /></button> */}
+              {turnouts.filter(t => t.section === section).map(turnout => (
+                <MapTurnout key={`mapturnout${groupBy}${turnout.turnoutId}`} config={turnout} />
+              ))}
+              
+              
             </div>
           </Grid>
         </>
