@@ -48,7 +48,7 @@ export const Conductor = props => {
   }
 
   return (
-    <Grid container spacing={8}>
+    <Grid container className="conductor">
       <Grid item xs={6}>
         <Throttles />
       </Grid>

@@ -2,7 +2,8 @@ $sliderWidth: 7rem;
 
 .throttles {
 
-  height: 100%;
+  // height: 100%;
+  flex: 1;
   &__menu {
     background-color: #424242;
     padding: 0.5rem;
@@ -32,8 +33,7 @@ $sliderWidth: 7rem;
         padding: .5rem;
         max-width: 320px;
         min-width: 240px;
-        flex: 1 1 25%;
-        height: 50%;
+        
       }
 
       .throttle__functions,
@@ -50,9 +50,12 @@ $sliderWidth: 7rem;
     &--view-comfy {      
       .throttle__container {
         width: auto;
-        flex: 1 1 50%;
+        height: auto;
+        // flex: 1 1 50%;
         max-width: 100%;
         min-width: 50%;
+        min-height: 600px;
+        max-height: 100%;
       }
       
     }

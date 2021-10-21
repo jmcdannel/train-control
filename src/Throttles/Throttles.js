@@ -29,20 +29,20 @@ export const Throttles = props => {
     jmriApi.on('acquire', 'Throttles', handleLocoAcquired);
   }, [jmriApi, handleLocoAcquired]);
 
-  console.log('locos', locos);
+  console.log('locos', locos, state);
 
   return (
     <Grid 
       container 
       // spacing={2} 
       className="throttles" 
+      direction="column"
       alignItems="flex-start"
       alignContent="flex-start"
     >
       <Grid 
         item 
         className="throttles__menu" 
-        xs={12}
         container 
         direction="row"
         justify="space-between"
@@ -64,7 +64,7 @@ export const Throttles = props => {
           </ButtonGroup>
         </Grid>
       </Grid>
-      <Grid item xs={12} className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
+      <Grid item className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
       
         {locos.filter(loco => loco.isAcquired).map(loco => 
           <div className="throttle__container" key={loco.address}>

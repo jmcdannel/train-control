@@ -6,7 +6,6 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Header from './Header';
 import Footer from './Footer';
@@ -183,22 +182,20 @@ function TrackMaster(props) {
             <MiniThrottles locos={state.locos} jmriApi={jmriApi} />
             
           </Box>
-          <Box flexGrow={1} width="100%" alignContent="center" className="App-content" mt={1}>
+          <Box flexGrow={1} width="100%" height="100%" alignContent="center" className="App-content" mt={1}>
 
-            <Container maxWidth="lg" disableGutters={true} className="trackmaster__content-container">
-              <Switch>
-                <Route path="/" exact>
-                  <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
-                </Route>
-                <Route path="/train-control" exact>
-                  <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
-                </Route>
-                <Route path="/conductor" exact>
-                  <Conductor />
-                </Route>
-                {appConfig.modules.map(getRoutedModule)}
-              </Switch>
-            </Container>
+            <Switch>
+              <Route path="/" exact>
+                <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
+              </Route>
+              <Route path="/train-control" exact>
+                <LandingMenu modules={appConfig.modules} onNavigate={handleNavigate} />
+              </Route>
+              <Route path="/conductor" exact>
+                <Conductor />
+              </Route>
+              {appConfig.modules.map(getRoutedModule)}
+            </Switch>
 
           </Box>
           <Box mt={1}>
