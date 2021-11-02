@@ -45,7 +45,7 @@ export const Throttles = props => {
       direction="column"
       alignItems="flex-start"
       alignContent="flex-start"
-      spacing={1}
+      spacing={2}
     >
       <Grid item className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
       

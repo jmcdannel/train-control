@@ -48,24 +48,25 @@ export const Conductor = props => {
   }
 
   return (
-    <Grid container className="conductor">
-      <Grid item xs={6}>
+    <Grid container className="conductor"
+      spacing={2}>
+      <Grid item xs={8}>
         <Throttles />
       </Grid>
-      <Grid item xs={6}>
-        <Paper elevation={3} style={{ padding: '1rem', marginBottom: '1rem' }}>
+      <Grid item xs={4}>
+        <Paper elevation={3} style={{ padding: '1rem', margin: '1rem 1rem 2rem' }}>
           <h2>Turnouts</h2>
-          <ConductorMenu 
+          {/* <ConductorMenu 
             onChange={handleMenuChange} 
             defaults={defaultMenu}
-          />
+          /> */}
           <Turnouts 
             view={menu.view}
             groupBy={menu.group}
             filter={filterTurnouts} 
           />
         </Paper>
-        <Paper elevation={3} style={{ padding: '1rem', marginBottom: '1rem' }}>
+        <Paper elevation={3} style={{ padding: '1rem', margin: '1rem 1rem 2rem' }}>
           <h2>Effects</h2>
           <Effects view={menu.view} />
         </Paper>

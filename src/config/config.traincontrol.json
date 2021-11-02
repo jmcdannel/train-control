@@ -1,0 +1,26 @@
+{
+  "layoutId": "traincontrol",
+  "name": "Train Control Dev",
+  "modules": [
+    "turnouts",
+    "throttles",
+    "signals",
+    "sensors"
+  ],
+  "api": "http://tamarackpi:5000",
+  "apiHost": "0.0.0.0",
+  "jmri": "http://tamarackpi:12080/json/",
+  "serial": "/dev/ttyACM0",
+  "turnouts": {
+      "device": "arduino",
+      "interface": "serial"
+  },
+  "signals": {
+      "device": "arduino",
+      "interface": "serial"
+  },
+  "sensors": {
+      "device": "arduino",
+      "interface": "serial"
+  }
+}
