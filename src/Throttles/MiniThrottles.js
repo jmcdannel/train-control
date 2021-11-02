@@ -9,34 +9,31 @@ import PanToolIcon from '@material-ui/icons/PanTool';
 import MiniThrottle from './MiniThrottle';
 import './MiniThrottles.scss';
 
-export const MiniThrottles = ({ locos, jmriApi }) => {
-
-  const filteredLocos = locos
-    .filter(loco => loco.isAcquired && (loco.speed !== 0 || loco.isPinned));
+export const MiniThrottles = ({ locos, jmriApi, onLocoClick, showStop = false }) => {
 
   return (
-    
     <Switch>
-      <Route
-        path="/throttles"></Route>
+      <Route path="/throttles"></Route>
       <Route
         path="/">
-          {filteredLocos.length && (
-            <Grid container className="mini-throttles" alignContent="flex-end">
+          {locos.length && (
+            <Grid container className="mini-throttles">
               <Grid item xs={10} className="flex" className="mini-throttles__wrapper">
-                {filteredLocos.map(loco => (
-                  <MiniThrottle key={loco.address} loco={loco} jmriApi={jmriApi} />
+                {locos.map(loco => (
+                  <MiniThrottle key={loco.address} loco={loco} jmriApi={jmriApi} onLocoClick={onLocoClick} />
                 ))}
               </Grid>
-              <Grid item xs={2} className="mini-throttles__stop">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<PanToolIcon />}
-                >
-                  Stop All
-                </Button>
-              </Grid>
+              {showStop && (
+                <Grid item xs={2} className="mini-throttles__stop">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<PanToolIcon />}
+                  >
+                    Stop All
+                  </Button>
+                </Grid>
+              )}
             </Grid>
           )}
         </Route>

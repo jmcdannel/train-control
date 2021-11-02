@@ -1,4 +1,10 @@
+@use "sass:color";
 $sliderWidth: 7rem;
+
+$green: #26ac14;
+$blue: #146fac;
+$red: #f44336;
+
 
 .throttles {
 
@@ -85,6 +91,8 @@ $sliderWidth: 7rem;
   display: flex;
   flex-direction: column;
 
+  
+
 
   .MulutiCardHeader-root,
   .MuiCardActions-root {
@@ -94,11 +102,11 @@ $sliderWidth: 7rem;
   .MuiCardHeader-content {
     .MuiCardHeader-title {
       font-size: 1.5rem;
-      border: 1px solid red;
+      // border: 1px solid red;
       padding: 0.25rem .5rem;
       text-align: center;
       border-radius: .25rem;
-      background-color: rgba(255,0,0,.1);
+      // background-color: rgba(255,0,0,.1);
     }
   }
 
@@ -307,6 +315,9 @@ $sliderWidth: 7rem;
         display: none;
       }
     }
+    &.throttle__speed--disabled {
+      color: #999;
+    }
   }
 
   &__functions {
@@ -338,6 +349,36 @@ $sliderWidth: 7rem;
   &__actions {
     &__primary.MuiButtonBase-root {
       margin-left: auto;
+    }
+  }
+
+}
+
+.throttle {
+  .MuiCardHeader-root {
+    background-color: $red;
+  }
+  .MuiButton-outlinedPrimary {
+    color: $red;
+  }
+
+  &--BNSF-5931 {
+    .MuiCardHeader-root {
+      background-color: $green;
+    }
+    .MuiButton-outlinedPrimary {
+      color: $green;
+    }
+  }
+
+  &--BNSF-5917, 
+  &--BNSF-5918,
+  &--BNSF-5919 {
+    .MuiCardHeader-root {
+      background-color: $blue;
+    }
+    .MuiButton-outlinedPrimary {
+      color: $blue;;
     }
   }
 

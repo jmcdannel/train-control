@@ -2,7 +2,7 @@ const Reducer=(state, action)=>{
   switch(action.type) {
 
     case 'INIT_STATE':
-      console.log('INIT_STATE', {...state, ...action.payload}, state, action.payload);
+      // console.log('INIT_STATE', {...state, ...action.payload}, state, action.payload);
       return {...state, ...action.payload};
 
     case 'UPDATE_LOCO':

@@ -16,17 +16,3 @@ const theme = createMuiTheme({
 });
 
 export default theme;
-
-// import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-
-
-// const theme = createMuiTheme({
-//   spacing: () => '8px',
-//   palette: {
-//     type: 'dark',
-//     primary: Colors.red500,
-//     secondary: Colors.lightGreenA200,
-//   }
-// });
-
-// export default theme;

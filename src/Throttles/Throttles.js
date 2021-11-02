@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 import Throttle from './Throttle';
-import FullThrottle from './FullThrottle';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
+import MiniThrottles from './MiniThrottles';
+import Paper from '@material-ui/core/Paper';
+import Chip from '@material-ui/core/Chip';
+import TrainIcon from '@material-ui/icons/Train';
 import { Context } from '../Store/Store';
 import jmriApi from '../Shared/jmri/jmriApi';
+
+import './Throttles.scss';
 
 export const Throttles = props => {
 
@@ -25,6 +24,14 @@ export const Throttles = props => {
     dispatch({ type: 'UPDATE_LOCO', payload: { address, isAcquired: true } });
   }
 
+  const handleCruiseControlLocoClicked = loco => {
+    console.log('handleCruiseControlLocoClicked', loco);
+  }
+
+  const handleThrottleLocoClicked = loco => {
+    console.log('handleCruiseControlLocoClicked', loco);
+  }
+
   useEffect(() => {
     jmriApi.on('acquire', 'Throttles', handleLocoAcquired);
   }, [jmriApi, handleLocoAcquired]);
@@ -34,45 +41,29 @@ export const Throttles = props => {
   return (
     <Grid 
       container 
-      // spacing={2} 
       className="throttles" 
       direction="column"
       alignItems="flex-start"
       alignContent="flex-start"
+      spacing={1}
     >
-      <Grid 
-        item 
-        className="throttles__menu" 
-        container 
-        direction="row"
-        justify="space-between"
-        alignItems="flex-start">
-        <Grid item>
-          <ButtonGroup 
-            orientation="horizontal"
-            variant="outlined"
-            className="width100"
-            color="primary">
-            {locos.filter(loco => !loco.isAcquired).map(loco => 
-              <Button 
-                key={loco.address}
-                onClick={() => acquireLocoClicked(loco.address)}
-              >
-                {loco.address}
-              </Button>
-            )}
-          </ButtonGroup>
-        </Grid>
-      </Grid>
       <Grid item className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
       
-        {locos.filter(loco => loco.isAcquired).map(loco => 
+        {locos.filter(loco => loco.isAcquired && !loco.cruiseControl).map(loco => 
           <div className="throttle__container" key={loco.address}>
-            <Throttle jmriApi={jmriApi} loco={loco} />
+            <Throttle jmriApi={jmriApi} loco={loco} onLocoClick={handleThrottleLocoClicked} />
           </div>
         )}
         
       </Grid>
+      <Grid item className={`throttles__cruise-control grow`}>
+        <MiniThrottles locos={locos.filter(loco => loco.isAcquired && loco.cruiseControl)} jmriApi={jmriApi} onLocoClick={handleCruiseControlLocoClicked} />
+      </Grid>
+
+      <Grid item className="throttles__unaquired grow">
+        <MiniThrottles locos={locos.filter(loco => !loco.isAcquired)} jmriApi={jmriApi} onLocoClick={loco => acquireLocoClicked(loco.address)} />
+      </Grid>
+
     </Grid>
   );
 

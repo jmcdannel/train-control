@@ -1,20 +1,57 @@
 [
     {
         "address": 31,
-        "name": "BNSF5931",
+        "name": "BNSF-5931",
         "road": "BNSF",
         "isAcquired": true,
+        "cruiseControl": false,
         "speed": 0,
         "forward": null,
-        "idleByDefault": true
+        "idleByDefault": true,
+        "color": "red"
+    },
+    {
+        "address": 5917,
+        "name": "BNSF-5917",
+        "road": "BNSF",
+        "isAcquired": true,
+        "cruiseControl": false,
+        "speed": 0,
+        "forward": null,
+        "idleByDefault": true,
+        "color": "green"
+    },
+    {
+        "address": 5918,
+        "name": "BNSF-5918",
+        "road": "BNSF",
+        "isAcquired": true,
+        "cruiseControl": true,
+        "speed": 0,
+        "forward": null,
+        "idleByDefault": true,
+        "color": "blue"
+    },
+    {
+        "address": 5919,
+        "name": "BNSF-5919",
+        "road": "BNSF",
+        "isAcquired": true,
+        "cruiseControl": true,
+        "speed": 0,
+        "forward": null,
+        "idleByDefault": true,
+        "color": "purple"
     },
     {
         "address": 3,
         "name": "GN-317",
         "road": "Great Northern",
         "isAcquired": false,
+        "cruiseControl": false,
         "speed": 0,
         "forward": null,
-        "idleByDefault": true
+        "idleByDefault": true,
+        "color": "magenta"
     }
   ]

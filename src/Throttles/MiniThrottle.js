@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import TrainIcon from '@material-ui/icons/Train';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -17,7 +18,7 @@ export const MiniThrottle = props => {
   const minSpeed = -maxSpeed;
 	const STOP = '0.0';
 
-  const { jmriApi, loco, loco: { 
+  const { jmriApi, onLocoClick, loco, loco: { 
     address, 
     isAcquired, 
     isPinned,
@@ -50,16 +51,31 @@ export const MiniThrottle = props => {
     setUiSpeed(uiSpeed - 1);
   }
 
+  const handleLocoClick = () => {
+    if (onLocoClick) {
+      onLocoClick(loco);
+    }
+  }
+
+  const computedClassName = () => {
+    return ['mini-throttle', isAcquired ? 'mini-throttle__acquired' : 'mini-throttle__notacquired'].join(' ');
+  }
+
   return (
-    <Paper elevation={3} className="mini-throttle">
-      <Avatar aria-label="line">
-        {loco.address}
-      </Avatar>
+    <Paper elevation={3} className={computedClassName()}>
+        <Chip
+            label={`${loco.address}`}
+            icon={<TrainIcon />}
+            className="chip"
+            variant={isAcquired ? 'default' : 'outlined'}
+            clickable
+            onClick={handleLocoClick}
+          />
       {isAcquired && (
         <JmriThrottleController speed={debouncedSpeed} address={address} jmriApi={jmriApi} forward={forward} />
       )}
-      <ThrottleSpeed speed={debouncedSpeed} idleByDefault={loco.idleByDefault} />
-      <Button className="mini-throttle__stop" variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
+      <ThrottleSpeed speed={debouncedSpeed} idleByDefault={loco.idleByDefault} isDisabled={!isAcquired} />
+      <Button className="mini-throttle__stop" disabled={!isAcquired} variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
        
       <ButtonGroup
         orientation="horizontal"
@@ -68,12 +84,8 @@ export const MiniThrottle = props => {
         className="throttle__controls__group"
         aria-label="vertical outlined primary button group"
       >
-        <Tooltip title="Speed Increase">
-          <Button size="large" disabled={speed === maxSpeed} onClick={handleUpClick} >+</Button>
-        </Tooltip>
-        <Tooltip title="Speed Decrease">
-          <Button size="large" disabled={speed === minSpeed} onClick={handleDownClick}>-</Button>
-        </Tooltip>
+        <Button size="large" disabled={speed === maxSpeed || !isAcquired} onClick={handleUpClick} >+</Button>
+        <Button size="large" disabled={speed === minSpeed || !isAcquired} onClick={handleDownClick}>-</Button>
       </ButtonGroup>
 
     </Paper>

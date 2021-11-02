@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 
 import ConductorMenu from './ConductorMenu';
 import Turnouts from '../Turnouts/Turnouts';
@@ -53,19 +53,22 @@ export const Conductor = props => {
         <Throttles />
       </Grid>
       <Grid item xs={6}>
-        <ConductorMenu 
-          onChange={handleMenuChange} 
-          defaults={defaultMenu}
-        />
-        <h2>Turnouts</h2>
-        <Turnouts 
-          view={menu.view}
-          groupBy={menu.group}
-          filter={filterTurnouts} 
-        />
-        <h2>Effects</h2>
-        <Effects
-          view={menu.view} />
+        <Paper elevation={3} style={{ padding: '1rem', marginBottom: '1rem' }}>
+          <h2>Turnouts</h2>
+          <ConductorMenu 
+            onChange={handleMenuChange} 
+            defaults={defaultMenu}
+          />
+          <Turnouts 
+            view={menu.view}
+            groupBy={menu.group}
+            filter={filterTurnouts} 
+          />
+        </Paper>
+        <Paper elevation={3} style={{ padding: '1rem', marginBottom: '1rem' }}>
+          <h2>Effects</h2>
+          <Effects view={menu.view} />
+        </Paper>
       </Grid>
     </Grid>
 

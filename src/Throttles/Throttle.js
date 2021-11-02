@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-
+import * as Colors from 'material-ui/colors';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Paper from '@material-ui/core/Paper';
+import Chip from '@material-ui/core/Chip';
+import TrainIcon from '@material-ui/icons/Train';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -21,8 +23,8 @@ import ThrottleSpeed from './ThrottleSpeed';
 import JmriThrottleController from './JmriThrottleController';
 import Functions from './Functions';
 import useDebounce from '../Shared/Hooks/useDebounce';
-
 import './Throttle.scss';
+
 
 export const Throttle = props => {
 
@@ -32,7 +34,7 @@ export const Throttle = props => {
 	const STOP = '0.0';
   // const FULL_SPEED = '1.0';
 
-  const { jmriApi, loco, loco: { 
+  const { jmriApi, loco, onLocoClick, loco: { 
     address, 
     isAcquired, 
     speed, 
@@ -77,25 +79,39 @@ export const Throttle = props => {
     setUiSpeed(uiSpeed - 1);
   }
 
+  const handleLocoClick = () => {
+    if (onLocoClick) {
+      onLocoClick(loco);
+    }
+  }
+
   const roadClassName = () => {
     return loco.road.toLowerCase().replace(/ /g, '-');
   }
 
+  const formattedAddress = () => loco.address && loco.address.length > 2
+    ? loco.address.substring(0, 2)
+    : loco.address;
+
   return (
-    <Card className={`throttle`} >
+    <Card className={`throttle throttle--${loco.name.replace(' ', '')}  throttle--${loco.road.replace(' ', '')}`} >
 
       <CardHeader
+        title={loco.name}
         avatar={
-          <Avatar aria-label="line" className={roadClassName()}>
-            {loco.address}
-          </Avatar>
+          <Chip
+              label={`${loco.address}`}
+              icon={<TrainIcon />}
+              className={roadClassName()}
+              clickable
+              onClick={handleLocoClick}
+            />
         }
         // action={
         //   <IconButton aria-label="settings" onClick={handleMenuClick}>
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title={loco.name}
       />
       <CardContent className="throttle__content">
         {(true || loco.isAcquired) && 

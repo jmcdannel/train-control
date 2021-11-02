@@ -30,7 +30,7 @@ export const Turnouts = props => {
   }, []);
 
   return (
-    <Grid container className={`turnouts turnouts--${view}`}>
+    <Grid container className={`turnouts turnouts--${view}`} spacing={1}>
       {groupBy === '' && (
         <Grid item sm={12} className="turnout__grid-item">
           {turnouts.map(turnout => (
@@ -43,10 +43,10 @@ export const Turnouts = props => {
       )}
       {groupBy === 'line' && lines.map(line => (
         <>
-          <Grid item sm={12} className="turnout__grid-item">
+          <Grid item sm={12} className="turnout__grid-item" spacing={1}>
             <h3>{line}</h3>
           </Grid>
-          <Grid item sm={12} className="turnout__grid-item">
+          <Grid item sm={12} className="turnout__grid-item" spacing={1}>
             {turnouts.filter(t => t.line === line).map(turnout => (
               <div key={`turnout${groupBy}${turnout.turnoutId}`} className="turnout__container">
               {console.log('line', turnout, turnout.turnoutId)}
