@@ -4,12 +4,14 @@
   "modules": [
     "turnouts",
     "throttles",
+    "locos",
     "signals",
-    "sensors"
+    "sensors",
+    "effects"
   ],
-  "api": "http://tamarackpi:5000",
+  "api": "http://traincontrol:5000",
   "apiHost": "0.0.0.0",
-  "jmri": "http://tamarackpi:12080/json/",
+  "jmri": "http://traincontrol:12080/json/",
   "serial": "/dev/ttyACM0",
   "turnouts": {
       "device": "arduino",
@@ -22,5 +24,9 @@
   "sensors": {
       "device": "arduino",
       "interface": "serial"
+  },
+  "effects": {
+      "arduino": ["serial"],
+      "pi": ["serial"]
   }
 }

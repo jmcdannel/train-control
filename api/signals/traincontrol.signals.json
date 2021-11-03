@@ -1,0 +1,34 @@
+[
+  {
+    "signalId": 101,
+    "greenPin": 26,
+    "redPin": 29,
+    "name": "Tamararck Station South Track 1 Signal",
+    "abbr":"TS Sig1",
+    "state": 0
+  },
+  {
+    "signalId": 102,
+    "greenPin": 27,
+    "redPin": 28,
+    "name": "Tamararck Station South Track 2 Signal",
+    "abbr":"TS Sig2",
+    "state": 0
+  },
+  {
+    "signalId": 103,
+    "greenPin": 30,
+    "redPin": 33,
+    "name": "Tamararck Station South Track 3 Signal",
+    "abbr":"TS Sig3",
+    "state": 0
+  },
+  {
+    "signalId": 104,
+    "greenPin": 40,
+    "redPin": 43,
+    "name": "Tamararck Station South Track 4 Signal",
+    "abbr":"TS Sig4",
+    "state": 0
+  }
+]

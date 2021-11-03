@@ -1,9 +1,22 @@
 @use "sass:color";
+@mixin linear-gradient($direction, $color-stops...) {
+  // Direction has been omitted and happens to be a color-stop
+  @if is-direction($direction) == false {
+    $color-stops: $direction, $color-stops;
+    $direction: 180deg;
+  }
+
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
 $sliderWidth: 7rem;
 
 $green: #26ac14;
 $blue: #146fac;
 $red: #f44336;
+$orange: #f89719;
 
 
 .throttles {
@@ -55,11 +68,9 @@ $red: #f44336;
     }
     &--view-comfy {      
       .throttle__container {
-        width: auto;
+        width: 33%;
         height: auto;
-        // flex: 1 1 50%;
-        max-width: 100%;
-        min-width: 33%;
+        
         min-height: 540px;
         max-height: 100%;
       }
@@ -116,7 +127,7 @@ $red: #f44336;
   }
 
   &__container {
-    flex: 1 1 33%;
+    
     padding: 1rem;
     min-width: 320px;
     width: 33%;
@@ -356,20 +367,61 @@ $red: #f44336;
 
 .throttle {
   .MuiCardHeader-root {
-    background-color: $red;
+    @include linear-gradient(darken($red, 10%), darken($red, 20%));
+  }
+  .MuiCardContent-root {
+    @include linear-gradient(darken($red, 50%), darken($red, 60%));
   }
   .MuiButton-outlinedPrimary {
     color: $red;
+    border-color: $red;
+  }
+  .MuiButton-containedPrimary {
+    background-color: $red;
+  }
+  .MuiSlider-root {
+    color: $red;
+  }
+  .MuiPaper-root {
+    background: rgba(66,66,66,.5)
   }
 
-  color.adjust
-
-  &--BNSF-5931 {
+  &--BNSF,
+  &--GN-317 {
     .MuiCardHeader-root {
-      background-color: $green;
+      @include linear-gradient(darken($green, 10%), darken($green, 20%));
+    }
+    .MuiCardContent-root {
+      @include linear-gradient(darken($green, 30%), darken($green, 40%));
     }
     .MuiButton-outlinedPrimary {
       color: $green;
+      border-color: $green;
+    }
+    .MuiButton-containedPrimary {
+      background-color: $green;
+    }
+    .MuiSlider-root {
+      color: $green;
+    }
+  }
+
+  &--BNSF-5931 {
+    .MuiCardHeader-root {
+      @include linear-gradient(darken($orange, 10%), darken($orange, 20%));
+    }
+    .MuiCardContent-root {
+      @include linear-gradient(darken($orange, 30%), darken($orange, 40%));
+    }
+    .MuiButton-outlinedPrimary {
+      color: $orange;
+      border-color: $orange;
+    }
+    .MuiButton-containedPrimary {
+      background-color: $orange;
+    }
+    .MuiSlider-root {
+      color: $orange;
     }
   }
 
@@ -377,10 +429,20 @@ $red: #f44336;
   &--BNSF-5918,
   &--BNSF-5919 {
     .MuiCardHeader-root {
-      background-color: $blue;
+      @include linear-gradient(darken($blue, 10%), darken($blue, 20%));
+    }
+    .MuiCardContent-root {
+      @include linear-gradient(darken($blue, 30%), darken($blue, 40%));
     }
     .MuiButton-outlinedPrimary {
-      color: $blue;;
+      color: $blue;
+      border-color: $blue;
+    }
+    .MuiButton-containedPrimary {
+      background-color: $blue;
+    }
+    .MuiSlider-root {
+      color: $blue;
     }
   }
 
