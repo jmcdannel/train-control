@@ -42,7 +42,9 @@ $orange: #f89719;
     justify-content: flex-end;
     flex: 1;
     max-height: calc(100vh - 13rem);
-    height: 100%;
+    min-height: 540px;
+    // height: 100%;
+    // width: 100%;
 
 
     &--view-compact {
@@ -68,11 +70,12 @@ $orange: #f89719;
     }
     &--view-comfy {      
       .throttle__container {
-        width: 33%;
+        width: 0;
+        min-width: 33%;
+        max-width: 50%;
         height: auto;
-        
         min-height: 540px;
-        max-height: 100%;
+        max-height: 1080px;
       }
       
     }
@@ -427,7 +430,8 @@ $orange: #f89719;
 
   &--BNSF-5917, 
   &--BNSF-5918,
-  &--BNSF-5919 {
+  &--BNSF-5919,
+  &--Amtrack-150 {
     .MuiCardHeader-root {
       @include linear-gradient(darken($blue, 10%), darken($blue, 20%));
     }

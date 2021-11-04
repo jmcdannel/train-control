@@ -18,10 +18,14 @@ export const MiniThrottles = ({ locos, jmriApi, onLocoClick, showStop = false })
         path="/">
           {locos.length && (
             <Grid container className="mini-throttles" spacing={2}>
-              <Grid item xs={showStop ? 10 : 12} className="flex" className="mini-throttles__wrapper">
-                {locos.map(loco => (
-                  <MiniThrottle key={loco.address} loco={loco} jmriApi={jmriApi} onLocoClick={onLocoClick} />
-                ))}
+              <Grid item xs={showStop ? 10 : 12} className="mini-throttles__wrapper">
+                <Grid container>
+                  {locos.map(loco => (
+                    <Grid item xs={4}>
+                      <MiniThrottle key={loco.address} loco={loco} jmriApi={jmriApi} onLocoClick={onLocoClick} />
+                    </Grid>
+                  ))}
+              </Grid>
               </Grid>
               {showStop && (
                 <Grid item xs={2} className="mini-throttles__stop">

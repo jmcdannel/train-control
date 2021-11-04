@@ -42,12 +42,12 @@ export const Throttles = props => {
     <Grid 
       container 
       className="throttles" 
-      direction="column"
+      direction="row"
       alignItems="flex-start"
       alignContent="flex-start"
       spacing={2}
     >
-      <Grid item className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
+      <Grid xs={12} item className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
       
         {locos.filter(loco => loco.isAcquired && !loco.cruiseControl).map(loco => 
           <div className="throttle__container" key={loco.address}>
@@ -56,11 +56,11 @@ export const Throttles = props => {
         )}
         
       </Grid>
-      <Grid item className={`throttles__cruise-control grow`}>
+      <Grid xs={12} item className={`throttles__cruise-control`}>
         <MiniThrottles locos={locos.filter(loco => loco.isAcquired && loco.cruiseControl)} jmriApi={jmriApi} onLocoClick={handleCruiseControlLocoClicked} />
       </Grid>
 
-      <Grid item className="throttles__unaquired grow">
+      <Grid xs={12} item className="throttles__unaquired">
         <MiniThrottles locos={locos.filter(loco => !loco.isAcquired)} jmriApi={jmriApi} onLocoClick={loco => acquireLocoClicked(loco.address)} />
       </Grid>
 

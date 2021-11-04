@@ -50,7 +50,7 @@ export const Conductor = props => {
   return (
     <Grid container className="conductor"
       spacing={2}>
-      <Grid item xs={8}>
+      <Grid item xs={8} className="flex">
         <Throttles />
       </Grid>
       <Grid item xs={4}>

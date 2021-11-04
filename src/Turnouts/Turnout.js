@@ -39,29 +39,27 @@ import './Turnout.scss';
 
 
 export const linesConfig = [
-  { lineId: 'Mainline Red', label: 'Mainline SB', color: Colors.red[500] },
-  { lineId: 'Mainline Green', label: 'Mainline NB', color: Colors.green[500] },
-  { lineId: 'Tamarack Station', label: 'Tamarack Station North', color: Colors.cyan[500] }
+  { lineId: 'Demo Track', label: 'Mainline SB', color: Colors.red[500] }
 ];
-// import { ReactComponent as TurnoutMaskLeft4Diverge } from './images/left-4-diverge.svg';
+const defaultLine = { lineId: 'Unknown Line', label: 'Unknown Line', color: Colors.grey[500] };
 
 
 export const Turnout = props => {
 
   const { config } = props;
+  const { dcc, current, straight, divergent, relay, crossover, reverse, name, turnoutId, line, label, abbr, 'default': defaultOrientation } = config;
   
   const [ state, dispatch ] = useContext(Context);
 
-  const [isDivergent, setIsDivergent] = useState(config.current === config.divergent);
+  const [isDivergent, setIsDivergent] = useState((relay && current === divergent) || (dcc && current === 0));
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [isPristine, setIsPristine] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
-  const { current, relay, crossover, reverse, name, turnoutId, line, label, abbr, straight, divergent, 'default': defaultOrientation } = config;
 
   useEffect(() => {
-    setIsDivergent((current === divergent));
-  }, [current, straight, divergent]);
+    setIsDivergent((relay && current === divergent) || (dcc && current === 0));
+  }, [relay, dcc, current, straight, divergent]);
 
   const handleToggle = async e => {
     if (isLoading) { 
@@ -70,7 +68,12 @@ export const Turnout = props => {
     try {
       setIsLoading(true);
       setIsPristine(false);
-      const turnout = await api.turnouts.put({ turnoutId, current: isDivergent ? straight : divergent });
+      const newCurrent = relay
+        ? isDivergent ? straight : divergent
+        : dcc 
+          ? current === 0 ? 1 : 0
+          : current;
+      const turnout = await api.turnouts.put({ turnoutId, current: newCurrent });
       await dispatch({ type: 'UPDATE_TURNOUT', payload: turnout });
     } catch (err) {
       console.error(err);
@@ -79,6 +82,11 @@ export const Turnout = props => {
       setIsLoading(false);
     }
     
+  }
+
+  const getLineColor = () => {
+    const lineConfig = linesConfig.find(l => l.lineId === line);
+    return lineConfig ? lineConfig.color : defaultLine.color;
   }
 
   const handleReset = async e => {
@@ -106,7 +114,7 @@ export const Turnout = props => {
             variant="outlined"
             className="chip"
             size="small"
-            style={{ backgroundColor: linesConfig.find(l => l.lineId === line).color }}
+            style={{ backgroundColor: getLineColor() }}
             clickable
             onClick={handleToggle}
           />

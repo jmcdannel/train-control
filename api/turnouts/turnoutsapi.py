@@ -75,18 +75,17 @@ def get_file():
   return data
 
 def _sendCommand(cmd):
+  print('cmd: %s' % cmd)
   if arduino is not None:
-    print('cmd: %s' % cmd)
     arduino.write(cmd.encode())
 
 def init():
   data = get_file()
 
-  if arduino is not None:
-    for trn in data:
-      if 'dcc' in trn:
-        _sendCommand('<Z %d %d 0>' % (trn['pinA'], trn['pinA']))
-        _sendCommand('<Z %d %d 0>' % (trn['pinB'], trn['pinB']))
+  for trn in data:
+    if 'dcc' in trn:
+      _sendCommand('<Z %d %d 0>' % (trn['dcc']['pinA'], trn['dcc']['pinA']))
+      _sendCommand('<Z %d %d 0>' % (trn['dcc']['pinB'], trn['dcc']['pinB']))
     _sendCommand('<E>')
 
   if pwm is not None:
@@ -140,13 +139,12 @@ def put(turnout_id):
 
   # Turn kato turnout via DCC OUTPUT
   if 'dcc' in turnout:
-    if arduino is not None:
       if (turnout['current'] == 1):
-        _sendCommand('<Z %d %d>' % (turnout['dccB'], 0))
-        _sendCommand('<Z %d %d>' % (turnout['dccA'], 1))
+        _sendCommand('<Z %d %d>' % (turnout['dcc']['pinB'], 0))
+        _sendCommand('<Z %d %d>' % (turnout['dcc']['pinA'], 1))
       elif (turnout['current'] == 0):
-        _sendCommand('<Z %d %d>' % (turnout['dccA'], 0))
-        _sendCommand('<Z %d %d>' % (turnout['dccB'], 1))
+        _sendCommand('<Z %d %d>' % (turnout['dcc']['pinA'], 0))
+        _sendCommand('<Z %d %d>' % (turnout['dcc']['pinB'], 1))
 
   if GPIO is not None:
     # Toggle relay if present

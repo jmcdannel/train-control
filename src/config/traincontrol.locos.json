@@ -3,45 +3,37 @@
         "address": 31,
         "name": "BNSF-5931",
         "road": "BNSF",
-        "isAcquired": true,
+        "isAcquired": false,
         "cruiseControl": false,
         "speed": 0,
         "forward": null,
-        "idleByDefault": true,
-        "color": "red"
+        "idleByDefault": true
     },
     {
         "address": 5917,
         "name": "BNSF-5917",
         "road": "BNSF",
-        "isAcquired": true,
+        "isAcquired": false,
         "cruiseControl": false,
         "speed": 0,
         "forward": null,
-        "idleByDefault": true,
-        "color": "green"
+        "idleByDefault": true
     },
     {
         "address": 5918,
         "name": "BNSF-5918",
         "road": "BNSF",
-        "isAcquired": true,
-        "cruiseControl": true,
-        "speed": 0,
-        "forward": null,
-        "idleByDefault": true,
-        "color": "blue"
+        "idleByDefault": true
     },
     {
         "address": 5919,
         "name": "BNSF-5919",
         "road": "BNSF",
-        "isAcquired": true,
-        "cruiseControl": true,
+        "isAcquired": false,
+        "cruiseControl": false,
         "speed": 0,
         "forward": null,
-        "idleByDefault": true,
-        "color": "purple"
+        "idleByDefault": true
     },
     {
         "address": 3,
@@ -51,7 +43,6 @@
         "cruiseControl": false,
         "speed": 0,
         "forward": null,
-        "idleByDefault": true,
-        "color": "magenta"
+        "idleByDefault": true
     }
   ]

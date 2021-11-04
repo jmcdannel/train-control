@@ -20,6 +20,13 @@ export const linesConfig = [
   { name: 'Purple', color: Colors.purple[500], img: purpleLineImg }
 ];
 
+const locoDefaults = {
+  isAcquired: false,
+  cruiseControl: false,
+  speed: 0,
+  forward: null
+};
+
 const appConfig = getConfig();
 let apiHost = getApiHostName();
 
@@ -37,7 +44,11 @@ async function get(type, Id = null) {
 
 async function initialize() {
   const getModules = appConfig.modules.reduce((reqs, module) => api[module] && api[module].get ? [...reqs, module] : [...reqs], []);
-  const results = await Promise.all(getModules.map(req => api[req].get()));
+  const results = await Promise.all(
+    getModules.map(req => api[req].get()
+      .then(resp => api[req].initialize ? api[req].initialize(resp) : resp))
+  );
+  
   return getModules.reduce((state, module, index) => ({ ...state, [module]: results[index] }), {});
 }
 
@@ -57,6 +68,10 @@ async function put(type, data) {
     console.error(err)
     throw new Error('Unable to update', type, data);
   }
+}
+
+function initializeLocos(locos) {
+  return locos.map(loco => ({...loco, locoDefaults }));
 }
 
 export const apiStates = {
@@ -83,7 +98,8 @@ export const api = {
     put: args => put('effect', args)
   },
   locos: {
-    get: args => get('loco', args)
+    get: args => get('loco', args),
+    initialize: initializeLocos
   },
   sensors: {
     get: args => get('sensor', args)
