@@ -23,6 +23,10 @@
         "address": 5918,
         "name": "BNSF-5918",
         "road": "BNSF",
+        "isAcquired": false,
+        "cruiseControl": false,
+        "speed": 0,
+        "forward": null,
         "idleByDefault": true
     },
     {
