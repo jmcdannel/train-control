@@ -11,10 +11,11 @@ pwm = None
 GPIO = None
 
 # Import Arduino Sertal
-if ('arduino' in appConfig['turnouts'] and  appConfig['turnouts']['interface'] == 'serial'):
+if (appConfig['turnouts']['device'] == 'arduino' and appConfig['turnouts']['interface'] =='serial'):
   try:
     import serial
     arduino = serial.Serial(appConfig['serial'], 115200)
+    print('Ardunio Serial Connection Established...')
   except ImportError as error:
     # Output expected ImportErrors.
     print('serial ImportError')
