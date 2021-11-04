@@ -39,7 +39,7 @@
     "line": "Demo Track",
     "name": "Passing",
     "section": "Demo Section",
-    "turnoutId": 102
+    "turnoutId": 103
   },
   {
     "abbr": "Station",
@@ -53,6 +53,6 @@
     "line": "Demo Track",
     "name": "Station",
     "section": "Demo Section",
-    "turnoutId": 102
+    "turnoutId": 104
   }
 ]
