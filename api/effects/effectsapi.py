@@ -25,7 +25,7 @@ if ('pi' in appConfig['effects'] and 'GPIO' in appConfig['effects']['pi']):
     print('Exception')
     print(exception, False)
 
-# Import Arduino Sertial
+# Import Arduino Sertal
 if ('arduino' in appConfig['effects'] and 'serial' in appConfig['effects']['arduino']):
   try:
     import serial
