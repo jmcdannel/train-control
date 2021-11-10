@@ -3,6 +3,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import PanToolIcon from '@material-ui/icons/PanTool';
@@ -17,28 +18,13 @@ export const MiniThrottles = ({ locos, jmriApi, onLocoClick, showStop = false })
       <Route
         path="/">
           {locos.length && (
-            <Grid container className="mini-throttles" spacing={2}>
-              <Grid item xs={showStop ? 10 : 12} className="mini-throttles__wrapper">
-                <Grid container>
-                  {locos.map(loco => (
-                    <Grid item xs={4}>
-                      <MiniThrottle key={loco.address} loco={loco} jmriApi={jmriApi} onLocoClick={onLocoClick} />
-                    </Grid>
-                  ))}
-              </Grid>
-              </Grid>
-              {showStop && (
-                <Grid item xs={2} className="mini-throttles__stop">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<PanToolIcon />}
-                  >
-                    Stop All
-                  </Button>
-                </Grid>
-              )}
-            </Grid>
+            <Box display="flex" flexDirection="row"  flexWrap="wrap" >
+              {locos.map(loco => (
+                <Box key={loco.address}>
+                  <MiniThrottle loco={loco} jmriApi={jmriApi} onLocoClick={onLocoClick} />
+                </Box>
+              ))}
+            </Box>
           )}
         </Route>
     </Switch>

@@ -11,7 +11,7 @@
   background: linear-gradient($direction, $color-stops);
 }
 
-$sliderWidth: 7rem;
+$sliderWidth: 5rem;
 
 $green: #26ac14;
 $blue: #146fac;
@@ -19,94 +19,7 @@ $red: #f44336;
 $orange: #f89719;
 
 
-.throttles {
-
-  // height: 100%;
-  flex: 1;
-  &__menu {
-    background-color: #424242;
-    padding: 0.5rem;
-    > .MuiGrid-root {
-      align-content: flex-start;
-    }
-    &__available {
-      justify-content: space-between;
-      padding-left: .5rem;;
-    }
-  }
-
-
-  &__acquired {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    flex: 1;
-    max-height: calc(100vh - 13rem);
-    min-height: 540px;
-    // height: 100%;
-    // width: 100%;
-
-
-    &--view-compact {
-
-      .throttle__container {
-
-        padding: .5rem;
-        max-width: 320px;
-        min-width: 240px;
-        
-      }
-
-      .throttle__functions,
-      .throttle__space {
-        display: none;
-      }
-      
-      .MuiCardHeader-root {
-        transform: scale(0.75);
-        padding: 0;
-      }
-      
-    }
-    &--view-comfy {      
-      .throttle__container {
-        width: 0;
-        min-width: 33%;
-        max-width: 50%;
-        height: auto;
-        min-height: 540px;
-        max-height: 1080px;
-      }
-      
-    }
-    &--view-2up {
-
-      .throttle__container {
-        max-width: 50%;
-        width: 50%;
-        flex: 1 1 50%;
-      }
-      
-    }
-    &--view-full {
-      
-      .throttle__container {
-        max-width: 100%;
-        width: 100%;
-        flex: 1 1 100%;
-      }
-    }
-  }
-
-}
 .throttle {
-
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-
-  
-
 
   .MulutiCardHeader-root,
   .MuiCardActions-root {
@@ -115,11 +28,12 @@ $orange: #f89719;
 
   .MuiCardHeader-content {
     .MuiCardHeader-title {
-      font-size: 1.5rem;
+      font-size: .8rem;
       // border: 1px solid red;
       padding: 0.25rem .5rem;
       text-align: center;
       border-radius: .25rem;
+      white-space: nowrap;
       // background-color: rgba(255,0,0,.1);
     }
   }
@@ -131,67 +45,49 @@ $orange: #f89719;
 
   &__container {
     
-    padding: 1rem;
-    min-width: 320px;
-    width: 33%;
-    max-width: 560px;
-    height: 100%;
-    max-height: calc(100vh - 10rem);
+    // padding: 1rem;
+    // min-width: 320px;
+    // width: 33%;
+    // max-width: 560px;
+    // height: 100%;
+    // max-height: calc(100vh - 10rem);
   }
 
-  &__content {
-    flex: 1;
-    &__grid {
-      height: 100%;
-    }
-  }
-
-  &__controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    height: 100%;
+ 
+  // &__controls {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   position: relative;
+  //   height: 100%;
 
 
-    &__status {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      padding: 1rem;
-      &.MuiPaper-root {
-        background-color: rgba(0,0,0,.1);
-      }
-      // button {
-      //   border: 1px solid rgba(244, 67, 54, .5);
-      //   // box-shadow: inset 0px 0px 2px 2px rgba(0,0,0,0.2);
-      //   background-color: rgba(0,0,0,.1);
-      // }
-    }
+  //   &__status {
+  //     width: 100%;
+  //     display: flex;
+  //     flex-direction: row;
+  //     padding: 1rem;
+  //     &.MuiPaper-root {
+  //       background-color: rgba(0,0,0,.1);
+  //     }
+  //     // button {
+  //     //   border: 1px solid rgba(244, 67, 54, .5);
+  //     //   // box-shadow: inset 0px 0px 2px 2px rgba(0,0,0,0.2);
+  //     //   background-color: rgba(0,0,0,.1);
+  //     // }
+  //   }
 
-    &__speed {
-      flex: 1;
-    }
-
-    &__group {
-      padding: 0 1.5rem;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      &:first-of-type {
-        padding-left: 0;
-      }
-      &:last-of-type {
-        padding-right: 0;
-      }
-    }
-  }
+    // &__speed {
+    //   flex: 1;
+    // }
+  // }
 
   &__slider {
     position: relative;
     flex: 1;
     text-align: center;
     height: 100%;
+    margin-top: 0.5rem;
     > .MuiGrid-container {
       height: 100%;
     }
@@ -240,17 +136,18 @@ $orange: #f89719;
       .MuiSlider-mark {
         width: ($sliderWidth / 2);
         // transform: translate(0px, 1rem);
-        left: -2.5rem;
+        left: -($sliderWidth / 2) + 1;
       }
       .MuiSlider-markLabel {
-        left: 41px;
+        // left: 41px;
+        left: ($sliderWidth / 2) - 1;
         color: #000;
         // padding-top: 25px;
         z-index: 2;
         &:before {
           position: absolute;
           content: calc(attr(data-index) + 5) + 'px';
-          left: -130px;
+          left: -$sliderWidth;
         }
 
       }

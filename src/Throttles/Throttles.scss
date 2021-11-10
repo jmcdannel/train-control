@@ -1,14 +1,81 @@
-.throttles__unaquired {
-  padding: 0.5rem;
-  &__wrapper {
-    display: flex;
-    padding: .5rem 1.5rem;
-  }
-}
 
-.throttle__unaquired { 
-  padding: .5rem;
-  &__chip {
-    margin-right: 1rem;
+.throttles {
+
+  // height: 100%;
+  // flex: 1;
+  &__menu {
+    background-color: #424242;
+    padding: 0.5rem;
+    > .MuiGrid-root {
+      align-content: flex-start;
+    }
+    &__available {
+      justify-content: space-between;
+      padding-left: .5rem;;
+    }
   }
+
+
+  &__acquired {
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: flex-end;
+    // flex: 1;
+    // max-height: calc(100vh - 13rem);
+    // min-height: 540px;
+    // height: 100%;
+    // width: 100%;
+
+
+    &--view-compact {
+
+      .throttle__container {
+
+        padding: .5rem;
+        max-width: 320px;
+        min-width: 240px;
+        
+      }
+
+      .throttle__functions,
+      .throttle__space {
+        display: none;
+      }
+      
+      .MuiCardHeader-root {
+        transform: scale(0.75);
+        padding: 0;
+      }
+      
+    }
+    &--view-comfy {      
+      .throttle {
+        min-width: 33%;
+        max-width: 50%;
+        min-height: 420px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+    }
+    &--view-2up {
+
+      .throttle__container {
+        max-width: 50%;
+        width: 50%;
+        flex: 1 1 50%;
+      }
+      
+    }
+    &--view-full {
+      
+      .throttle__container {
+        max-width: 100%;
+        width: 100%;
+        flex: 1 1 100%;
+      }
+    }
+  }
+
 }

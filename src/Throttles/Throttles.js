@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Throttle from './Throttle';
 import MiniThrottles from './MiniThrottles';
 import Paper from '@material-ui/core/Paper';
@@ -39,32 +40,23 @@ export const Throttles = props => {
   console.log('locos', locos, state);
 
   return (
-    <Grid 
-      container 
-      className="throttles" 
-      direction="row"
-      alignItems="flex-start"
-      alignContent="flex-start"
-      spacing={2}
-    >
-      <Grid xs={12} item className={`throttles__acquired  throttles__acquired--view-comfy grow`}>
-      
+    <Box display="flex" flexDirection="column" flexGrow={1}>
+      <Box 
+        flexGrow={1} 
+        display="flex" 
+        flexDirection="row" 
+        className={`throttles__acquired  throttles__acquired--view-comfy`}>
         {locos.filter(loco => loco.isAcquired && !loco.cruiseControl).map(loco => 
-          <div className="throttle__container" key={loco.address}>
-            <Throttle jmriApi={jmriApi} loco={loco} onLocoClick={handleThrottleLocoClicked} />
-          </div>
-        )}
-        
-      </Grid>
-      <Grid xs={12} item className={`throttles__cruise-control`}>
+            <Throttle key={loco.address} jmriApi={jmriApi} loco={loco} onLocoClick={handleThrottleLocoClicked} />
+        )}        
+      </Box>
+      <Box className={`throttles__cruise-control`}>
         <MiniThrottles locos={locos.filter(loco => loco.isAcquired && loco.cruiseControl)} jmriApi={jmriApi} onLocoClick={handleCruiseControlLocoClicked} />
-      </Grid>
-
-      <Grid xs={12} item className="throttles__unaquired">
+      </Box>
+      <Box className="throttles__unaquired">
         <MiniThrottles locos={locos.filter(loco => !loco.isAcquired)} jmriApi={jmriApi} onLocoClick={loco => acquireLocoClicked(loco.address)} />
-      </Grid>
-
-    </Grid>
+      </Box>
+    </Box>
   );
 
 }

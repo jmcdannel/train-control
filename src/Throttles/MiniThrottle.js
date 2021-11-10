@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import TrainIcon from '@material-ui/icons/Train';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
+import IconButton from '@material-ui/core/IconButton';
 import ThrottleSpeed from './ThrottleSpeed';
 import JmriThrottleController from './JmriThrottleController';
 import PanToolIcon from '@material-ui/icons/PanTool';
@@ -71,24 +72,18 @@ export const MiniThrottle = props => {
             clickable
             onClick={handleLocoClick}
           />
-      {isAcquired && (
-        <JmriThrottleController speed={debouncedSpeed} address={address} jmriApi={jmriApi} forward={forward} />
+      {isAcquired ? (
+        <>
+          <JmriThrottleController speed={debouncedSpeed} address={address} jmriApi={jmriApi} forward={forward} />
+          <ThrottleSpeed speed={debouncedSpeed} idleByDefault={loco.idleByDefault} />
+          <IconButton variant="outlined" size="medium" disabled={speed === minSpeed} onClick={handleDownClick}><RemoveIcon /></IconButton>
+          <IconButton size="medium"  disabled={!isAcquired} variant="contained" color="primary" onClick={handleStopClick} ><PanToolIcon /></IconButton>
+          <IconButton variant="outlined" size="medium" disabled={speed === maxSpeed} onClick={handleUpClick}><AddIcon /></IconButton>
+        </>
+      ) : ( 
+        <IconButton variant="outlined" size="medium" variant="contained" color="primary" onClick={handleLocoClick}><OpenInBrowserIcon /></IconButton>
       )}
-      <ThrottleSpeed speed={debouncedSpeed} idleByDefault={loco.idleByDefault} isDisabled={!isAcquired} />
-      <Button className="mini-throttle__stop" disabled={!isAcquired} variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
-       
-      <ButtonGroup
-        orientation="horizontal"
-        color="primary"
-        variant="outlined"
-        className="throttle__controls__group"
-        aria-label="vertical outlined primary button group"
-      >
-        <Button size="large" disabled={speed === maxSpeed || !isAcquired} onClick={handleUpClick} >+</Button>
-        <Button size="large" disabled={speed === minSpeed || !isAcquired} onClick={handleDownClick}>-</Button>
-      </ButtonGroup>
-
-    </Paper>
+      </Paper>
   )
 
 }

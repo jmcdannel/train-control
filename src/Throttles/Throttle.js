@@ -17,6 +17,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PanToolIcon from '@material-ui/icons/PanTool';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import ReportIcon from '@material-ui/icons/Report';
 import ThrottleSlider from './ThrottleSlider';
 import ThrottleSpeed from './ThrottleSpeed';
@@ -94,7 +96,8 @@ export const Throttle = props => {
     : loco.address;
 
   return (
-    <Card className={`throttle throttle--${loco.name.replace(' ', '')}  throttle--${loco.road.replace(' ', '')}`} >
+    <Card 
+      className={`throttle throttle--${loco.name.replace(' ', '')}  throttle--${loco.road.replace(' ', '')}`} >
 
       <CardHeader
         title={loco.name}
@@ -113,11 +116,10 @@ export const Throttle = props => {
         //   </IconButton>
         // }
       />
-      <CardContent className="throttle__content">
+      <CardContent className="throttle__content grow flex">
         {(true || loco.isAcquired) && 
-          <Grid container spacing={2}  className="throttle__content__grid">
-            <Grid item 
-              xs={5}>
+          <Grid container className="grow">
+            <Grid item xs={5} flexGrow={1} display="flex">
                   <div className="throttle__slider">
                     {isAcquired && (
                       <JmriThrottleController speed={debouncedSpeed} address={address} jmriApi={jmriApi} forward={forward} />
@@ -126,13 +128,22 @@ export const Throttle = props => {
                   </div>
             </Grid>
             <Grid item xs={7} className="throttle__controls">
-              <Functions />
-              <div className="throttle__space"></div>
+              {/* <Functions /> */}
+              {/* <div className="throttle__space"></div> */}
               <Paper elevation={3} className="width100" >
                 {/* <pre>speed={loco.speed}</pre>
                 <pre>uiSpeed={uiSpeed}</pre> */}
                 <ThrottleSpeed  speed={uiSpeed} idleByDefault={loco.idleByDefault} />
-                <Grid container spacing={2} className="throttle__controls__status">
+                <ButtonGroup
+                    orientation="vertical"
+                    className="throttle__controls__group width100"
+                    aria-label="vertical outlined primary button group"
+                  >
+                  <IconButton variant="outlined" size="medium" disabled={speed === minSpeed} onClick={handleDownClick}><RemoveIcon /></IconButton>
+                  <IconButton size="medium"  disabled={!isAcquired} variant="contained" color="primary" onClick={handleStopClick} ><PanToolIcon /></IconButton>
+                  <IconButton variant="outlined" size="medium" disabled={speed === maxSpeed} onClick={handleUpClick}><AddIcon /></IconButton>
+                </ButtonGroup>
+                {/* <Grid container spacing={2} className="throttle__controls__status">
                   <Grid item className="flex">
                     <Button className="width100" variant="contained" color="primary" startIcon={<PanToolIcon />} size="large" onClick={handleStopClick}>Stop</Button>
                   </Grid>
@@ -147,15 +158,15 @@ export const Throttle = props => {
                       <Tooltip title="Speed Increase">
                         <Button size="large" disabled={speed === maxSpeed} onClick={handleUpClick} >+</Button>
                       </Tooltip>
-                      {/* <Tooltip title="Idle">
+                       <Tooltip title="Idle">
                         <Button onClick={handleIdleClick} >Idle</Button>
-                      </Tooltip> */}
+                      </Tooltip> 
                       <Tooltip title="Speed Decrease">
                         <Button size="large" disabled={speed === minSpeed} onClick={handleDownClick}>-</Button>
                       </Tooltip>
                     </ButtonGroup>
-                  </Grid>
-                </Grid>
+                  </Grid> 
+                </Grid>*/}
               </Paper>
             </Grid>
           </Grid>

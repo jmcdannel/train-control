@@ -1,26 +1,10 @@
-.mini-throttles {
-  padding: .5rem 0;
-  // background: rgba(0,0,0,.5);
-
-  &__stop {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 1.5rem;
-  }
-
-  &__wrapper {
-    display: flex;
-    // justify-content: flex-end;
-    padding-left: 1.5rem;
-  }
-}
 
 .mini-throttle {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 1rem;
-  margin: 1rem;
+  padding: 0.25rem;
+  margin: 0.25rem;
   width: auto;
 
   &__stop {
@@ -29,7 +13,7 @@
   }
 
   .throttle__speed {
-    width: 7rem;
+    width: 5rem;
     // flex: 1;
     height: 100%;
     padding: 0;

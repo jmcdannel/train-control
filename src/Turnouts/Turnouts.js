@@ -4,6 +4,7 @@ import Turnout from './Turnout';
 import MapTurnout from './MapTurnout';
 import tamarackStationSouthImage from '../Layout/images/tam/tamarack-station-south.png';
 import { ReactComponent as Turnout4Left } from '../Shared/Images/TurnoutMasks/4-left.svg';
+import { ReactComponent as TamSouth } from '../Layout/images/tam/tam-south-lines.svg';
 
 import { Context } from '../Store/Store';
 import api from '../Api';
@@ -30,7 +31,10 @@ export const Turnouts = props => {
   }, []);
 
   return (
-    <Grid container className={`turnouts turnouts--${view}`} spacing={1}>
+    <Grid container className={`turnouts turnouts--${view}`}>
+      <Grid item sm={12}>
+        <TamSouth />
+      </Grid>
       {groupBy === '' && (
         <Grid item sm={12} className="turnout__grid-item">
           {turnouts.map(turnout => (
@@ -42,11 +46,11 @@ export const Turnouts = props => {
         </Grid>
       )}
       {groupBy === 'line' && lines.map(line => (
-        <>
-          <Grid item sm={12} className="turnout__grid-item" spacing={1}>
+        <div key={`line-${line}`}>
+          <Grid item sm={12} className="turnout__grid-item">
             <h3>{line}</h3>
           </Grid>
-          <Grid item sm={12} className="turnout__grid-item" spacing={1}>
+          <Grid item sm={12} className="turnout__grid-item">
             {turnouts.filter(t => t.line === line).map(turnout => (
               <div key={`turnout${groupBy}${turnout.turnoutId}`} className="turnout__container">
               {console.log('line', turnout, turnout.turnoutId)}
@@ -54,10 +58,10 @@ export const Turnouts = props => {
               </div>
             ))}
           </Grid>
-        </>
+        </div>
       ))}
       {groupBy === 'board' && sections.map(section => (
-        <>
+        <div key={`section-${section}`}>
           <Grid item sm={12} className="turnout__grid-item">
             <h3>{section}</h3>
           </Grid>
@@ -81,7 +85,7 @@ export const Turnouts = props => {
               
             </div>
           </Grid>
-        </>
+        </div>
       ))}
     </Grid>
     

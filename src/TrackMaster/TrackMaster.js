@@ -182,7 +182,7 @@ function TrackMaster(props) {
             {page !== '/conductor' && <MiniThrottles showSto={true} locos={state.locos.filter(loco => loco.isAcquired && (loco.speed !== 0 || loco.isPinned))} jmriApi={jmriApi} />}
             
           </Box>
-          <Box flexGrow={1} width="100%" height="100%" alignContent="center" className="App-content" mt={1}>
+          <Box flexGrow={1} display="flex" width="100%" height="100%" alignContent="center" className="App-content" mt={1}>
 
             <Switch>
               <Route path="/" exact>
