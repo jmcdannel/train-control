@@ -1,58 +1,58 @@
 [
-  {
-    "abbr": "XOver",
-    "current": 0,
-    "dcc": {
-      "pinA": 22,
-      "pinB": 23
+    {
+        "abbr": "XOver",
+        "current": 0,
+        "dcc": {
+            "pinA": 22,
+            "pinB": 23
+        },
+        "default": 0,
+        "label": "Crossover",
+        "line": "Demo Track",
+        "name": "Crossover",
+        "section": "Demo Section",
+        "turnoutId": 101
     },
-    "default": 0,
-    "label": "Crossover",
-    "line": "Demo Track",
-    "name": "Crossover",
-    "section": "Demo Section",
-    "turnoutId": 101
-  },
-  {
-    "abbr": "Storage",
-    "current": 0,
-    "dcc": {
-      "pinA": 24,
-      "pinB": 25
+    {
+        "abbr": "Storage",
+        "current": 0,
+        "dcc": {
+            "pinA": 24,
+            "pinB": 25
+        },
+        "default": 0,
+        "label": "Storage",
+        "line": "Demo Track",
+        "name": "Storage",
+        "section": "Demo Section",
+        "turnoutId": 102
     },
-    "default": 0,
-    "label": "Storage",
-    "line": "Demo Track",
-    "name": "Storage",
-    "section": "Demo Section",
-    "turnoutId": 102
-  },
-  {
-    "abbr": "Passing",
-    "current": 0,
-    "dcc": {
-      "pinA": 26,
-      "pinB": 27
+    {
+        "abbr": "Passing",
+        "current": 0,
+        "dcc": {
+            "pinA": 26,
+            "pinB": 27
+        },
+        "default": 0,
+        "label": "Passing",
+        "line": "Demo Track",
+        "name": "Passing",
+        "section": "Demo Section",
+        "turnoutId": 103
     },
-    "default": 0,
-    "label": "Passing",
-    "line": "Demo Track",
-    "name": "Passing",
-    "section": "Demo Section",
-    "turnoutId": 103
-  },
-  {
-    "abbr": "Station",
-    "current": 0,
-    "dcc": {
-      "pinA": 28,
-      "pinB": 29
-    },
-    "default": 0,
-    "label": "Station",
-    "line": "Demo Track",
-    "name": "Station",
-    "section": "Demo Section",
-    "turnoutId": 104
-  }
+    {
+        "abbr": "Station",
+        "current": 0,
+        "dcc": {
+            "pinA": 28,
+            "pinB": 29
+        },
+        "default": 0,
+        "label": "Station",
+        "line": "Demo Track",
+        "name": "Station",
+        "section": "Demo Section",
+        "turnoutId": 104
+    }
 ]
